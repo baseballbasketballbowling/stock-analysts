@@ -1,21 +1,24 @@
 """J-Quants REST API クライアント。
 
-認証フロー:
-  1. メール+パスワード → refreshToken
-  2. refreshToken → idToken (有効期間24h)
-  3. 以降のリクエストは Authorization: Bearer <idToken>
+認証フロー（2通り対応）:
+  A. メール+パスワード方式（通常登録ユーザー）:
+       メール+パスワード → refreshToken → idToken
+  B. リフレッシュトークン直接指定（Googleアカウント登録ユーザー）:
+       JQUANTS_REFRESH_TOKEN 環境変数 → idToken
+
+idToken の有効期間は24時間。23時間でキャッシュを更新する。
 """
 
 import json
 import time
 import logging
-from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
 
 import requests
 
 from config.settings import (
+    JQUANTS_REFRESH_TOKEN,
     JQUANTS_EMAIL,
     JQUANTS_PASSWORD,
     JQUANTS_BASE_URL,
@@ -30,7 +33,13 @@ _TOKEN_CACHE = DATA_DIR / ".token_cache.json"
 
 
 class JQuantsClient:
-    def __init__(self, email: str = JQUANTS_EMAIL, password: str = JQUANTS_PASSWORD):
+    def __init__(
+        self,
+        refresh_token: str = JQUANTS_REFRESH_TOKEN,
+        email: str = JQUANTS_EMAIL,
+        password: str = JQUANTS_PASSWORD,
+    ):
+        self._refresh_token = refresh_token  # Googleユーザーはここに直接セット
         self.email = email
         self.password = password
         self._id_token: Optional[str] = None
@@ -56,7 +65,7 @@ class JQuantsClient:
             "expires": self._token_expires,
         }))
 
-    def _get_refresh_token(self) -> str:
+    def _get_refresh_token_from_password(self) -> str:
         resp = requests.post(JQUANTS_TOKEN_URL, json={
             "mailaddress": self.email,
             "password": self.password,
@@ -76,10 +85,23 @@ class JQuantsClient:
     def _ensure_token(self) -> None:
         if self._id_token and time.time() < self._token_expires:
             return
-        logger.info("J-Quants: トークン取得中...")
-        refresh_token = self._get_refresh_token()
+        logger.info("J-Quants: IDトークン取得中...")
+
+        if self._refresh_token:
+            # B. リフレッシュトークン直接指定（Googleアカウント等）
+            refresh_token = self._refresh_token
+        elif self.email and self.password:
+            # A. メール+パスワード方式
+            refresh_token = self._get_refresh_token_from_password()
+        else:
+            raise RuntimeError(
+                "J-Quants 認証情報が未設定です。\n"
+                "Googleアカウント登録の場合: export JQUANTS_REFRESH_TOKEN=<リフレッシュトークン>\n"
+                "メール登録の場合: export JQUANTS_EMAIL=... JQUANTS_PASSWORD=..."
+            )
+
         self._id_token = self._get_id_token(refresh_token)
-        self._token_expires = time.time() + 23 * 3600  # 23時間で再取得
+        self._token_expires = time.time() + 23 * 3600
         self._save_token_cache()
 
     # ------------------------------------------------------------------
