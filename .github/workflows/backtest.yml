@@ -3,8 +3,8 @@ name: バックテスト実行
 on:
   workflow_dispatch:
     inputs:
-      refresh_token:
-        description: 'J-Quants リフレッシュトークン（マイページからコピー）'
+      api_key:
+        description: 'J-Quants API Key（マイページの「現在のAPI Key」をコピー）'
         required: true
       start_date:
         description: '開始日 (YYYY-MM-DD)'
@@ -34,7 +34,7 @@ jobs:
 
       - name: バックテスト実行
         env:
-          JQUANTS_REFRESH_TOKEN: ${{ inputs.refresh_token }}
+          JQUANTS_API_KEY: ${{ inputs.api_key }}
         run: |
           python main.py backtest --start ${{ inputs.start_date }} --end ${{ inputs.end_date }}
 

@@ -4,7 +4,9 @@ from pathlib import Path
 BASE_DIR = Path(__file__).parent.parent
 
 # --- J-Quants 認証 ---
-# Googleアカウント登録ユーザーはリフレッシュトークンを直接設定する
+# マイページの「API Key」をセット（Googleアカウント登録ユーザー）
+JQUANTS_API_KEY = os.environ.get("JQUANTS_API_KEY", "")
+# メール登録ユーザーは以下を使用
 JQUANTS_REFRESH_TOKEN = os.environ.get("JQUANTS_REFRESH_TOKEN", "")
 JQUANTS_EMAIL = os.environ.get("JQUANTS_EMAIL", "")
 JQUANTS_PASSWORD = os.environ.get("JQUANTS_PASSWORD", "")

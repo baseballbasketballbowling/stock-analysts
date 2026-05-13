@@ -1,12 +1,12 @@
 """J-Quants REST API クライアント。
 
-認証フロー（2通り対応）:
-  A. メール+パスワード方式（通常登録ユーザー）:
+認証フロー（3通り対応）:
+  A. APIキー直接指定（Googleアカウント登録ユーザー）:
+       マイページの「API Key」を JQUANTS_API_KEY にセット → Bearer トークンとして直接使用
+  B. リフレッシュトークン直接指定:
+       JQUANTS_REFRESH_TOKEN → idToken
+  C. メール+パスワード方式（通常登録ユーザー）:
        メール+パスワード → refreshToken → idToken
-  B. リフレッシュトークン直接指定（Googleアカウント登録ユーザー）:
-       JQUANTS_REFRESH_TOKEN 環境変数 → idToken
-
-idToken の有効期間は24時間。23時間でキャッシュを更新する。
 """
 
 import json
@@ -18,6 +18,7 @@ from typing import Optional
 import requests
 
 from config.settings import (
+    JQUANTS_API_KEY,
     JQUANTS_REFRESH_TOKEN,
     JQUANTS_EMAIL,
     JQUANTS_PASSWORD,
@@ -35,16 +36,19 @@ _TOKEN_CACHE = DATA_DIR / ".token_cache.json"
 class JQuantsClient:
     def __init__(
         self,
+        api_key: str = JQUANTS_API_KEY,
         refresh_token: str = JQUANTS_REFRESH_TOKEN,
         email: str = JQUANTS_EMAIL,
         password: str = JQUANTS_PASSWORD,
     ):
-        self._refresh_token = refresh_token  # Googleユーザーはここに直接セット
+        self._api_key = api_key.strip()
+        self._refresh_token = refresh_token.strip()
         self.email = email
         self.password = password
         self._id_token: Optional[str] = None
         self._token_expires: float = 0.0
-        self._load_token_cache()
+        if not self._api_key:
+            self._load_token_cache()
 
     # ------------------------------------------------------------------
     # 認証
@@ -73,7 +77,7 @@ class JQuantsClient:
         resp.raise_for_status()
         return resp.json()["refreshToken"]
 
-    def _get_id_token(self, refresh_token: str) -> str:
+    def _exchange_refresh_token(self, refresh_token: str) -> str:
         resp = requests.post(
             JQUANTS_REFRESH_URL,
             params={"refreshtoken": refresh_token},
@@ -83,24 +87,30 @@ class JQuantsClient:
         return resp.json()["idToken"]
 
     def _ensure_token(self) -> None:
+        # A. APIキー → そのままBearerトークンとして使用
+        if self._api_key:
+            self._id_token = self._api_key
+            return
+
         if self._id_token and time.time() < self._token_expires:
             return
+
         logger.info("J-Quants: IDトークン取得中...")
 
         if self._refresh_token:
-            # B. リフレッシュトークン直接指定（Googleアカウント等）
-            refresh_token = self._refresh_token.strip()
+            # B. リフレッシュトークン直接指定
+            self._id_token = self._exchange_refresh_token(self._refresh_token)
         elif self.email and self.password:
-            # A. メール+パスワード方式
+            # C. メール+パスワード方式
             refresh_token = self._get_refresh_token_from_password()
+            self._id_token = self._exchange_refresh_token(refresh_token)
         else:
             raise RuntimeError(
                 "J-Quants 認証情報が未設定です。\n"
-                "Googleアカウント登録の場合: export JQUANTS_REFRESH_TOKEN=<リフレッシュトークン>\n"
+                "Googleアカウント登録の場合: export JQUANTS_API_KEY=<マイページのAPI Key>\n"
                 "メール登録の場合: export JQUANTS_EMAIL=... JQUANTS_PASSWORD=..."
             )
 
-        self._id_token = self._get_id_token(refresh_token)
         self._token_expires = time.time() + 23 * 3600
         self._save_token_cache()
 
@@ -144,10 +154,6 @@ class JQuantsClient:
         date_from: Optional[str] = None,
         date_to: Optional[str] = None,
     ) -> list[dict]:
-        """日足株価データを返す。
-
-        code を省略すると全銘柄（日付指定が必要）。
-        """
         params: dict = {}
         if code:
             params["code"] = code
@@ -166,7 +172,6 @@ class JQuantsClient:
         date_from: Optional[str] = None,
         date_to: Optional[str] = None,
     ) -> list[dict]:
-        """財務諸表（決算）データを返す。"""
         params: dict = {}
         if code:
             params["code"] = code
