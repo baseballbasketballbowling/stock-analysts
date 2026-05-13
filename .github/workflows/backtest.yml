@@ -29,6 +29,21 @@ jobs:
       - name: ライブラリをインストール
         run: pip install -r requirements.txt
 
+      - name: トークン確認
+        env:
+          JQUANTS_REFRESH_TOKEN: ${{ secrets.JQUANTS_REFRESH_TOKEN }}
+        run: |
+          echo "トークン長: ${#JQUANTS_REFRESH_TOKEN} 文字"
+          python - <<'EOF'
+          import os, re
+          token = os.environ.get("JQUANTS_REFRESH_TOKEN", "")
+          print(f"長さ: {len(token)}")
+          print(f"改行含む: {'はい' if chr(10) in token or chr(13) in token else 'いいえ'}")
+          print(f"スペース含む: {'はい' if ' ' in token else 'いいえ'}")
+          clean = token.strip()
+          print(f"strip後の長さ: {len(clean)}")
+          EOF
+
       - name: バックテスト実行
         env:
           JQUANTS_REFRESH_TOKEN: ${{ secrets.JQUANTS_REFRESH_TOKEN }}

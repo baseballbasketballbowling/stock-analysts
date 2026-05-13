@@ -89,7 +89,7 @@ class JQuantsClient:
 
         if self._refresh_token:
             # B. リフレッシュトークン直接指定（Googleアカウント等）
-            refresh_token = self._refresh_token
+            refresh_token = self._refresh_token.strip()
         elif self.email and self.password:
             # A. メール+パスワード方式
             refresh_token = self._get_refresh_token_from_password()
