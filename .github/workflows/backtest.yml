@@ -1,0 +1,43 @@
+name: バックテスト実行
+
+on:
+  workflow_dispatch:
+    inputs:
+      start_date:
+        description: '開始日 (YYYY-MM-DD)'
+        required: false
+        default: '2022-01-01'
+      end_date:
+        description: '終了日 (YYYY-MM-DD)'
+        required: false
+        default: '2024-12-31'
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/stock-screening-backtest-RTDEv
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: ライブラリをインストール
+        run: pip install -r requirements.txt
+
+      - name: バックテスト実行
+        env:
+          JQUANTS_REFRESH_TOKEN: ${{ secrets.JQUANTS_REFRESH_TOKEN }}
+        run: |
+          python main.py backtest --start ${{ inputs.start_date }} --end ${{ inputs.end_date }}
+
+      - name: 結果をアップロード
+        uses: actions/upload-artifact@v4
+        with:
+          name: backtest-results
+          path: results/
+          retention-days: 30
