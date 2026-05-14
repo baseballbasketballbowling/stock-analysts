@@ -21,7 +21,6 @@ from config.settings import TAKE_PROFIT, STOP_LOSS, MAX_HOLD_DAYS
 
 logger = logging.getLogger(__name__)
 
-
 @dataclass
 class Trade:
     code: str
@@ -57,16 +56,16 @@ class Trade:
 
 
 def _simulate_trade(
-    code: str,
     entry_date: pd.Timestamp,
     entry_price: float,
-    price_df: pd.DataFrame,
+    code_prices: pd.DataFrame,
     take_profit: float = TAKE_PROFIT,
     stop_loss: float = STOP_LOSS,
     max_hold: int = MAX_HOLD_DAYS,
 ) -> tuple[pd.Timestamp, float, str]:
     """
     1銘柄のエグジットを日足ベースでシミュレートする。
+    code_prices は当該 Code のみ Date 昇順ソート済みの DataFrame。
 
     日中の判定順序:
       - まず損切り判定（安値が SL ライン以下）
@@ -78,9 +77,7 @@ def _simulate_trade(
     tp_price = entry_price * (1 + take_profit)
     sl_price = entry_price * (1 + stop_loss)
 
-    # エントリー日以降の行（エントリー日当日も保有中）
-    mask = (price_df["Code"] == code) & (price_df["Date"] >= entry_date)
-    holding = price_df[mask].sort_values("Date").reset_index(drop=True)
+    holding = code_prices[code_prices["Date"] >= entry_date].reset_index(drop=True)
 
     for i, row in holding.iterrows():
         # MAX_HOLD_DAYS を超えたら強制決済（終値）
@@ -111,31 +108,42 @@ def _simulate_trade(
     return entry_date, entry_price, "no_data"
 
 
+def build_price_dict(quotes_df: pd.DataFrame) -> dict:
+    """quotes_df を Code 別に事前インデックス化して返す（スイープ高速化用）。"""
+    price_cols = ["Code", "Date"]
+    for col in ["AdjustmentOpen", "AdjustmentClose", "AdjustmentHigh", "AdjustmentLow",
+                "Open", "Close", "High", "Low"]:
+        if col in quotes_df.columns:
+            price_cols.append(col)
+    price_cols = list(dict.fromkeys(price_cols))
+    price_df = quotes_df[price_cols].copy()
+    return {
+        code: grp.sort_values("Date").reset_index(drop=True)
+        for code, grp in price_df.groupby("Code")
+    }
+
+
 def run_backtest(
     candidates: pd.DataFrame,
     quotes_df: pd.DataFrame,
     take_profit: float = TAKE_PROFIT,
     stop_loss: float = STOP_LOSS,
     max_hold: int = MAX_HOLD_DAYS,
+    price_dict: Optional[dict] = None,
 ) -> list[Trade]:
     """
     候補銘柄リストに対してバックテストを実行し Trade リストを返す。
 
     Parameters
     ----------
-    candidates : screen_candidates() の出力 DataFrame
-    quotes_df  : 全期間・全銘柄の日足データ
+    candidates  : screen_candidates() の出力 DataFrame
+    quotes_df   : 全期間・全銘柄の日足データ
+    price_dict  : build_price_dict() の出力（スイープ時は外から渡して再利用）
     """
     trades: list[Trade] = []
 
-    # 高速化：価格テーブルを必要カラムに絞る
-    price_cols = ["Code", "Date"]
-    for col in ["AdjustmentOpen", "AdjustmentClose", "AdjustmentHigh", "AdjustmentLow",
-                "Open", "Close", "High", "Low"]:
-        if col in quotes_df.columns:
-            price_cols.append(col)
-    price_cols = list(dict.fromkeys(price_cols))  # 重複除去・順序保持
-    price_df = quotes_df[price_cols].copy()
+    if price_dict is None:
+        price_dict = build_price_dict(quotes_df)
 
     logger.info(f"バックテスト開始: {len(candidates)} 候補")
 
@@ -147,8 +155,12 @@ def run_backtest(
         if entry_price <= 0:
             continue
 
+        code_prices = price_dict.get(code, pd.DataFrame())
+        if code_prices.empty:
+            continue
+
         exit_date, exit_price, reason = _simulate_trade(
-            code, entry_date, entry_price, price_df,
+            entry_date, entry_price, code_prices,
             take_profit, stop_loss, max_hold,
         )
 

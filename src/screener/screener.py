@@ -154,6 +154,7 @@ def screen_candidates(
     quotes_df: pd.DataFrame,
     listed_df: pd.DataFrame,
     target_date: Optional[str] = None,
+    earnings_growth_min: Optional[float] = None,
 ) -> pd.DataFrame:
     """
     スクリーニング条件を適用して候補銘柄を返す。
@@ -180,9 +181,10 @@ def screen_candidates(
         return pd.DataFrame()
 
     # 1. 決算成長率フィルタ
-    cond_growth = growth_df["EarningsGrowth"] >= EARNINGS_GROWTH_MIN
+    _growth_min = EARNINGS_GROWTH_MIN if earnings_growth_min is None else earnings_growth_min
+    cond_growth = growth_df["EarningsGrowth"] >= _growth_min
     passed = growth_df[cond_growth].copy()
-    logger.info(f"  決算成長率 >= {EARNINGS_GROWTH_MIN:.0%}: {len(passed)} 件")
+    logger.info(f"  決算成長率 >= {_growth_min:.0%}: {len(passed)} 件")
 
     if target_date:
         td = pd.to_datetime(target_date)

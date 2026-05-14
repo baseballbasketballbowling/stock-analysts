@@ -91,6 +91,55 @@ def cmd_backtest(args) -> None:
         sys.exit(1)
 
 
+def cmd_sweep(args) -> None:
+    import traceback as _tb
+    from src.api.jquants_client import JQuantsClient
+    from src.screener.screener import (
+        load_listed_info, load_statements, load_daily_quotes, screen_candidates,
+    )
+    from src.backtest.sweep import PARAM_GRID, run_parameter_sweep, save_sweep_results, print_sweep_top
+
+    start = args.start
+    end   = args.end
+    logger.info(f"パラメータスイープ期間: {start} 〜 {end}")
+
+    try:
+        client = JQuantsClient()
+        listed_df = load_listed_info(client)
+
+        stmt_start = str(int(start[:4]) - 1) + start[4:]
+        stmt_df = load_statements(client, date_from=stmt_start, date_to=end)
+        quotes_df = load_daily_quotes(client, date_from=start, date_to=end)
+
+        # 最も緩い成長率フィルタで候補を取得（スイープ内で再フィルタする）
+        min_growth = min(PARAM_GRID["growth_min"])
+        logger.info(f"ベーススクリーニング（成長率 >= {min_growth:.0%}）")
+        candidates_full = screen_candidates(
+            stmt_df, quotes_df, listed_df,
+            earnings_growth_min=min_growth,
+        )
+
+        if candidates_full.empty:
+            logger.warning("候補銘柄が見つかりませんでした。")
+            sys.exit(1)
+
+        logger.info(f"ベース候補数: {len(candidates_full)}")
+        sweep_df = run_parameter_sweep(candidates_full, quotes_df)
+
+        if sweep_df.empty:
+            logger.warning("スイープ結果が空です。")
+            sys.exit(1)
+
+        save_sweep_results(sweep_df)
+        print_sweep_top(sweep_df, n=20)
+        logger.info("完了。results/sweep_results.csv に保存しました。")
+
+    except Exception as e:
+        logger.error(f"エラー発生: {type(e).__name__}: {e}")
+        _tb.print_exc()
+        sys.exit(1)
+
+
 def cmd_screen(args) -> None:
     from src.api.jquants_client import JQuantsClient
     from src.screener.screener import (
@@ -136,6 +185,12 @@ def build_parser() -> argparse.ArgumentParser:
     bt.add_argument("--start", default=BACKTEST_START, help="開始日 (YYYY-MM-DD)")
     bt.add_argument("--end", default=BACKTEST_END, help="終了日 (YYYY-MM-DD)")
     bt.set_defaults(func=cmd_backtest)
+
+    # sweep サブコマンド
+    sw = sub.add_parser("sweep", help="パラメータスイープ実行")
+    sw.add_argument("--start", default=BACKTEST_START, help="開始日 (YYYY-MM-DD)")
+    sw.add_argument("--end", default=BACKTEST_END, help="終了日 (YYYY-MM-DD)")
+    sw.set_defaults(func=cmd_sweep)
 
     # screen サブコマンド
     sc = sub.add_parser("screen", help="スクリーニング実行")
