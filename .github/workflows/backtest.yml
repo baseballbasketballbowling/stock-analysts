@@ -7,20 +7,20 @@ on:
   workflow_dispatch:
     inputs:
       api_key:
-        description: 'J-Quants API Key（マイページの「現在のAPI Key」をコピー）'
+        description: 'J-Quants API Key'
         required: false
       start_date:
-        description: '開始日 (YYYY-MM-DD)'
         required: false
         default: '2022-07-01'
       end_date:
-        description: '終了日 (YYYY-MM-DD)'
         required: false
         default: '2024-12-31'
 
 jobs:
   backtest:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -41,16 +41,35 @@ jobs:
         run: python tests/test_api_connection.py
 
       - name: バックテスト実行
+        id: backtest
+        continue-on-error: true
         env:
           JQUANTS_API_KEY: ${{ inputs.api_key || secrets.JQUANTS_API_KEY }}
         run: |
+          mkdir -p debug
           START="${{ inputs.start_date }}"
           END="${{ inputs.end_date }}"
-          python main.py backtest --start "${START:-2022-07-01}" --end "${END:-2024-12-31}"
+          python main.py backtest --start "${START:-2022-07-01}" --end "${END:-2024-12-31}" 2>&1 | tee debug/last_run.txt
+
+      - name: ログをリポジトリに保存
+        if: always()
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          git add debug/last_run.txt
+          git diff --staged --quiet || git commit -m "debug: [skip ci] バックテストログ $(date +%Y%m%d-%H%M%S)"
+          git push origin claude/stock-screening-backtest-RTDEv || true
 
       - name: 結果をアップロード
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: backtest-results
-          path: results/
+          path: |
+            results/
+            debug/
           retention-days: 30
+
+      - name: 失敗時に終了コードを返す
+        if: steps.backtest.outcome == 'failure'
+        run: exit 1
