@@ -227,19 +227,24 @@ def screen_candidates(
     passed["EntryDate"] = passed["DisclosedDate"].apply(next_trading_day)
     passed = passed.dropna(subset=["EntryDate"])
 
-    # エントリー日の始値取得
-    open_map = quotes_df.set_index(["Code", "Date"])["AdjustmentOpen"].to_dict()
-    # AdjustmentOpen がない場合は Open を使う
-    if not open_map:
-        open_map = quotes_df.set_index(["Code", "Date"])["Open"].to_dict()
+    # エントリー日の始値取得（調整後始値 → 通常始値 の優先順）
+    adj_col = next(
+        (c for c in ["AdjustmentOpen", "AdjO", "AdjOpen"] if c in quotes_df.columns),
+        None,
+    )
+    idx = quotes_df.set_index(["Code", "Date"])
+    adj_open_map = idx[adj_col].to_dict() if adj_col else {}
+    open_map = idx["Open"].to_dict() if "Open" in quotes_df.columns else {}
+    if adj_col:
+        logger.info(f"  始値カラム: {adj_col}")
+    else:
+        logger.warning("  調整後始値カラムなし → 通常始値(Open)を使用")
 
     def get_open(row):
         key = (row["Code"], row["EntryDate"])
-        val = open_map.get(key)
-        if val is None or pd.isna(val):
-            # AdjustmentOpen 不在 → Open を試みる
-            open_map2 = quotes_df.set_index(["Code", "Date"])["Open"].to_dict()
-            val = open_map2.get(key)
+        val = adj_open_map.get(key)
+        if val is None or (isinstance(val, float) and pd.isna(val)):
+            val = open_map.get(key)
         return val
 
     passed["EntryOpen"] = passed.apply(get_open, axis=1)

@@ -30,6 +30,7 @@ _FIN_RENAME = {
 }
 
 _QUOTE_RENAME = {
+    # V2 API の略称 → 長い名前
     "O": "Open",
     "H": "High",
     "L": "Low",
@@ -39,6 +40,13 @@ _QUOTE_RENAME = {
     "AdjL": "AdjustmentLow",
     "AdjC": "AdjustmentClose",
     "Vo": "Volume",
+    "Va": "TurnoverValue",
+    "MktCap": "MarketCapitalization",
+    # バルクCSVが別の略称を使う場合のフォールバック
+    "AdjOpen":  "AdjustmentOpen",
+    "AdjHigh":  "AdjustmentHigh",
+    "AdjLow":   "AdjustmentLow",
+    "AdjClose": "AdjustmentClose",
 }
 
 _BULK_REQUEST_INTERVAL = 0.5   # バルクURL取得間隔（秒）
@@ -171,6 +179,8 @@ class JQuantsClient:
                     self._cli.download_bulk(key, outpath)
                     df = self._load_bulk_file(outpath, ext)
                     if not df.empty:
+                        if i == 1:
+                            logger.info(f"    バルクCSV列名: {list(df.columns)}")
                         results.append(df)
                     logger.info(f"    {i}/{len(keys)}: {key} ({len(df)}件)")
                     time.sleep(_BULK_REQUEST_INTERVAL)
