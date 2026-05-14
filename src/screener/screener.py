@@ -208,11 +208,13 @@ def screen_candidates(
         passed.loc[mask, "MarketCapitalization"] = passed.loc[mask, "_cap_listed"]
         passed.drop(columns=["_cap_listed"], inplace=True, errors="ignore")
 
-    cond_cap = (
-        passed["MarketCapitalization"].between(MARKET_CAP_MIN, MARKET_CAP_MAX)
-    )
-    passed = passed[cond_cap].copy()
-    logger.info(f"  時価総額 {MARKET_CAP_MIN/1e8:.0f}〜{MARKET_CAP_MAX/1e8:.0f}億円: {len(passed)} 件")
+    has_cap = passed["MarketCapitalization"].notna().any()
+    if has_cap:
+        cond_cap = passed["MarketCapitalization"].between(MARKET_CAP_MIN, MARKET_CAP_MAX)
+        passed = passed[cond_cap].copy()
+        logger.info(f"  時価総額 {MARKET_CAP_MIN/1e8:.0f}〜{MARKET_CAP_MAX/1e8:.0f}億円: {len(passed)} 件")
+    else:
+        logger.warning("  時価総額データなし（V2 API非対応）: 時価総額フィルタをスキップ")
 
     # 3. エントリー日（翌営業日）と始値を付与
     trading_dates = sorted(quotes_df["Date"].unique())
