@@ -4,6 +4,11 @@ on:
   schedule:
     # 平日 10:00 UTC = 19:00 JST（市場終了後、決算開示が揃うタイミング）
     - cron: '0 10 * * 1-5'
+  push:
+    branches:
+      - claude/stock-screening-backtest-RTDEv
+    paths:
+      - '.github/workflows/daily_notify.yml'
   workflow_dispatch:
     inputs:
       target_date:
