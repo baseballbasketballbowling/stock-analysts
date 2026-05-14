@@ -11,10 +11,10 @@ on:
         required: false
       start_date:
         required: false
-        default: '2022-07-01'
+        default: '2025-01-01'
       end_date:
         required: false
-        default: '2024-12-31'
+        default: '2025-12-31'
 
 jobs:
   backtest:
@@ -50,7 +50,7 @@ jobs:
           mkdir -p debug results
           START="${{ inputs.start_date }}"
           END="${{ inputs.end_date }}"
-          python main.py backtest --start "${START:-2022-07-01}" --end "${END:-2024-12-31}" 2>&1 | tee debug/last_run.txt
+          python main.py backtest --start "${START:-2025-01-01}" --end "${END:-2025-12-31}" 2>&1 | tee debug/last_run.txt
 
       - name: パラメータスイープ実行
         id: sweep
@@ -61,7 +61,7 @@ jobs:
           START="${{ inputs.start_date }}"
           END="${{ inputs.end_date }}"
           echo "===== PARAMETER SWEEP =====" >> debug/last_run.txt
-          python main.py sweep --start "${START:-2022-07-01}" --end "${END:-2024-12-31}" 2>&1 | tee -a debug/last_run.txt
+          python main.py sweep --start "${START:-2025-01-01}" --end "${END:-2025-12-31}" 2>&1 | tee -a debug/last_run.txt
 
       - name: スクリーニング条件スイープ実行
         id: screen_sweep
@@ -72,7 +72,7 @@ jobs:
           START="${{ inputs.start_date }}"
           END="${{ inputs.end_date }}"
           echo "===== SCREENING SWEEP =====" >> debug/last_run.txt
-          python main.py screen_sweep --start "${START:-2022-07-01}" --end "${END:-2024-12-31}" 2>&1 | tee -a debug/last_run.txt
+          python main.py screen_sweep --start "${START:-2025-01-01}" --end "${END:-2025-12-31}" 2>&1 | tee -a debug/last_run.txt
 
       - name: ログをリポジトリに保存
         if: always()
