@@ -1,11 +1,14 @@
 name: バックテスト実行
 
 on:
+  push:
+    branches:
+      - claude/stock-screening-backtest-RTDEv
   workflow_dispatch:
     inputs:
       api_key:
         description: 'J-Quants API Key（マイページの「現在のAPI Key」をコピー）'
-        required: true
+        required: false
       start_date:
         description: '開始日 (YYYY-MM-DD)'
         required: false
@@ -34,9 +37,9 @@ jobs:
 
       - name: バックテスト実行
         env:
-          JQUANTS_API_KEY: ${{ inputs.api_key }}
+          JQUANTS_API_KEY: ${{ inputs.api_key || secrets.JQUANTS_API_KEY }}
         run: |
-          python main.py backtest --start ${{ inputs.start_date }} --end ${{ inputs.end_date }}
+          python main.py backtest --start ${{ inputs.start_date || '2022-01-01' }} --end ${{ inputs.end_date || '2024-12-31' }}
 
       - name: 結果をアップロード
         uses: actions/upload-artifact@v4
