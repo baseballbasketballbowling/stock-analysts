@@ -1,116 +1,49 @@
-"""J-Quants REST API クライアント（V2対応）。
+"""J-Quants API クライアント（公式ライブラリ jquantsapi のラッパー）。
 
-V2 API 認証:
-  x-api-key ヘッダーにマイページの「現在のAPI Key」をセット。
-  トークン交換不要。
-
-環境変数:
-  JQUANTS_API_KEY  マイページの「現在のAPI Key」
+認証: JQUANTS_API_KEY 環境変数にマイページの「現在のAPI Key」をセット。
+      ClientV2() は JQUANTS_API_KEY を自動で読む。
 """
 
 import logging
 from typing import Optional
 
-import requests
-
-from config.settings import (
-    JQUANTS_API_KEY,
-    JQUANTS_BASE_URL,
-    DATA_DIR,
-)
+import jquantsapi
 
 logger = logging.getLogger(__name__)
 
 
 class JQuantsClient:
-    def __init__(self, api_key: str = JQUANTS_API_KEY):
-        if not api_key:
-            raise RuntimeError(
-                "J-Quants API Keyが未設定です。\n"
-                "export JQUANTS_API_KEY=<マイページの「現在のAPI Key」>"
-            )
-        self._headers = {"x-api-key": api_key.strip()}
+    def __init__(self):
+        self._cli = jquantsapi.ClientV2()
 
-    # ------------------------------------------------------------------
-    # 汎用GETラッパー（ページネーション対応）
-    # ------------------------------------------------------------------
-    def _get(self, endpoint: str, params: Optional[dict] = None) -> dict:
-        url = f"{JQUANTS_BASE_URL}/{endpoint}"
-        resp = requests.get(url, headers=self._headers, params=params, timeout=30)
-        resp.raise_for_status()
-        return resp.json()
-
-    def _get_paginated(self, endpoint: str, key: str, params: Optional[dict] = None) -> list:
-        params = params or {}
-        results = []
-        while True:
-            data = self._get(endpoint, params)
-            results.extend(data.get(key, []))
-            pagination_key = data.get("pagination_key")
-            if not pagination_key:
-                break
-            params = {**params, "pagination_key": pagination_key}
-        return results
-
-    # ------------------------------------------------------------------
-    # 上場銘柄一覧
-    # ------------------------------------------------------------------
     def get_listed_info(self) -> list[dict]:
-        return self._get_paginated("equities/master", "items")
+        df = self._cli.get_eq_master()
+        return df.to_dict(orient="records")
 
-    # ------------------------------------------------------------------
-    # 日足株価
-    # ------------------------------------------------------------------
     def get_daily_quotes(
         self,
         code: Optional[str] = None,
         date_from: Optional[str] = None,
         date_to: Optional[str] = None,
     ) -> list[dict]:
-        params: dict = {}
         if code:
-            params["code"] = code
-        if date_from:
-            params["date_from"] = date_from
-        if date_to:
-            params["date_to"] = date_to
-        return self._get_paginated("equities/bars/daily", "items", params)
+            df = self._cli.get_eq_bars_daily(code=code)
+        else:
+            df = self._cli.get_eq_bars_daily_range(
+                start_dt=date_from, end_dt=date_to
+            )
+        return df.to_dict(orient="records")
 
-    # ------------------------------------------------------------------
-    # 財務情報（決算サマリー）
-    # V2 fins/summary は code か date（単日）のみ受け付けるため
-    # date_from/date_to はPython側でフィルタする
-    # ------------------------------------------------------------------
     def get_statements(
         self,
         code: Optional[str] = None,
         date_from: Optional[str] = None,
         date_to: Optional[str] = None,
     ) -> list[dict]:
-        params: dict = {}
         if code:
-            params["code"] = code
-        rows = self._get_paginated("fins/summary", "items", params)
-        if date_from:
-            rows = [r for r in rows if r.get("DisclosedDate", r.get("date", "")) >= date_from]
-        if date_to:
-            rows = [r for r in rows if r.get("DisclosedDate", r.get("date", "")) <= date_to]
-        return rows
-
-    # ------------------------------------------------------------------
-    # 株式分割・併合
-    # ------------------------------------------------------------------
-    def get_splits(
-        self,
-        code: Optional[str] = None,
-        date_from: Optional[str] = None,
-        date_to: Optional[str] = None,
-    ) -> list[dict]:
-        params: dict = {}
-        if code:
-            params["code"] = code
-        if date_from:
-            params["date_from"] = date_from
-        if date_to:
-            params["date_to"] = date_to
-        return self._get_paginated("equities/adjustments/splits", "items", params)
+            df = self._cli.get_fin_summary(code=code)
+        else:
+            df = self._cli.get_fin_summary_range(
+                start_dt=date_from, end_dt=date_to
+            )
+        return df.to_dict(orient="records")
