@@ -12,7 +12,7 @@ on:
       start_date:
         description: '開始日 (YYYY-MM-DD)'
         required: false
-        default: '2023-01-01'
+        default: '2022-07-01'
       end_date:
         description: '終了日 (YYYY-MM-DD)'
         required: false
@@ -44,7 +44,9 @@ jobs:
         env:
           JQUANTS_API_KEY: ${{ inputs.api_key || secrets.JQUANTS_API_KEY }}
         run: |
-          python main.py backtest --start ${{ inputs.start_date || '2022-01-01' }} --end ${{ inputs.end_date || '2024-12-31' }}
+          START="${{ inputs.start_date }}"
+          END="${{ inputs.end_date }}"
+          python main.py backtest --start "${START:-2022-07-01}" --end "${END:-2024-12-31}"
 
       - name: 結果をアップロード
         uses: actions/upload-artifact@v4

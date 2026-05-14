@@ -22,7 +22,7 @@ STOP_LOSS = -0.03    # −3%
 MAX_HOLD_DAYS = 10   # 最大10営業日（約2週間）
 
 # --- バックテスト ---
-BACKTEST_START = "2022-01-01"
+BACKTEST_START = "2022-07-01"
 BACKTEST_END = "2024-12-31"
 INITIAL_CAPITAL = 10_000_000  # 初期資金 1,000万円
 POSITION_SIZE = 1_000_000     # 1トレードあたり 100万円
