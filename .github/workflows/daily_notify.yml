@@ -1,0 +1,51 @@
+name: 毎日スクリーニング通知
+
+on:
+  schedule:
+    # 平日 10:00 UTC = 19:00 JST（市場終了後、決算開示が揃うタイミング）
+    - cron: '0 10 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      target_date:
+        description: 'スクリーニング基準日 (YYYY-MM-DD、省略時は今日)'
+        required: false
+      lookback_days:
+        description: '遡及日数 (デフォルト: 1、月曜は3推奨)'
+        required: false
+        default: '1'
+
+jobs:
+  daily-screen:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/stock-screening-backtest-RTDEv
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: ライブラリをインストール
+        run: pip install -r requirements.txt
+
+      - name: 毎日スクリーニング & LINE通知
+        env:
+          JQUANTS_API_KEY: ${{ secrets.JQUANTS_API_KEY }}
+          LINE_NOTIFY_TOKEN: ${{ secrets.LINE_NOTIFY_TOKEN }}
+        run: |
+          DATE="${{ inputs.target_date }}"
+          DAYS="${{ inputs.lookback_days || '1' }}"
+          python main.py notify \
+            ${DATE:+--date "$DATE"} \
+            --lookback-days "$DAYS"
+
+      - name: スクリーニング結果をアップロード
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-screen-${{ github.run_id }}
+          path: results/daily_screen_*.csv
+          retention-days: 7

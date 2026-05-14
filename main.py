@@ -221,6 +221,133 @@ def cmd_screen(args) -> None:
     print(f"\n計: {len(candidates)} 銘柄")
 
 
+def _build_notify_message(candidates, target_date: str, lookback_days: int) -> str:
+    """LINE Notify 用メッセージを組み立てる（1000文字以内）。"""
+    import pandas as pd
+    from config.settings import TAKE_PROFIT, STOP_LOSS, MAX_HOLD_DAYS
+
+    n = len(candidates)
+    date_label = target_date if lookback_days == 1 else f"直近{lookback_days}日"
+    lines = [
+        f"\n[株式スクリーニング {target_date}]",
+        f"{date_label}の決算開示から {n}件 が条件に合致",
+        "",
+    ]
+
+    for _, row in candidates.iterrows():
+        code = str(row.get("Code", "????"))
+        disclosed = pd.to_datetime(row.get("DisclosedDate")).strftime("%m/%d")
+        per_type = row.get("CurPerType", "")
+        eg = row.get("EarningsGrowth", float("nan"))
+        roe = row.get("ROE", float("nan"))
+        cap = row.get("MarketCap", float("nan"))
+        entry_date = row.get("EntryDate")
+        entry_open = row.get("EntryOpen")
+
+        eg_str = f"+{eg:.1%}" if pd.notna(eg) and eg >= 0 else (f"{eg:.1%}" if pd.notna(eg) else "-")
+        roe_str = f"{roe:.1%}" if pd.notna(roe) else "-"
+        cap_str = f"{cap/1e8:.0f}億円" if pd.notna(cap) else "-"
+        entry_str = pd.to_datetime(entry_date).strftime("%m/%d") if pd.notna(entry_date) else "TBD"
+        price_str = f" {entry_open:,.0f}円" if pd.notna(entry_open) else ""
+
+        lines.append(f"◆ {code} ({per_type} {disclosed}開示)")
+        lines.append(f"  EG{eg_str} ROE{roe_str} {cap_str}")
+        lines.append(f"  → {entry_str}寄付き{price_str}")
+        lines.append("")
+
+    lines.append(f"TP+{TAKE_PROFIT:.0%} / SL{STOP_LOSS:.0%} / 最大{MAX_HOLD_DAYS}日")
+    msg = "\n".join(lines)
+    # LINE Notifyの上限1000文字に収める
+    if len(msg) > 1000:
+        msg = msg[:997] + "…"
+    return msg
+
+
+def cmd_notify(args) -> None:
+    import os
+    import traceback as _tb
+    from datetime import timedelta
+    import pandas as pd
+    from src.api.jquants_client import JQuantsClient
+    from src.screener.screener import (
+        load_listed_info,
+        load_statements,
+        load_daily_quotes,
+        screen_candidates,
+    )
+    from src.notifier.line_notify import send_line_message
+    from config.settings import RESULTS_DIR
+
+    token = os.environ.get("LINE_NOTIFY_TOKEN", "")
+    target_date = args.date or datetime.today().strftime("%Y-%m-%d")
+    lookback_days = args.lookback_days
+    target_dt = pd.to_datetime(target_date)
+
+    logger.info(f"毎日スクリーニング: {target_date} (遡及{lookback_days}日)")
+
+    # 財務YoY比較のため2年分のstatement、market cap/RSI用に90日分のquotes
+    stmt_start = str(int(target_date[:4]) - 2) + target_date[4:]
+    quotes_start = (target_dt - timedelta(days=90)).strftime("%Y-%m-%d")
+
+    try:
+        client = JQuantsClient()
+        listed_df = load_listed_info(client)
+
+        logger.info(f"財務データ取得: {stmt_start} 〜 {target_date}")
+        stmt_df = load_statements(client, date_from=stmt_start, date_to=target_date)
+
+        logger.info(f"日足データ取得: {quotes_start} 〜 {target_date}")
+        quotes_df = load_daily_quotes(client, date_from=quotes_start, date_to=target_date)
+
+        if stmt_df.empty or quotes_df.empty:
+            logger.info("データが空です。終了。")
+            return
+
+        # 全候補スクリーニング（EntryOpenなしも含む = 当日開示銘柄対応）
+        all_candidates = screen_candidates(
+            stmt_df, quotes_df, listed_df,
+            roe_min=0.12,
+            require_entry_price=False,
+        )
+
+        if all_candidates.empty:
+            logger.info("条件に合致する銘柄なし。通知しません。")
+            return
+
+        # 指定期間内の開示に絞る
+        cutoff = target_dt - timedelta(days=lookback_days - 1)
+        recent = all_candidates[
+            (all_candidates["DisclosedDate"] >= cutoff) &
+            (all_candidates["DisclosedDate"] <= target_dt)
+        ].copy()
+
+        logger.info(f"直近{lookback_days}日の候補: {len(recent)} 件")
+
+        # CSV保存
+        RESULTS_DIR.mkdir(exist_ok=True)
+        csv_path = RESULTS_DIR / f"daily_screen_{target_date}.csv"
+        recent.to_csv(csv_path, index=False, encoding="utf-8-sig")
+        logger.info(f"保存: {csv_path}")
+
+        if recent.empty:
+            logger.info(f"直近{lookback_days}日の開示で条件に合致する銘柄なし。通知しません。")
+            return
+
+        msg = _build_notify_message(recent, target_date, lookback_days)
+        print(msg)
+
+        if not token:
+            logger.warning("LINE_NOTIFY_TOKEN 未設定。通知をスキップ（結果はCSVに保存済み）。")
+            return
+
+        send_line_message(token, msg)
+
+    except Exception as e:
+        logger.error(f"エラー: {type(e).__name__}: {e}")
+        _tb.print_exc()
+        sys.exit(1)
+
+
 def pd_import():
     import pandas as pd
     return pd
@@ -254,6 +381,13 @@ def build_parser() -> argparse.ArgumentParser:
     sc = sub.add_parser("screen", help="スクリーニング実行")
     sc.add_argument("--date", default=None, help="基準日 (YYYY-MM-DD、省略時は今日)")
     sc.set_defaults(func=cmd_screen)
+
+    # notify サブコマンド
+    nt = sub.add_parser("notify", help="毎日スクリーニング & LINE通知")
+    nt.add_argument("--date", default=None, help="スクリーニング基準日 (YYYY-MM-DD、省略時は今日)")
+    nt.add_argument("--lookback-days", type=int, default=1,
+                    help="何日前まで遡って開示をチェックするか (デフォルト: 1)")
+    nt.set_defaults(func=cmd_notify)
 
     return parser
 

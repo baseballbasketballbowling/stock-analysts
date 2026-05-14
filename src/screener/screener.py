@@ -209,6 +209,7 @@ def screen_candidates(
     roe_min: Optional[float] = None,
     period_types: Optional[list] = None,
     sectors: Optional[list] = None,
+    require_entry_price: bool = True,
 ) -> pd.DataFrame:
     """
     スクリーニング条件を適用して候補銘柄を返す。
@@ -395,7 +396,16 @@ def screen_candidates(
         return future.iloc[0] if not future.empty else None
 
     passed["EntryDate"] = passed["DisclosedDate"].apply(next_trading_day)
-    passed = passed.dropna(subset=["EntryDate"])
+    if require_entry_price:
+        passed = passed.dropna(subset=["EntryDate"])
+    else:
+        # 翌営業日が quotes_df の範囲外の場合はカレンダー上の次営業日で補完
+        from pandas.tseries.offsets import BDay
+        mask_no_entry = passed["EntryDate"].isna()
+        if mask_no_entry.any():
+            passed.loc[mask_no_entry, "EntryDate"] = (
+                passed.loc[mask_no_entry, "DisclosedDate"] + BDay(1)
+            )
 
     # エントリー日の始値取得（調整後始値 → 通常始値 の優先順）
     adj_col = next(
@@ -418,7 +428,8 @@ def screen_candidates(
         return val
 
     passed["EntryOpen"] = passed.apply(get_open, axis=1)
-    passed = passed.dropna(subset=["EntryOpen"])
+    if require_entry_price:
+        passed = passed.dropna(subset=["EntryOpen"])
 
     # RSI(14日) — 開示日以前の直近値を付与
     _close_col = next(
