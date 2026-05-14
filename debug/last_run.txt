@@ -1,0 +1,82 @@
+07:28:46 [INFO] Failed to extract font properties from /usr/share/fonts/truetype/noto/NotoColorEmoji.ttf: Can not load face (unknown file format; error code 0x2)
+07:28:46 [INFO] generated new fontManager
+07:28:46 [INFO] バックテスト期間: 2022-07-01 〜 2024-12-31
+07:28:46 [INFO] STEP1: クライアント初期化
+07:28:46 [INFO] STEP2: 上場銘柄取得
+07:28:46 [INFO] J-Quants: 上場銘柄情報を取得中...
+07:28:49 [INFO] 上場銘柄数: 4449
+07:28:49 [INFO] STEP3: 財務データ取得 (2021-07-01 〜 2024-12-31)
+07:28:49 [INFO] J-Quants: 財務データを取得中 (2021-07-01 〜 2024-12-31)...
+07:31:46 [ERROR] エラー発生: RetryError: HTTPSConnectionPool(host='api.jquants.com', port=443): Max retries exceeded with url: /v2/fins/summary?date=20210827 (Caused by ResponseError('too many 429 error responses'))
+urllib3.exceptions.ResponseError: too many 429 error responses
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/adapters.py", line 696, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py", line 955, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py", line 955, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py", line 955, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py", line 945, in urlopen
+    retries = retries.increment(method, url, response=response, _pool=self)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/util/retry.py", line 543, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.jquants.com', port=443): Max retries exceeded with url: /v2/fins/summary?date=20210827 (Caused by ResponseError('too many 429 error responses'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/work/stock-analysts/stock-analysts/main.py", line 59, in cmd_backtest
+    stmt_df = load_statements(client, date_from=stmt_start, date_to=end)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/stock-analysts/stock-analysts/src/screener/screener.py", line 71, in load_statements
+    raw = client.get_statements(date_from=date_from, date_to=date_to)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/stock-analysts/stock-analysts/src/api/jquants_client.py", line 69, in get_statements
+    df = self._cli.get_fin_summary_range(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jquantsapi/client_v2.py", line 668, in get_fin_summary_range
+    df = future.result()
+         ^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jquantsapi/client_v2.py", line 613, in get_fin_summary
+    return self._fin_summary_api.execute(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jquantsapi/apis/v2/fins.py", line 36, in execute
+    all_data = client._get_paginated(  # type: ignore[attr-defined]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jquantsapi/client_v2.py", line 268, in _get_paginated
+    resp = self._get(url, params=query)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jquantsapi/client_v2.py", line 243, in _get
+    resp = session.get(url, params=params, headers=headers, timeout=30)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/sessions.py", line 671, in get
+    return self.request("GET", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/sessions.py", line 651, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/sessions.py", line 784, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/adapters.py", line 720, in send
+    raise RetryError(e, request=request)
+requests.exceptions.RetryError: HTTPSConnectionPool(host='api.jquants.com', port=443): Max retries exceeded with url: /v2/fins/summary?date=20210827 (Caused by ResponseError('too many 429 error responses'))
