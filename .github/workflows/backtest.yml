@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - claude/stock-screening-backtest-RTDEv
+    paths-ignore:
+      - '.github/workflows/daily_notify.yml'
+      - 'debug/daily_notify_last_run.txt'
   workflow_dispatch:
     inputs:
       api_key:
