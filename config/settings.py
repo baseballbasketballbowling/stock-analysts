@@ -34,6 +34,4 @@ DATA_DIR.mkdir(exist_ok=True)
 RESULTS_DIR.mkdir(exist_ok=True)
 
 # --- API ---
-JQUANTS_BASE_URL = "https://api.jquants.com/v1"
-JQUANTS_TOKEN_URL = "https://api.jquants.com/v1/token/auth_user"
-JQUANTS_REFRESH_URL = "https://api.jquants.com/v1/token/auth_refresh"
+JQUANTS_BASE_URL = "https://api.jquants.com/v2"
