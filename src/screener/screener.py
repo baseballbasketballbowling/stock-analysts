@@ -215,14 +215,63 @@ def screen_candidates(
         logger.info(f"  時価総額 {MARKET_CAP_MIN/1e8:.0f}〜{MARKET_CAP_MAX/1e8:.0f}億円: {len(passed)} 件")
     else:
         # 時価総額なし → ScaleCat (規模別分類) で代替フィルタ
-        # ScaleCat: "1"=大型, "2"=中型(300〜3000億円相当), "3"=小型
         if "ScaleCat" in listed_df.columns:
-            scale_map = listed_df.set_index("Code")["ScaleCat"].to_dict()
-            passed["_ScaleCat"] = passed["Code"].map(scale_map)
-            before = len(passed)
-            passed = passed[passed["_ScaleCat"].isin(["1", "2", 1, 2])].copy()
-            passed.drop(columns=["_ScaleCat"], inplace=True, errors="ignore")
-            logger.info(f"  時価総額なし → ScaleCat大型/中型フィルタ: {before} → {len(passed)} 件")
+            # eq_master の Code は 4桁 ("1301") / fin_summary は 5桁 ("13010") の場合がある
+            # 両方のマッピングを試みる
+            listed_code_sample = str(listed_df["Code"].iloc[0]) if len(listed_df) > 0 else ""
+            passed_code_sample = str(passed["Code"].iloc[0]) if len(passed) > 0 else ""
+            logger.info(f"  Code形式 listed={listed_code_sample!r}, passed={passed_code_sample!r}")
+
+            # 正規化: 5桁コードの末尾"0"を除いた4桁版と両方試す
+            def normalize_code(c):
+                s = str(c)
+                if len(s) == 5 and s.endswith("0"):
+                    return s[:-1]
+                return s
+
+            scale_map_raw = listed_df.set_index("Code")["ScaleCat"].to_dict()
+            # 4桁版のマップも作成
+            scale_map_4 = {normalize_code(k): v for k, v in scale_map_raw.items()}
+
+            def lookup_scale(code):
+                v = scale_map_raw.get(code)
+                if v is None or (isinstance(v, float) and pd.isna(v)):
+                    v = scale_map_4.get(normalize_code(code))
+                return v
+
+            passed["_ScaleCat"] = passed["Code"].apply(lookup_scale)
+
+            # 実際の ScaleCat 値を確認してからフィルタ
+            val_counts = passed["_ScaleCat"].value_counts(dropna=False).head(10).to_dict()
+            logger.info(f"  ScaleCat値分布: {val_counts}")
+
+            nan_ratio = passed["_ScaleCat"].isna().mean()
+            if nan_ratio > 0.9:
+                # Code マッチ率が低すぎる → スキップ
+                logger.warning(f"  ScaleCatマッチ率低({1-nan_ratio:.1%}) → フィルタをスキップ")
+                passed.drop(columns=["_ScaleCat"], inplace=True, errors="ignore")
+            else:
+                unique_vals = passed["_ScaleCat"].dropna().unique().tolist()
+                # "TOPIX Large70" / "TOPIX Mid400" / "TOPIX Small" 等の文字列対応
+                mid_large_vals = [
+                    v for v in unique_vals
+                    if str(v) in ("1", "2") or "Large" in str(v) or "Mid" in str(v)
+                ]
+                if not mid_large_vals:
+                    # 値不明 → 小型(3/"Small"/"TOPIX Small"等)を除外
+                    small_vals = [v for v in unique_vals if "Small" in str(v) or str(v) == "3"]
+                    if small_vals:
+                        before = len(passed)
+                        passed = passed[~passed["_ScaleCat"].isin(small_vals)].copy()
+                        logger.info(f"  小型除外フィルタ({small_vals}): {before} → {len(passed)} 件")
+                    else:
+                        logger.warning(f"  ScaleCat値不明({unique_vals[:5]}) → フィルタをスキップ")
+                        passed.drop(columns=["_ScaleCat"], inplace=True, errors="ignore")
+                else:
+                    before = len(passed)
+                    passed = passed[passed["_ScaleCat"].isin(mid_large_vals)].copy()
+                    passed.drop(columns=["_ScaleCat"], inplace=True, errors="ignore")
+                    logger.info(f"  ScaleCat大型/中型({mid_large_vals}): {before} → {len(passed)} 件")
         else:
             logger.warning("  時価総額データなし（V2 API非対応）: 時価総額フィルタをスキップ")
 
