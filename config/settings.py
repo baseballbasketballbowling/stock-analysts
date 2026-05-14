@@ -17,9 +17,9 @@ MARKET_CAP_MAX = 3000e8   # 3,000億円
 EARNINGS_GROWTH_MIN = 0.20  # 前年同期比 +20%
 
 # --- 売買ルール ---
-TAKE_PROFIT = 0.07   # +7%
-STOP_LOSS = -0.03    # −3%
-MAX_HOLD_DAYS = 10   # 最大10営業日（約2週間）
+TAKE_PROFIT = 0.15   # +15%
+STOP_LOSS = -0.05    # −5%
+MAX_HOLD_DAYS = 20   # 最大20営業日（約1ヶ月）
 
 # --- バックテスト ---
 BACKTEST_START = "2022-07-01"

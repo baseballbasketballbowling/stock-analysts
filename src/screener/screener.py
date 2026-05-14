@@ -21,6 +21,17 @@ from config.settings import (
     DATA_DIR,
 )
 
+
+def _compute_rsi(close_series: pd.Series, period: int = 14) -> pd.Series:
+    """終値SeriesからRSI（デフォルト14日）を計算する。"""
+    delta = close_series.diff()
+    gain = delta.clip(lower=0)
+    loss = -delta.clip(upper=0)
+    avg_gain = gain.ewm(alpha=1 / period, min_periods=period).mean()
+    avg_loss = loss.ewm(alpha=1 / period, min_periods=period).mean()
+    rs = avg_gain / avg_loss.replace(0, float("nan"))
+    return 100 - 100 / (1 + rs)
+
 logger = logging.getLogger(__name__)
 
 
@@ -195,6 +206,7 @@ def screen_candidates(
     op_margin_min: Optional[float] = None,
     equity_ratio_min: Optional[float] = None,
     fwd_guidance_min: Optional[float] = None,
+    roe_min: Optional[float] = None,
     period_types: Optional[list] = None,
     sectors: Optional[list] = None,
 ) -> pd.DataFrame:
@@ -248,6 +260,11 @@ def screen_candidates(
         before = len(passed)
         passed = passed[passed["ForwardGuidance"] >= fwd_guidance_min].copy()
         logger.info(f"  来期予想増益率 >= {fwd_guidance_min:.0%}: {before} → {len(passed)} 件")
+
+    if roe_min is not None and "ROE" in passed.columns:
+        before = len(passed)
+        passed = passed[passed["ROE"] >= roe_min].copy()
+        logger.info(f"  ROE >= {roe_min:.0%}: {before} → {len(passed)} 件")
 
     if period_types is not None and "CurPerType" in passed.columns:
         before = len(passed)
@@ -403,6 +420,41 @@ def screen_candidates(
     passed["EntryOpen"] = passed.apply(get_open, axis=1)
     passed = passed.dropna(subset=["EntryOpen"])
 
+    # RSI(14日) — 開示日以前の直近値を付与
+    _close_col = next(
+        (c for c in ["AdjustmentClose", "Close"] if c in quotes_df.columns), None
+    )
+    if _close_col is not None:
+        _rsi_price = (
+            quotes_df[["Code", "Date", _close_col]]
+            .copy()
+            .sort_values(["Code", "Date"])
+        )
+        _rsi_price["RSI14"] = _rsi_price.groupby("Code")[_close_col].transform(
+            _compute_rsi
+        )
+        _rsi_lookup = (
+            _rsi_price[["Code", "Date", "RSI14"]]
+            .dropna(subset=["RSI14"])
+            .sort_values("Date")
+        )
+        if not _rsi_lookup.empty:
+            _rp = passed[["Code", "DisclosedDate"]].copy().reset_index()
+            _rp = _rp.sort_values("DisclosedDate")
+            _rp_merged = pd.merge_asof(
+                _rp,
+                _rsi_lookup.rename(columns={"Date": "DisclosedDate"}),
+                on="DisclosedDate",
+                by="Code",
+                direction="backward",
+            )
+            passed["RSI14"] = (
+                _rp_merged.set_index("index")["RSI14"]
+                .reindex(passed.index)
+                .values
+            )
+            logger.info(f"  RSI14: {passed['RSI14'].notna().sum()} 件に付与")
+
     # S17Nm（業種）を追加（後でスイープ用フィルタに使う）
     if "S17Nm" in listed_df.columns and "S17Nm" not in passed.columns:
         s17_map = listed_df.set_index("Code")["S17Nm"].to_dict()
@@ -413,7 +465,7 @@ def screen_candidates(
         base_cols.append("FiscalPeriodEnd")
     metric_cols = [c for c in [
         "EarningsGrowth", "SalesGrowth", "OperatingMargin",
-        "ROE", "EquityRatio", "ForwardGuidance", "CurPerType", "S17Nm",
+        "ROE", "EquityRatio", "ForwardGuidance", "CurPerType", "S17Nm", "RSI14",
     ] if c in passed.columns]
     tail_cols = ["MarketCapitalization", "EntryDate", "EntryOpen"]
 

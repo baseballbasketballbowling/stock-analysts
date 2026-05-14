@@ -64,7 +64,7 @@ def cmd_backtest(args) -> None:
         logger.info(f"日足データ件数: {len(quotes_df)}")
 
         logger.info("STEP5: スクリーニング")
-        candidates = screen_candidates(stmt_df, quotes_df, listed_df)
+        candidates = screen_candidates(stmt_df, quotes_df, listed_df, roe_min=0.12)
 
         if candidates.empty:
             logger.warning("候補銘柄が見つかりませんでした。")

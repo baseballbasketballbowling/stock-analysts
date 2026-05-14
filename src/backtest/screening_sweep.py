@@ -3,7 +3,7 @@
 エントリー条件（TP/SL/保有期間）は前回スイープのベスト値に固定し、
 スクリーニング条件の各次元を独立に変化させてバックテストする。
 
-固定パラメータ: TP=15%, SL=-3%, MaxHold=20日
+固定パラメータ: TP=15%, SL=-5%, MaxHold=20日
 """
 
 import logging
@@ -17,7 +17,7 @@ from src.backtest.metrics import compute_metrics, trades_to_df
 logger = logging.getLogger(__name__)
 
 FIXED_TP   = 0.15
-FIXED_SL   = -0.03
+FIXED_SL   = -0.05
 FIXED_HOLD = 20
 BASE_GROWTH = 0.20
 
@@ -124,6 +124,19 @@ def run_screening_sweep(all_candidates: pd.DataFrame, quotes_df: pd.DataFrame) -
         for s in sectors:
             c = base[base["S17Nm"] == s]
             test(c, "Sector", f"EG>=20% & 業種={s}")
+
+    # ── 9. RSI(14日) ──────────────────────────────────
+    if "RSI14" in all_candidates.columns:
+        logger.info("次元9: RSI(14日)")
+        test(base, "RSI", "EG>=20% (RSI条件なし)")
+        # 売られすぎ（低RSI = まだ上がっていない）
+        for rsi_max in [40, 50, 60, 70]:
+            c = base[base["RSI14"] <= rsi_max]
+            test(c, "RSI_low", f"EG>=20% & RSI<={rsi_max}")
+        # 上昇モメンタム（高RSI = 強い株）
+        for rsi_min in [50, 60, 70]:
+            c = base[base["RSI14"] >= rsi_min]
+            test(c, "RSI_high", f"EG>=20% & RSI>={rsi_min}")
 
     if not results:
         return pd.DataFrame()
