@@ -115,10 +115,23 @@ class JQuantsClient:
             )
 
         if "OperatingProfit" in df.columns and "OperatingProfitPriorYear" not in df.columns:
-            df = df.sort_values(["Code", "DisclosedDate"])
-            df["OperatingProfitPriorYear"] = (
-                df.groupby("Code")["OperatingProfit"].shift(4)
-            )
+            # 同じ四半期の前年比較: CurPerType でグルーピングして shift(1)
+            # （修正開示が複数ある場合は最新 DisclosedDate を優先）
+            if "CurPerType" in df.columns and "FiscalPeriodEnd" in df.columns:
+                dedup_keys = ["Code", "CurPerType", "FiscalPeriodEnd"]
+                df = (
+                    df.sort_values(dedup_keys + ["DisclosedDate"])
+                    .drop_duplicates(subset=dedup_keys, keep="last")
+                    .sort_values(["Code", "CurPerType", "FiscalPeriodEnd"])
+                )
+                df["OperatingProfitPriorYear"] = (
+                    df.groupby(["Code", "CurPerType"])["OperatingProfit"].shift(1)
+                )
+            else:
+                df = df.sort_values(["Code", "DisclosedDate"])
+                df["OperatingProfitPriorYear"] = (
+                    df.groupby("Code")["OperatingProfit"].shift(4)
+                )
 
         return df.to_dict(orient="records")
 

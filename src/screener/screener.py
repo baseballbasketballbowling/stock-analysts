@@ -133,7 +133,7 @@ def compute_financial_metrics(stmt_df: pd.DataFrame) -> pd.DataFrame:
     ]
     df = stmt_df[[c for c in wanted if c in stmt_df.columns]].copy()
 
-    sort_by = [c for c in ["Code", "FiscalPeriodEnd"] if c in df.columns]
+    sort_by = [c for c in ["Code", "CurPerType", "FiscalPeriodEnd"] if c in df.columns]
     if sort_by:
         df = df.sort_values(sort_by)
 
@@ -150,7 +150,10 @@ def compute_financial_metrics(stmt_df: pd.DataFrame) -> pd.DataFrame:
 
     # --- 売上高 YoY ---
     if "Sales" in df.columns:
-        df["SalesPriorYear"] = df.groupby("Code")["Sales"].shift(4)
+        if "CurPerType" in df.columns:
+            df["SalesPriorYear"] = df.groupby(["Code", "CurPerType"])["Sales"].shift(1)
+        else:
+            df["SalesPriorYear"] = df.groupby("Code")["Sales"].shift(4)
         df["SalesGrowth"] = (
             df["Sales"] / df["SalesPriorYear"].replace(0, float("nan")) - 1
         )
@@ -263,15 +266,31 @@ def screen_candidates(
         td = pd.to_datetime(target_date)
         passed = passed[passed["DisclosedDate"] <= td]
 
-    # 2. 時価総額フィルタ（日足データの MarketCapitalization を使用）
-    # 開示日の直近取引日の時価総額を参照
-    cap_map = (
-        quotes_df.sort_values("Date")
-        .groupby("Code")[["Date", "MarketCapitalization"]]
-        .last()
-        .reset_index()
+    # 2. 時価総額フィルタ（開示日時点の時価総額を使用）
+    # merge_asof で開示日以前の直近取引日の時価総額を取得
+    cap_df = (
+        quotes_df[["Code", "Date", "MarketCapitalization"]]
+        .dropna(subset=["MarketCapitalization"])
+        .sort_values("Date")
     )
-    passed = passed.merge(cap_map[["Code", "MarketCapitalization"]], on="Code", how="left")
+    if not cap_df.empty and not passed.empty:
+        passed = passed.reset_index(drop=True)
+        _pf = passed[["Code", "DisclosedDate"]].copy().reset_index()
+        _pf = _pf.sort_values("DisclosedDate")
+        _merged = pd.merge_asof(
+            _pf,
+            cap_df.rename(columns={"Date": "DisclosedDate"}),
+            on="DisclosedDate",
+            by="Code",
+            direction="backward",
+        )
+        passed["MarketCapitalization"] = (
+            _merged.set_index("index")["MarketCapitalization"]
+            .reindex(passed.index)
+            .values
+        )
+    else:
+        passed["MarketCapitalization"] = float("nan")
 
     # MarketCapitalization が欠損の場合は listed_info の TotalMarketCap を補完
     if "TotalMarketCap" in listed_df.columns:
