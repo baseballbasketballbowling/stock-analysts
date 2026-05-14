@@ -74,10 +74,12 @@ class JQuantsClient:
             params["date_from"] = date_from
         if date_to:
             params["date_to"] = date_to
-        return self._get_paginated("equities/bars/daily", "items")
+        return self._get_paginated("equities/bars/daily", "items", params)
 
     # ------------------------------------------------------------------
     # 財務情報（決算サマリー）
+    # V2 fins/summary は code か date（単日）のみ受け付けるため
+    # date_from/date_to はPython側でフィルタする
     # ------------------------------------------------------------------
     def get_statements(
         self,
@@ -88,11 +90,12 @@ class JQuantsClient:
         params: dict = {}
         if code:
             params["code"] = code
+        rows = self._get_paginated("fins/summary", "items", params)
         if date_from:
-            params["date_from"] = date_from
+            rows = [r for r in rows if r.get("DisclosedDate", r.get("date", "")) >= date_from]
         if date_to:
-            params["date_to"] = date_to
-        return self._get_paginated("fins/summary", "items", params)
+            rows = [r for r in rows if r.get("DisclosedDate", r.get("date", "")) <= date_to]
+        return rows
 
     # ------------------------------------------------------------------
     # 株式分割・併合
