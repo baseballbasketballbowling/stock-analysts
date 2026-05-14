@@ -222,15 +222,15 @@ def cmd_screen(args) -> None:
 
 
 def _build_notify_message(candidates, target_date: str, lookback_days: int) -> str:
-    """LINE Notify 用メッセージを組み立てる（1000文字以内）。"""
+    """メール本文を組み立てる。"""
     import pandas as pd
     from config.settings import TAKE_PROFIT, STOP_LOSS, MAX_HOLD_DAYS
 
     n = len(candidates)
     date_label = target_date if lookback_days == 1 else f"直近{lookback_days}日"
     lines = [
-        f"\n[株式スクリーニング {target_date}]",
-        f"{date_label}の決算開示から {n}件 が条件に合致",
+        f"[株式スクリーニング {target_date}]",
+        f"{date_label}の決算開示から {n}件 が条件に合致しました。",
         "",
     ]
 
@@ -250,17 +250,18 @@ def _build_notify_message(candidates, target_date: str, lookback_days: int) -> s
         entry_str = pd.to_datetime(entry_date).strftime("%m/%d") if pd.notna(entry_date) else "TBD"
         price_str = f" {entry_open:,.0f}円" if pd.notna(entry_open) else ""
 
-        lines.append(f"◆ {code} ({per_type} {disclosed}開示)")
-        lines.append(f"  EG{eg_str} ROE{roe_str} {cap_str}")
-        lines.append(f"  → {entry_str}寄付き{price_str}")
+        lines.append(f"◆ {code}  ({per_type} / {disclosed}開示)")
+        lines.append(f"  営業利益成長: {eg_str}")
+        lines.append(f"  ROE: {roe_str}  時価総額: {cap_str}")
+        lines.append(f"  エントリー予定: {entry_str}寄付き{price_str}")
         lines.append("")
 
-    lines.append(f"TP+{TAKE_PROFIT:.0%} / SL{STOP_LOSS:.0%} / 最大{MAX_HOLD_DAYS}日")
-    msg = "\n".join(lines)
-    # LINE Notifyの上限1000文字に収める
-    if len(msg) > 1000:
-        msg = msg[:997] + "…"
-    return msg
+    lines += [
+        "─" * 40,
+        f"利確: +{TAKE_PROFIT:.0%}  損切り: {STOP_LOSS:.0%}  最大保有: {MAX_HOLD_DAYS}日",
+        "※ 翌営業日始値でエントリー。価格未確定の場合は TBD。",
+    ]
+    return "\n".join(lines)
 
 
 def cmd_notify(args) -> None:
@@ -275,10 +276,12 @@ def cmd_notify(args) -> None:
         load_daily_quotes,
         screen_candidates,
     )
-    from src.notifier.line_notify import send_line_message
+    from src.notifier.email_notify import send_email
     from config.settings import RESULTS_DIR
 
-    token = os.environ.get("LINE_NOTIFY_TOKEN", "")
+    gmail_user = os.environ.get("GMAIL_USER", "")
+    app_password = os.environ.get("GMAIL_APP_PASSWORD", "")
+    notify_to = os.environ.get("NOTIFY_TO", gmail_user)
     target_date = args.date or datetime.today().strftime("%Y-%m-%d")
     lookback_days = args.lookback_days
     target_dt = pd.to_datetime(target_date)
@@ -333,14 +336,15 @@ def cmd_notify(args) -> None:
             logger.info(f"直近{lookback_days}日の開示で条件に合致する銘柄なし。通知しません。")
             return
 
-        msg = _build_notify_message(recent, target_date, lookback_days)
-        print(msg)
+        body = _build_notify_message(recent, target_date, lookback_days)
+        subject = f"【株式スクリーニング】{len(recent)}件ヒット ({target_date})"
+        print(body)
 
-        if not token:
-            logger.warning("LINE_NOTIFY_TOKEN 未設定。通知をスキップ（結果はCSVに保存済み）。")
+        if not gmail_user or not app_password:
+            logger.warning("GMAIL_USER / GMAIL_APP_PASSWORD 未設定。メール送信をスキップ（結果はCSVに保存済み）。")
             return
 
-        send_line_message(token, msg)
+        send_email(gmail_user, app_password, notify_to, subject, body)
 
     except Exception as e:
         logger.error(f"エラー: {type(e).__name__}: {e}")

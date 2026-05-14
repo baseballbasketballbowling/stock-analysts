@@ -1,4 +1,4 @@
-name: 毎日スクリーニング通知
+name: 毎日スクリーニング & メール通知
 
 on:
   schedule:
@@ -31,10 +31,12 @@ jobs:
       - name: ライブラリをインストール
         run: pip install -r requirements.txt
 
-      - name: 毎日スクリーニング & LINE通知
+      - name: 毎日スクリーニング & メール通知
         env:
           JQUANTS_API_KEY: ${{ secrets.JQUANTS_API_KEY }}
-          LINE_NOTIFY_TOKEN: ${{ secrets.LINE_NOTIFY_TOKEN }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          NOTIFY_TO: ${{ secrets.NOTIFY_TO }}
         run: |
           DATE="${{ inputs.target_date }}"
           DAYS="${{ inputs.lookback_days || '1' }}"
