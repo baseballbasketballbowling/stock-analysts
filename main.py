@@ -91,6 +91,58 @@ def cmd_backtest(args) -> None:
         sys.exit(1)
 
 
+def cmd_screen_sweep(args) -> None:
+    import traceback as _tb
+    from src.api.jquants_client import JQuantsClient
+    from src.screener.screener import (
+        load_listed_info, load_statements, load_daily_quotes, screen_candidates,
+    )
+    from src.backtest.screening_sweep import (
+        run_screening_sweep, save_screening_sweep_results, print_screening_sweep_top,
+    )
+
+    start = args.start
+    end   = args.end
+    logger.info(f"スクリーニング条件スイープ期間: {start} 〜 {end}")
+
+    try:
+        client = JQuantsClient()
+        listed_df = load_listed_info(client)
+
+        stmt_start = str(int(start[:4]) - 1) + start[4:]
+        stmt_df   = load_statements(client, date_from=stmt_start, date_to=end)
+        quotes_df = load_daily_quotes(client, date_from=start, date_to=end)
+
+        # 緩い閾値で全候補を取得（追加指標カラムも含む）
+        logger.info("ベーススクリーニング（成長率 >= 5%）")
+        all_candidates = screen_candidates(
+            stmt_df, quotes_df, listed_df,
+            earnings_growth_min=0.05,
+        )
+
+        if all_candidates.empty:
+            logger.warning("候補が見つかりませんでした。")
+            sys.exit(1)
+
+        logger.info(f"全候補数: {len(all_candidates)}")
+        logger.info(f"利用可能な指標列: {[c for c in all_candidates.columns if c not in ('Code','DisclosedDate','FiscalPeriodEnd','MarketCap','EntryDate','EntryOpen')]}")
+
+        sweep_df = run_screening_sweep(all_candidates, quotes_df)
+
+        if sweep_df.empty:
+            logger.warning("スイープ結果が空です。")
+            sys.exit(1)
+
+        save_screening_sweep_results(sweep_df)
+        print_screening_sweep_top(sweep_df, n=30)
+        logger.info("完了。results/screening_sweep_results.csv に保存しました。")
+
+    except Exception as e:
+        logger.error(f"エラー発生: {type(e).__name__}: {e}")
+        _tb.print_exc()
+        sys.exit(1)
+
+
 def cmd_sweep(args) -> None:
     import traceback as _tb
     from src.api.jquants_client import JQuantsClient
@@ -185,6 +237,12 @@ def build_parser() -> argparse.ArgumentParser:
     bt.add_argument("--start", default=BACKTEST_START, help="開始日 (YYYY-MM-DD)")
     bt.add_argument("--end", default=BACKTEST_END, help="終了日 (YYYY-MM-DD)")
     bt.set_defaults(func=cmd_backtest)
+
+    # screen_sweep サブコマンド
+    ss = sub.add_parser("screen_sweep", help="スクリーニング条件スイープ実行")
+    ss.add_argument("--start", default=BACKTEST_START)
+    ss.add_argument("--end",   default=BACKTEST_END)
+    ss.set_defaults(func=cmd_screen_sweep)
 
     # sweep サブコマンド
     sw = sub.add_parser("sweep", help="パラメータスイープ実行")

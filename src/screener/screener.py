@@ -76,7 +76,8 @@ def load_statements(client, date_from: str, date_to: str) -> pd.DataFrame:
         return df
 
     df["DisclosedDate"] = pd.to_datetime(df["DisclosedDate"])
-    for col in ["OperatingProfit", "OperatingProfitPriorYear"]:
+    for col in ["OperatingProfit", "OperatingProfitPriorYear",
+                "Sales", "NP", "Eq", "EqAR", "NxFOP"]:
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors="coerce")
 
@@ -112,41 +113,73 @@ def load_daily_quotes(client, date_from: str, date_to: str) -> pd.DataFrame:
 # コア スクリーニング関数
 # ------------------------------------------------------------------
 
-def compute_earnings_growth(stmt_df: pd.DataFrame) -> pd.DataFrame:
+def compute_financial_metrics(stmt_df: pd.DataFrame) -> pd.DataFrame:
     """
-    各決算開示について営業利益の前年同期比を計算して返す。
+    各決算開示の財務指標をまとめて計算して返す。
 
-    戻り値のカラム:
-      Code, DisclosedDate, FiscalPeriodEnd, TypeOfDocument,
-      OperatingProfit, OperatingProfitPriorYear, EarningsGrowth
+    Returns columns (利用可能なもの):
+      Code, DisclosedDate, FiscalPeriodEnd, TypeOfDocument, CurPerType,
+      OperatingProfit, EarningsGrowth,
+      Sales, SalesGrowth, OperatingMargin,
+      ROE, EquityRatio, ForwardGuidance
     """
     if stmt_df.empty:
         return pd.DataFrame()
 
-    needed = ["Code", "DisclosedDate", "FiscalPeriodEnd",
-              "TypeOfDocument", "OperatingProfit", "OperatingProfitPriorYear"]
-    missing = [c for c in needed if c not in stmt_df.columns]
-    if missing:
-        logger.warning(f"財務データに不足カラム: {missing}")
-        # 利用可能なカラムで続行
-        needed = [c for c in needed if c in stmt_df.columns]
+    wanted = [
+        "Code", "DisclosedDate", "FiscalPeriodEnd", "TypeOfDocument", "CurPerType",
+        "OperatingProfit", "OperatingProfitPriorYear",
+        "Sales", "NP", "Eq", "EqAR", "NxFOP",
+    ]
+    df = stmt_df[[c for c in wanted if c in stmt_df.columns]].copy()
 
-    df = stmt_df[needed].copy()
+    sort_by = [c for c in ["Code", "FiscalPeriodEnd"] if c in df.columns]
+    if sort_by:
+        df = df.sort_values(sort_by)
 
-    # 前年同期利益カラムが存在する場合はそのまま使用
+    # --- 営業利益 YoY ---
     if "OperatingProfitPriorYear" in df.columns:
         df["EarningsGrowth"] = (
             df["OperatingProfit"] / df["OperatingProfitPriorYear"].replace(0, float("nan")) - 1
         )
     else:
-        # フォールバック: 同一コード・同期を前年比で自前計算
-        df = df.sort_values(["Code", "FiscalPeriodEnd"])
         df["OperatingProfitPriorYear"] = df.groupby("Code")["OperatingProfit"].shift(4)
         df["EarningsGrowth"] = (
-            df["OperatingProfit"] / df["OperatingProfitPriorYear"] - 1
+            df["OperatingProfit"] / df["OperatingProfitPriorYear"].replace(0, float("nan")) - 1
         )
 
+    # --- 売上高 YoY ---
+    if "Sales" in df.columns:
+        df["SalesPriorYear"] = df.groupby("Code")["Sales"].shift(4)
+        df["SalesGrowth"] = (
+            df["Sales"] / df["SalesPriorYear"].replace(0, float("nan")) - 1
+        )
+
+    # --- 営業利益率 (OP / Sales) ---
+    if "Sales" in df.columns and "OperatingProfit" in df.columns:
+        df["OperatingMargin"] = (
+            df["OperatingProfit"] / df["Sales"].replace(0, float("nan"))
+        )
+
+    # --- ROE (純利益 / 純資産) ---
+    if "NP" in df.columns and "Eq" in df.columns:
+        df["ROE"] = df["NP"] / df["Eq"].replace(0, float("nan"))
+
+    # --- 自己資本比率 (EqAR は % 単位 → 比率に変換) ---
+    if "EqAR" in df.columns:
+        df["EquityRatio"] = df["EqAR"] / 100.0
+
+    # --- 来期予想増益率 (NxFOP / |OP| - 1) ---
+    if "NxFOP" in df.columns and "OperatingProfit" in df.columns:
+        op_abs = df["OperatingProfit"].abs().replace(0, float("nan"))
+        df["ForwardGuidance"] = df["NxFOP"] / op_abs - 1
+
     return df.dropna(subset=["EarningsGrowth"])
+
+
+def compute_earnings_growth(stmt_df: pd.DataFrame) -> pd.DataFrame:
+    """後方互換エイリアス。compute_financial_metrics を呼ぶ。"""
+    return compute_financial_metrics(stmt_df)
 
 
 def screen_candidates(
@@ -155,6 +188,12 @@ def screen_candidates(
     listed_df: pd.DataFrame,
     target_date: Optional[str] = None,
     earnings_growth_min: Optional[float] = None,
+    sales_growth_min: Optional[float] = None,
+    op_margin_min: Optional[float] = None,
+    equity_ratio_min: Optional[float] = None,
+    fwd_guidance_min: Optional[float] = None,
+    period_types: Optional[list] = None,
+    sectors: Optional[list] = None,
 ) -> pd.DataFrame:
     """
     スクリーニング条件を適用して候補銘柄を返す。
@@ -176,7 +215,7 @@ def screen_candidates(
         logger.warning("データが空のため候補なし")
         return pd.DataFrame()
 
-    growth_df = compute_earnings_growth(stmt_df)
+    growth_df = compute_financial_metrics(stmt_df)
     if growth_df.empty:
         return pd.DataFrame()
 
@@ -185,6 +224,40 @@ def screen_candidates(
     cond_growth = growth_df["EarningsGrowth"] >= _growth_min
     passed = growth_df[cond_growth].copy()
     logger.info(f"  決算成長率 >= {_growth_min:.0%}: {len(passed)} 件")
+
+    # 1b. 追加スクリーニング条件
+    if sales_growth_min is not None and "SalesGrowth" in passed.columns:
+        before = len(passed)
+        passed = passed[passed["SalesGrowth"] >= sales_growth_min].copy()
+        logger.info(f"  売上高成長率 >= {sales_growth_min:.0%}: {before} → {len(passed)} 件")
+
+    if op_margin_min is not None and "OperatingMargin" in passed.columns:
+        before = len(passed)
+        passed = passed[passed["OperatingMargin"] >= op_margin_min].copy()
+        logger.info(f"  営業利益率 >= {op_margin_min:.0%}: {before} → {len(passed)} 件")
+
+    if equity_ratio_min is not None and "EquityRatio" in passed.columns:
+        before = len(passed)
+        passed = passed[passed["EquityRatio"] >= equity_ratio_min].copy()
+        logger.info(f"  自己資本比率 >= {equity_ratio_min:.0%}: {before} → {len(passed)} 件")
+
+    if fwd_guidance_min is not None and "ForwardGuidance" in passed.columns:
+        before = len(passed)
+        passed = passed[passed["ForwardGuidance"] >= fwd_guidance_min].copy()
+        logger.info(f"  来期予想増益率 >= {fwd_guidance_min:.0%}: {before} → {len(passed)} 件")
+
+    if period_types is not None and "CurPerType" in passed.columns:
+        before = len(passed)
+        passed = passed[passed["CurPerType"].isin(period_types)].copy()
+        logger.info(f"  決算種別 {period_types}: {before} → {len(passed)} 件")
+
+    if sectors is not None and "S17Nm" in listed_df.columns:
+        s17_map = listed_df.set_index("Code")["S17Nm"].to_dict()
+        passed["_S17Nm"] = passed["Code"].map(s17_map)
+        before = len(passed)
+        passed = passed[passed["_S17Nm"].isin(sectors)].copy()
+        passed.drop(columns=["_S17Nm"], inplace=True, errors="ignore")
+        logger.info(f"  業種フィルタ {sectors}: {before} → {len(passed)} 件")
 
     if target_date:
         td = pd.to_datetime(target_date)
@@ -311,16 +384,21 @@ def screen_candidates(
     passed["EntryOpen"] = passed.apply(get_open, axis=1)
     passed = passed.dropna(subset=["EntryOpen"])
 
-    result = passed[[
-        "Code", "DisclosedDate", "FiscalPeriodEnd" if "FiscalPeriodEnd" in passed.columns else "Code",
-        "EarningsGrowth", "MarketCapitalization", "EntryDate", "EntryOpen",
-    ]].copy()
+    # S17Nm（業種）を追加（後でスイープ用フィルタに使う）
+    if "S17Nm" in listed_df.columns and "S17Nm" not in passed.columns:
+        s17_map = listed_df.set_index("Code")["S17Nm"].to_dict()
+        passed["S17Nm"] = passed["Code"].map(s17_map)
 
-    # FiscalPeriodEnd が結果にない場合は除外
-    if "FiscalPeriodEnd" not in result.columns:
-        result = passed[["Code", "DisclosedDate", "EarningsGrowth",
-                          "MarketCapitalization", "EntryDate", "EntryOpen"]].copy()
+    base_cols = ["Code", "DisclosedDate"]
+    if "FiscalPeriodEnd" in passed.columns:
+        base_cols.append("FiscalPeriodEnd")
+    metric_cols = [c for c in [
+        "EarningsGrowth", "SalesGrowth", "OperatingMargin",
+        "ROE", "EquityRatio", "ForwardGuidance", "CurPerType", "S17Nm",
+    ] if c in passed.columns]
+    tail_cols = ["MarketCapitalization", "EntryDate", "EntryOpen"]
 
+    result = passed[base_cols + metric_cols + tail_cols].copy()
     result.rename(columns={"MarketCapitalization": "MarketCap"}, inplace=True)
     result.reset_index(drop=True, inplace=True)
 
