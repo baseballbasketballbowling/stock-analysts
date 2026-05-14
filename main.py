@@ -30,6 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 def cmd_backtest(args) -> None:
+    import traceback as _tb
     from src.api.jquants_client import JQuantsClient
     from src.screener.screener import (
         load_listed_info,
@@ -45,44 +46,49 @@ def cmd_backtest(args) -> None:
 
     logger.info(f"バックテスト期間: {start} 〜 {end}")
 
-    client = JQuantsClient()
+    try:
+        logger.info("STEP1: クライアント初期化")
+        client = JQuantsClient()
 
-    # データ取得
-    listed_df = load_listed_info(client)
-    logger.info(f"上場銘柄数: {len(listed_df)}")
+        logger.info("STEP2: 上場銘柄取得")
+        listed_df = load_listed_info(client)
+        logger.info(f"上場銘柄数: {len(listed_df)}")
 
-    # 決算データは1年余分に取得（前年同期比計算のため）
-    stmt_start = str(int(start[:4]) - 1) + start[4:]
-    stmt_df = load_statements(client, date_from=stmt_start, date_to=end)
-    logger.info(f"財務データ件数: {len(stmt_df)}")
+        stmt_start = str(int(start[:4]) - 1) + start[4:]
+        logger.info(f"STEP3: 財務データ取得 ({stmt_start} 〜 {end})")
+        stmt_df = load_statements(client, date_from=stmt_start, date_to=end)
+        logger.info(f"財務データ件数: {len(stmt_df)}")
 
-    quotes_df = load_daily_quotes(client, date_from=start, date_to=end)
-    logger.info(f"日足データ件数: {len(quotes_df)}")
+        logger.info(f"STEP4: 日足データ取得 ({start} 〜 {end})")
+        quotes_df = load_daily_quotes(client, date_from=start, date_to=end)
+        logger.info(f"日足データ件数: {len(quotes_df)}")
 
-    # スクリーニング
-    logger.info("スクリーニング実行中...")
-    candidates = screen_candidates(stmt_df, quotes_df, listed_df)
+        logger.info("STEP5: スクリーニング")
+        candidates = screen_candidates(stmt_df, quotes_df, listed_df)
 
-    if candidates.empty:
-        logger.warning("候補銘柄が見つかりませんでした。APIキー・データを確認してください。")
+        if candidates.empty:
+            logger.warning("候補銘柄が見つかりませんでした。")
+            sys.exit(1)
+
+        logger.info(f"候補銘柄数: {len(candidates)}")
+
+        logger.info("STEP6: バックテスト")
+        trades = run_backtest(candidates, quotes_df)
+
+        if not trades:
+            logger.warning("トレードが生成されませんでした。")
+            sys.exit(1)
+
+        trades_df = trades_to_df(trades)
+        metrics = compute_metrics(trades_df)
+        print_metrics(metrics)
+        save_results(trades_df, metrics)
+        logger.info("完了。results/ フォルダに結果を保存しました。")
+
+    except Exception as e:
+        logger.error(f"エラー発生: {type(e).__name__}: {e}")
+        _tb.print_exc()
         sys.exit(1)
-
-    logger.info(f"候補銘柄数: {len(candidates)}")
-
-    # バックテスト
-    trades = run_backtest(candidates, quotes_df)
-
-    if not trades:
-        logger.warning("トレードが生成されませんでした。")
-        sys.exit(1)
-
-    trades_df = trades_to_df(trades)
-    metrics = compute_metrics(trades_df)
-
-    print_metrics(metrics)
-    save_results(trades_df, metrics)
-
-    logger.info("完了。results/ フォルダに結果を保存しました。")
 
 
 def cmd_screen(args) -> None:
