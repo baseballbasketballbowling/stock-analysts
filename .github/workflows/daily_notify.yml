@@ -22,6 +22,8 @@ on:
 jobs:
   daily-screen:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -46,6 +48,11 @@ jobs:
           mkdir -p debug results
           DATE="${{ inputs.target_date }}"
           DAYS="${{ inputs.lookback_days || '1' }}"
+          # pushトリガー時はテスト用に過去日付を使用（本番cronは今日の日付）
+          if [ -z "$DATE" ] && [ "${{ github.event_name }}" = "push" ]; then
+            DATE="2025-12-01"
+            DAYS="30"
+          fi
           python main.py notify \
             ${DATE:+--date "$DATE"} \
             --lookback-days "$DAYS" 2>&1 | tee debug/daily_notify_last_run.txt
