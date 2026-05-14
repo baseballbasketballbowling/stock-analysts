@@ -87,17 +87,24 @@ class JQuantsClient:
         return resp.json()["idToken"]
 
     def _ensure_token(self) -> None:
-        # A. APIキー → そのままBearerトークンとして使用
-        if self._api_key:
-            self._id_token = self._api_key
-            return
-
         if self._id_token and time.time() < self._token_expires:
             return
 
         logger.info("J-Quants: IDトークン取得中...")
 
-        if self._refresh_token:
+        if self._api_key:
+            # A. APIキー → idToken（Googleアカウント登録ユーザー）
+            resp = requests.post(JQUANTS_TOKEN_URL, json={
+                "apikey": self._api_key,
+            }, timeout=30)
+            resp.raise_for_status()
+            data = resp.json()
+            refresh_token = data.get("refreshToken") or data.get("idToken")
+            if data.get("idToken"):
+                self._id_token = data["idToken"]
+            else:
+                self._id_token = self._exchange_refresh_token(refresh_token)
+        elif self._refresh_token:
             # B. リフレッシュトークン直接指定
             self._id_token = self._exchange_refresh_token(self._refresh_token)
         elif self.email and self.password:
