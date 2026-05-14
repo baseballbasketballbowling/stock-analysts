@@ -35,6 +35,26 @@ jobs:
       - name: ライブラリをインストール
         run: pip install -r requirements.txt
 
+      - name: API接続テスト
+        env:
+          JQUANTS_API_KEY: ${{ inputs.api_key || secrets.JQUANTS_API_KEY }}
+        run: |
+          python - <<'EOF'
+          import jquantsapi, traceback
+          try:
+              cli = jquantsapi.ClientV2()
+              df = cli.get_eq_master()
+              print(f"OK: get_eq_master() -> {len(df)} rows, columns: {list(df.columns[:5])}")
+          except Exception as e:
+              print(f"FAIL get_eq_master: {e}")
+              traceback.print_exc()
+          try:
+              df2 = cli.get_fin_summary(date_yyyymmdd="20240101")
+              print(f"OK: get_fin_summary() -> {len(df2)} rows")
+          except Exception as e:
+              print(f"FAIL get_fin_summary: {e}")
+          EOF
+
       - name: バックテスト実行
         env:
           JQUANTS_API_KEY: ${{ inputs.api_key || secrets.JQUANTS_API_KEY }}
