@@ -214,7 +214,17 @@ def screen_candidates(
         passed = passed[cond_cap].copy()
         logger.info(f"  時価総額 {MARKET_CAP_MIN/1e8:.0f}〜{MARKET_CAP_MAX/1e8:.0f}億円: {len(passed)} 件")
     else:
-        logger.warning("  時価総額データなし（V2 API非対応）: 時価総額フィルタをスキップ")
+        # 時価総額なし → ScaleCat (規模別分類) で代替フィルタ
+        # ScaleCat: "1"=大型, "2"=中型(300〜3000億円相当), "3"=小型
+        if "ScaleCat" in listed_df.columns:
+            scale_map = listed_df.set_index("Code")["ScaleCat"].to_dict()
+            passed["_ScaleCat"] = passed["Code"].map(scale_map)
+            before = len(passed)
+            passed = passed[passed["_ScaleCat"].isin(["1", "2", 1, 2])].copy()
+            passed.drop(columns=["_ScaleCat"], inplace=True, errors="ignore")
+            logger.info(f"  時価総額なし → ScaleCat大型/中型フィルタ: {before} → {len(passed)} 件")
+        else:
+            logger.warning("  時価総額データなし（V2 API非対応）: 時価総額フィルタをスキップ")
 
     # 3. エントリー日（翌営業日）と始値を付与
     trading_dates = sorted(quotes_df["Date"].unique())

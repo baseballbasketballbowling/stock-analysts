@@ -81,6 +81,14 @@ class JQuantsClient:
                 seq_fetch_fn=self._seq_fetch_eq_bars,
                 label="eq_bars_daily",
             )
+        # バルクCSVには AdjO/AdjC がないが AdjFactor があるので計算する
+        if "AdjFactor" in df.columns and "AdjustmentOpen" not in df.columns:
+            adj = pd.to_numeric(df["AdjFactor"], errors="coerce").fillna(1.0)
+            for raw, adj_col in [("Open", "AdjustmentOpen"), ("High", "AdjustmentHigh"),
+                                  ("Low", "AdjustmentLow"), ("Close", "AdjustmentClose")]:
+                if raw in df.columns:
+                    df[adj_col] = pd.to_numeric(df[raw], errors="coerce") * adj
+
         if "MarketCapitalization" not in df.columns:
             df["MarketCapitalization"] = float("nan")
         return df.to_dict(orient="records")
