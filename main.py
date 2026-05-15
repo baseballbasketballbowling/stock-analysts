@@ -281,7 +281,7 @@ def cmd_notify(args) -> None:
 
     gmail_user = os.environ.get("GMAIL_USER", "")
     app_password = os.environ.get("GMAIL_APP_PASSWORD", "")
-    notify_to = os.environ.get("NOTIFY_TO", gmail_user)
+    notify_to = os.environ.get("NOTIFY_TO") or gmail_user
     target_date = args.date or datetime.today().strftime("%Y-%m-%d")
     lookback_days = args.lookback_days
     target_dt = pd.to_datetime(target_date)
