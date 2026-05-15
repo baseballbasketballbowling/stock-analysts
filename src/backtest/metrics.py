@@ -65,6 +65,25 @@ def compute_metrics(trades_df: pd.DataFrame) -> dict:
     # エグジット理由別集計
     exit_counts = df["ExitReason"].value_counts().to_dict()
 
+    # ギャップ別分析 (GapPct が存在する場合)
+    gap_analysis = {}
+    if "GapPct" in df.columns and df["GapPct"].notna().any():
+        def _gap_label(g):
+            if g > 0.01:
+                return "gap_up(>+1%)"
+            if g < -0.01:
+                return "gap_down(<-1%)"
+            return "flat(±1%)"
+        df["_GapLabel"] = df["GapPct"].apply(_gap_label)
+        for label, grp in df.groupby("_GapLabel"):
+            w = grp[grp["PnLPct"] > 0]
+            gap_analysis[label] = {
+                "count": len(grp),
+                "win_rate": round(len(w) / len(grp), 4),
+                "avg_pnl": round(grp["PnLPct"].mean(), 4),
+                "avg_gap": round(grp["GapPct"].mean(), 4),
+            }
+
     metrics = {
         "total_trades": n,
         "win_rate": round(win_rate, 4),
@@ -76,6 +95,7 @@ def compute_metrics(trades_df: pd.DataFrame) -> dict:
         "total_return": round(total_return, 4),
         "max_drawdown": round(max_dd, 4),
         "exit_reasons": exit_counts,
+        "gap_analysis": gap_analysis,
     }
     return metrics
 
@@ -97,6 +117,16 @@ def print_metrics(metrics: dict) -> None:
     for reason, count in metrics.get("exit_reasons", {}).items():
         label = {"take_profit": "利確", "stop_loss": "損切り", "time_exit": "期間切れ"}.get(reason, reason)
         print(f"    {label:<12}: {count}")
+    gap = metrics.get("gap_analysis", {})
+    if gap:
+        print("  ギャップ方向別分析:")
+        order = ["gap_down(<-1%)", "flat(±1%)", "gap_up(>+1%)"]
+        for key in order:
+            if key not in gap:
+                continue
+            g = gap[key]
+            label = {"gap_down(<-1%)": "ギャップダウン", "flat(±1%)": "フラット    ", "gap_up(>+1%)": "ギャップアップ"}.get(key, key)
+            print(f"    {label}: {g['count']:>3}件  勝率{g['win_rate']:.1%}  平均損益{g['avg_pnl']:+.2%}  平均Gap{g['avg_gap']:+.2%}")
     print("=" * 50 + "\n")
 
 

@@ -64,7 +64,7 @@ def load_listed_info(client) -> pd.DataFrame:
 
     df = pd.DataFrame(raw)
     # 数値型に変換
-    for col in ["TotalMarketCap", "MarketCapitalization"]:
+    for col in ["TotalMarketCap", "MarketCapitalization", "TotalSharesIssued"]:
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors="coerce")
     return df
@@ -320,6 +320,36 @@ def screen_candidates(
         passed.loc[mask, "MarketCapitalization"] = passed.loc[mask, "_cap_listed"]
         passed.drop(columns=["_cap_listed"], inplace=True, errors="ignore")
 
+    # TotalMarketCapも欠損の場合: 発行済株式数 × 開示日前後の終値で算出
+    mask_no_cap = passed["MarketCapitalization"].isna()
+    if mask_no_cap.any() and "TotalSharesIssued" in listed_df.columns:
+        shares_ser = listed_df.set_index("Code")["TotalSharesIssued"]
+        _close_col_mc = next(
+            (c for c in ["AdjustmentClose", "Close"] if c in quotes_df.columns), None
+        )
+        if _close_col_mc:
+            _mc_df = (
+                quotes_df[["Code", "Date", _close_col_mc]]
+                .dropna(subset=[_close_col_mc])
+                .sort_values("Date")
+            )
+            _pf_mc = passed.loc[mask_no_cap, ["Code", "DisclosedDate"]].copy().reset_index()
+            _pf_mc = _pf_mc.sort_values("DisclosedDate")
+            _mc_merged = pd.merge_asof(
+                _pf_mc,
+                _mc_df.rename(columns={"Date": "DisclosedDate", _close_col_mc: "_Close"}),
+                on="DisclosedDate", by="Code", direction="backward",
+            )
+            _mc_merged["_Shares"] = _mc_merged["Code"].map(shares_ser)
+            _mc_merged["_Cap"] = _mc_merged["_Close"] * _mc_merged["_Shares"]
+            cap_vals = _mc_merged.set_index("index")["_Cap"].reindex(
+                passed.loc[mask_no_cap].index
+            ).values
+            passed.loc[mask_no_cap, "MarketCapitalization"] = cap_vals
+            n_computed = int(pd.Series(cap_vals).notna().sum())
+            if n_computed:
+                logger.info(f"  時価総額算出(株価×発行株数): {n_computed} 件補完")
+
     has_cap = passed["MarketCapitalization"].notna().any()
     if has_cap:
         cond_cap = passed["MarketCapitalization"].between(MARKET_CAP_MIN, MARKET_CAP_MAX)
@@ -431,6 +461,27 @@ def screen_candidates(
     if require_entry_price:
         passed = passed.dropna(subset=["EntryOpen"])
 
+    # 開示日の終値 (PrevClose) — 翌日寄付きとのギャップ率算出用
+    _close_col_gap = next(
+        (c for c in ["AdjustmentClose", "Close"] if c in quotes_df.columns), None
+    )
+    if _close_col_gap:
+        _gap_df = (
+            quotes_df[["Code", "Date", _close_col_gap]]
+            .dropna(subset=[_close_col_gap])
+            .sort_values("Date")
+        )
+        _pg = passed[["Code", "DisclosedDate"]].copy().reset_index()
+        _pg = _pg.sort_values("DisclosedDate")
+        _pg_merged = pd.merge_asof(
+            _pg,
+            _gap_df.rename(columns={"Date": "DisclosedDate", _close_col_gap: "PrevClose"}),
+            on="DisclosedDate", by="Code", direction="backward",
+        )
+        passed["PrevClose"] = (
+            _pg_merged.set_index("index")["PrevClose"].reindex(passed.index).values
+        )
+
     # RSI(14日) — 開示日以前の直近値を付与
     _close_col = next(
         (c for c in ["AdjustmentClose", "Close"] if c in quotes_df.columns), None
@@ -478,7 +529,8 @@ def screen_candidates(
         "EarningsGrowth", "SalesGrowth", "OperatingMargin",
         "ROE", "EquityRatio", "ForwardGuidance", "CurPerType", "S17Nm", "RSI14",
     ] if c in passed.columns]
-    tail_cols = ["MarketCapitalization", "EntryDate", "EntryOpen"]
+    tail_cols = [c for c in ["MarketCapitalization", "EntryDate", "EntryOpen", "PrevClose"]
+                 if c in passed.columns]
 
     result = passed[base_cols + metric_cols + tail_cols].copy()
     result.rename(columns={"MarketCapitalization": "MarketCap"}, inplace=True)

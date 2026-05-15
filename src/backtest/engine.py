@@ -33,6 +33,8 @@ class Trade:
     disclosed_date: Optional[pd.Timestamp] = None
     earnings_growth: Optional[float] = None
     market_cap: Optional[float] = None
+    prev_close: Optional[float] = None
+    gap_pct: Optional[float] = None
 
     def close(self, exit_date: pd.Timestamp, exit_price: float, reason: str) -> None:
         self.exit_date = exit_date
@@ -52,6 +54,8 @@ class Trade:
             "PnLPct": self.pnl_pct,
             "EarningsGrowth": self.earnings_growth,
             "MarketCap": self.market_cap,
+            "PrevClose": self.prev_close,
+            "GapPct": self.gap_pct,
         }
 
 
@@ -164,6 +168,12 @@ def run_backtest(
             take_profit, stop_loss, max_hold,
         )
 
+        prev_close = row.get("PrevClose")
+        gap_pct = (
+            (entry_price / prev_close) - 1
+            if prev_close and prev_close > 0
+            else None
+        )
         trade = Trade(
             code=code,
             entry_date=entry_date,
@@ -171,6 +181,8 @@ def run_backtest(
             disclosed_date=row.get("DisclosedDate"),
             earnings_growth=row.get("EarningsGrowth"),
             market_cap=row.get("MarketCap"),
+            prev_close=prev_close,
+            gap_pct=gap_pct,
         )
         trade.close(exit_date, exit_price, reason)
         trades.append(trade)
