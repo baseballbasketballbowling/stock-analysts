@@ -221,10 +221,22 @@ def cmd_screen(args) -> None:
     print(f"\n計: {len(candidates)} 銘柄")
 
 
-def _build_notify_message(candidates, target_date: str, lookback_days: int) -> str:
+def _build_notify_message(candidates, target_date: str, lookback_days: int, listed_df=None) -> str:
     """メール本文を組み立てる。"""
     import pandas as pd
     from config.settings import TAKE_PROFIT, STOP_LOSS, MAX_HOLD_DAYS
+
+    # 企業名マップ（5桁/4桁コード両対応）
+    name_map = {}
+    if listed_df is not None:
+        for col in ["CompanyName", "Name", "会社名"]:
+            if col in listed_df.columns:
+                for _, r in listed_df[["Code", col]].iterrows():
+                    c = str(r["Code"])
+                    name_map[c] = r[col]
+                    if len(c) == 5 and c.endswith("0"):
+                        name_map[c[:-1]] = r[col]
+                break
 
     n = len(candidates)
     date_label = target_date if lookback_days == 1 else f"直近{lookback_days}日"
@@ -236,24 +248,52 @@ def _build_notify_message(candidates, target_date: str, lookback_days: int) -> s
 
     for _, row in candidates.iterrows():
         code = str(row.get("Code", "????"))
+        company = name_map.get(code, "")
         disclosed = pd.to_datetime(row.get("DisclosedDate")).strftime("%m/%d")
         per_type = row.get("CurPerType", "")
-        eg = row.get("EarningsGrowth", float("nan"))
-        roe = row.get("ROE", float("nan"))
-        cap = row.get("MarketCap", float("nan"))
-        entry_date = row.get("EntryDate")
-        entry_open = row.get("EntryOpen")
+        eg   = row.get("EarningsGrowth", float("nan"))
+        sg   = row.get("SalesGrowth", float("nan"))
+        om   = row.get("OperatingMargin", float("nan"))
+        roe  = row.get("ROE", float("nan"))
+        cap  = row.get("MarketCap", float("nan"))
+        rsi  = row.get("RSI14", float("nan"))
+        fg   = row.get("ForwardGuidance", float("nan"))
+        s17  = row.get("S17Nm", "")
+        entry_date  = row.get("EntryDate")
+        entry_open  = row.get("EntryOpen")
+        prev_close  = row.get("PrevClose")
 
-        eg_str = f"+{eg:.1%}" if pd.notna(eg) and eg >= 0 else (f"{eg:.1%}" if pd.notna(eg) else "-")
-        roe_str = f"{roe:.1%}" if pd.notna(roe) else "-"
-        cap_str = f"{cap/1e8:.0f}億円" if pd.notna(cap) else "-"
+        def pct(v, plus=True):
+            if pd.isna(v): return "-"
+            return (f"+{v:.1%}" if v >= 0 and plus else f"{v:.1%}")
+
+        cap_str   = f"{cap/1e8:.0f}億円" if pd.notna(cap) else "-"
+        rsi_str   = f"{rsi:.0f}" if pd.notna(rsi) else "-"
         entry_str = pd.to_datetime(entry_date).strftime("%m/%d") if pd.notna(entry_date) else "TBD"
-        price_str = f" {entry_open:,.0f}円" if pd.notna(entry_open) else ""
+        price_str = f"  {entry_open:,.0f}円" if pd.notna(entry_open) else ""
 
-        lines.append(f"◆ {code}  ({per_type} / {disclosed}開示)")
-        lines.append(f"  営業利益成長: {eg_str}")
-        lines.append(f"  ROE: {roe_str}  時価総額: {cap_str}")
-        lines.append(f"  エントリー予定: {entry_str}寄付き{price_str}")
+        gap_str = ""
+        if pd.notna(entry_open) and pd.notna(prev_close) and prev_close > 0:
+            gap = (entry_open / prev_close) - 1
+            direction = "↑GU" if gap > 0.01 else ("↓GD" if gap < -0.01 else "→FL")
+            gap_str = f"  前日比{gap:+.1%} {direction}"
+
+        header = f"◆ {code}"
+        if company:
+            header += f"  {company}"
+        header += f"  ({per_type} / {disclosed}開示)"
+        lines.append(header)
+        if s17:
+            lines.append(f"  業種: {s17}  時価総額: {cap_str}")
+        else:
+            lines.append(f"  時価総額: {cap_str}")
+        lines.append(f"  営業利益成長: {pct(eg)}  売上成長: {pct(sg)}")
+        lines.append(f"  営業利益率: {pct(om, False)}  ROE: {pct(roe, False)}")
+        rsi_fg = f"  RSI14: {rsi_str}"
+        if pd.notna(fg):
+            rsi_fg += f"  来期予想: {pct(fg)}"
+        lines.append(rsi_fg)
+        lines.append(f"  エントリー予定: {entry_str}寄付き{price_str}{gap_str}")
         lines.append("")
 
     lines += [
@@ -336,7 +376,7 @@ def cmd_notify(args) -> None:
             logger.info(f"直近{lookback_days}日の開示で条件に合致する銘柄なし。通知しません。")
             return
 
-        body = _build_notify_message(recent, target_date, lookback_days)
+        body = _build_notify_message(recent, target_date, lookback_days, listed_df=listed_df)
         subject = f"【株式スクリーニング】{len(recent)}件ヒット ({target_date})"
         print(body)
 

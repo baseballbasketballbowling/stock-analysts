@@ -62,11 +62,30 @@ def compute_metrics(trades_df: pd.DataFrame) -> dict:
     total_pnl = df_sorted["PnLAbs"].sum()
     total_return = total_pnl / INITIAL_CAPITAL
 
-    # エグジット理由別集計
+    # エグジット理由別集計（詳細）
     exit_counts = df["ExitReason"].value_counts().to_dict()
+    exit_detail = {}
+    for reason, grp in df.groupby("ExitReason"):
+        w = grp[grp["PnLPct"] > 0]
+        hold_days = None
+        if "ExitDate" in grp.columns and "EntryDate" in grp.columns:
+            try:
+                hold_days = round(
+                    (pd.to_datetime(grp["ExitDate"]) - pd.to_datetime(grp["EntryDate"]))
+                    .dt.days.mean(), 1
+                )
+            except Exception:
+                pass
+        exit_detail[reason] = {
+            "count": len(grp),
+            "win_rate": round(len(w) / len(grp), 4),
+            "avg_pnl": round(grp["PnLPct"].mean(), 4),
+            "avg_hold_days": hold_days,
+        }
 
-    # ギャップ別分析 (GapPct が存在する場合)
+    # ギャップ別分析（詳細5段階）
     gap_analysis = {}
+    gap_detail = {}
     if "GapPct" in df.columns and df["GapPct"].notna().any():
         def _gap_label(g):
             if g > 0.01:
@@ -84,6 +103,36 @@ def compute_metrics(trades_df: pd.DataFrame) -> dict:
                 "avg_gap": round(grp["GapPct"].mean(), 4),
             }
 
+        def _gap_bucket(g):
+            if g < -0.05: return "①大幅GD(<-5%)"
+            if g < -0.01: return "②GD(-5%~-1%)"
+            if g <= 0.01: return "③フラット(±1%)"
+            if g <= 0.05: return "④GU(+1%~+5%)"
+            return "⑤大幅GU(>+5%)"
+        df["_GapBucket"] = df["GapPct"].apply(_gap_bucket)
+        for label, grp in sorted(df.groupby("_GapBucket")):
+            w = grp[grp["PnLPct"] > 0]
+            gap_detail[label] = {
+                "count": len(grp),
+                "win_rate": round(len(w) / len(grp), 4),
+                "avg_pnl": round(grp["PnLPct"].mean(), 4),
+                "avg_gap": round(grp["GapPct"].mean(), 4),
+            }
+
+    # 月別・季節性分析
+    monthly_stats = {}
+    if "EntryDate" in df.columns:
+        earnings_months = {2, 5, 8, 11}
+        df["_Month"] = pd.to_datetime(df["EntryDate"]).dt.month
+        for month, grp in df.groupby("_Month"):
+            w = grp[grp["PnLPct"] > 0]
+            monthly_stats[int(month)] = {
+                "count": len(grp),
+                "win_rate": round(len(w) / len(grp), 4),
+                "avg_pnl": round(grp["PnLPct"].mean(), 4),
+                "is_earnings_month": month in earnings_months,
+            }
+
     metrics = {
         "total_trades": n,
         "win_rate": round(win_rate, 4),
@@ -95,7 +144,10 @@ def compute_metrics(trades_df: pd.DataFrame) -> dict:
         "total_return": round(total_return, 4),
         "max_drawdown": round(max_dd, 4),
         "exit_reasons": exit_counts,
+        "exit_detail": exit_detail,
         "gap_analysis": gap_analysis,
+        "gap_detail": gap_detail,
+        "monthly_stats": monthly_stats,
     }
     return metrics
 
@@ -113,20 +165,25 @@ def print_metrics(metrics: dict) -> None:
     print(f"  総損益              : {metrics.get('total_pnl_jpy', 0):>10,.0f} 円")
     print(f"  総リターン          : {metrics.get('total_return', 0):>8.1%}")
     print(f"  最大ドローダウン    : {metrics.get('max_drawdown', 0):>8.1%}")
-    print("  エグジット理由:")
-    for reason, count in metrics.get("exit_reasons", {}).items():
-        label = {"take_profit": "利確", "stop_loss": "損切り", "time_exit": "期間切れ"}.get(reason, reason)
-        print(f"    {label:<12}: {count}")
-    gap = metrics.get("gap_analysis", {})
-    if gap:
-        print("  ギャップ方向別分析:")
-        order = ["gap_down(<-1%)", "flat(±1%)", "gap_up(>+1%)"]
-        for key in order:
-            if key not in gap:
-                continue
-            g = gap[key]
-            label = {"gap_down(<-1%)": "ギャップダウン", "flat(±1%)": "フラット    ", "gap_up(>+1%)": "ギャップアップ"}.get(key, key)
-            print(f"    {label}: {g['count']:>3}件  勝率{g['win_rate']:.1%}  平均損益{g['avg_pnl']:+.2%}  平均Gap{g['avg_gap']:+.2%}")
+    print("  エグジット理由 (件数 / 勝率 / 平均損益 / 平均保有日数):")
+    label_map = {"take_profit": "利確   ", "stop_loss": "損切り  ", "time_exit": "期間切れ"}
+    for reason, d in metrics.get("exit_detail", {}).items():
+        label = label_map.get(reason, reason)
+        hold = f"{d['avg_hold_days']:.0f}日" if d.get("avg_hold_days") is not None else "-"
+        print(f"    {label}: {d['count']:>3}件  勝率{d['win_rate']:.1%}  平均{d['avg_pnl']:+.2%}  保有{hold}")
+    gap_d = metrics.get("gap_detail", {})
+    if gap_d:
+        print("  ギャップ詳細分析 (5段階):")
+        for key in sorted(gap_d):
+            g = gap_d[key]
+            print(f"    {key}: {g['count']:>3}件  勝率{g['win_rate']:.1%}  平均損益{g['avg_pnl']:+.2%}  平均Gap{g['avg_gap']:+.2%}")
+    monthly = metrics.get("monthly_stats", {})
+    if monthly:
+        print("  月別分析 (★=決算集中月):")
+        for month in sorted(monthly):
+            m = monthly[month]
+            mark = "★" if m["is_earnings_month"] else "  "
+            print(f"    {mark}{month:>2}月: {m['count']:>3}件  勝率{m['win_rate']:.1%}  平均{m['avg_pnl']:+.2%}")
     print("=" * 50 + "\n")
 
 
