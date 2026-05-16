@@ -392,6 +392,77 @@ def cmd_notify(args) -> None:
         sys.exit(1)
 
 
+def cmd_entry_delay(args) -> None:
+    """決算翌日寄り vs 2日後寄り の比較分析。"""
+    import traceback as _tb
+    from src.api.jquants_client import JQuantsClient
+    from src.screener.screener import (
+        load_listed_info, load_statements, load_daily_quotes, screen_candidates,
+    )
+    from src.backtest.engine import run_backtest, build_price_dict
+    from src.backtest.metrics import trades_to_df, compute_metrics
+
+    start = args.start
+    end = args.end
+    logger.info(f"エントリータイミング比較分析: {start} 〜 {end}")
+
+    try:
+        client = JQuantsClient()
+        listed_df = load_listed_info(client)
+
+        stmt_start = str(int(start[:4]) - 1) + start[4:]
+        stmt_df = load_statements(client, date_from=stmt_start, date_to=end)
+        quotes_df = load_daily_quotes(client, date_from=start, date_to=end)
+
+        candidates = screen_candidates(stmt_df, quotes_df, listed_df, roe_min=0.12)
+        if candidates.empty:
+            logger.warning("候補銘柄なし")
+            return
+
+        price_dict = build_price_dict(quotes_df)
+        logger.info(f"候補銘柄数: {len(candidates)}")
+
+        print("\n" + "=" * 65)
+        print("  【比較】エントリータイミング: 決算翌日寄り vs 2日後寄り")
+        print("=" * 65)
+
+        label_map = {"take_profit": "利確  ", "stop_loss": "損切り", "time_exit": "期間切れ"}
+        for delay, label in [(0, "決算翌日寄り (現行, Day+1)"), (1, "2日後寄り  (1日待ち, Day+2)")]:
+            trades = run_backtest(
+                candidates, quotes_df,
+                price_dict=price_dict, entry_delay=delay,
+            )
+            if not trades:
+                print(f"\n[{label}] トレードなし")
+                continue
+            df = trades_to_df(trades)
+            m = compute_metrics(df)
+            print(f"\n--- {label} ---")
+            print(f"  トレード数   : {m.get('total_trades', 0)}")
+            print(f"  勝率         : {m.get('win_rate', 0):.1%}")
+            print(f"  PF           : {m.get('profit_factor', 0):.2f}")
+            print(f"  期待値       : {m.get('expectancy_pct', 0):+.2%}")
+            print(f"  総リターン   : {m.get('total_return', 0):+.1%}")
+            print(f"  最大DD       : {m.get('max_drawdown', 0):.1%}")
+            print(f"  平均利益     : {m.get('avg_win_pct', 0):+.2%}")
+            print(f"  平均損失     : {m.get('avg_loss_pct', 0):+.2%}")
+            exit_d = m.get("exit_detail", {})
+            if exit_d:
+                print("  エグジット内訳 (件数 / 勝率 / 平均損益 / 平均保有):")
+                for reason, d in exit_d.items():
+                    rl = label_map.get(reason, reason)
+                    hold = f"{d['avg_hold_days']:.0f}日" if d.get("avg_hold_days") else "-"
+                    print(f"    {rl}: {d['count']:>3}件  勝率{d['win_rate']:.1%}  avg{d['avg_pnl']:+.2%}  保有{hold}")
+
+        print("\n" + "=" * 65)
+        logger.info("完了")
+
+    except Exception as e:
+        logger.error(f"エラー: {type(e).__name__}: {e}")
+        _tb.print_exc()
+        sys.exit(1)
+
+
 def pd_import():
     import pandas as pd
     return pd
@@ -425,6 +496,12 @@ def build_parser() -> argparse.ArgumentParser:
     sc = sub.add_parser("screen", help="スクリーニング実行")
     sc.add_argument("--date", default=None, help="基準日 (YYYY-MM-DD、省略時は今日)")
     sc.set_defaults(func=cmd_screen)
+
+    # entry_delay サブコマンド
+    ed = sub.add_parser("entry_delay", help="エントリータイミング比較 (決算翌日 vs 2日後)")
+    ed.add_argument("--start", default=BACKTEST_START, help="開始日 (YYYY-MM-DD)")
+    ed.add_argument("--end", default=BACKTEST_END, help="終了日 (YYYY-MM-DD)")
+    ed.set_defaults(func=cmd_entry_delay)
 
     # notify サブコマンド
     nt = sub.add_parser("notify", help="毎日スクリーニング & LINE通知")

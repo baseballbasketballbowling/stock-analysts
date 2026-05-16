@@ -134,6 +134,7 @@ def run_backtest(
     stop_loss: float = STOP_LOSS,
     max_hold: int = MAX_HOLD_DAYS,
     price_dict: Optional[dict] = None,
+    entry_delay: int = 0,
 ) -> list[Trade]:
     """
     候補銘柄リストに対してバックテストを実行し Trade リストを返す。
@@ -143,24 +144,41 @@ def run_backtest(
     candidates  : screen_candidates() の出力 DataFrame
     quotes_df   : 全期間・全銘柄の日足データ
     price_dict  : build_price_dict() の出力（スイープ時は外から渡して再利用）
+    entry_delay : 0=決算翌日寄り(現行), 1=2日後寄り(初動を見てから入る)
     """
     trades: list[Trade] = []
 
     if price_dict is None:
         price_dict = build_price_dict(quotes_df)
 
-    logger.info(f"バックテスト開始: {len(candidates)} 候補")
+    logger.info(f"バックテスト開始: {len(candidates)} 候補 (entry_delay={entry_delay})")
 
     for _, row in candidates.iterrows():
         code = str(row["Code"])
-        entry_date = pd.to_datetime(row["EntryDate"])
-        entry_price = float(row["EntryOpen"])
-
-        if entry_price <= 0:
-            continue
+        orig_entry_date = pd.to_datetime(row["EntryDate"])
 
         code_prices = price_dict.get(code, pd.DataFrame())
         if code_prices.empty:
+            continue
+
+        if entry_delay > 0:
+            # orig_entry_date 以降の行から entry_delay 日ずらした日の始値を使う
+            future = code_prices[code_prices["Date"] >= orig_entry_date].reset_index(drop=True)
+            if len(future) <= entry_delay:
+                continue
+            delayed_row = future.iloc[entry_delay]
+            entry_date = delayed_row["Date"]
+            open_col = "AdjustmentOpen" if "AdjustmentOpen" in delayed_row.index else "Open"
+            _open = delayed_row.get(open_col)
+            if _open is None or pd.isna(_open):
+                close_col = "AdjustmentClose" if "AdjustmentClose" in delayed_row.index else "Close"
+                _open = delayed_row.get(close_col, 0)
+            entry_price = float(_open)
+        else:
+            entry_date = orig_entry_date
+            entry_price = float(row["EntryOpen"])
+
+        if entry_price <= 0:
             continue
 
         exit_date, exit_price, reason = _simulate_trade(
