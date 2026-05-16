@@ -64,7 +64,10 @@ def cmd_backtest(args) -> None:
         logger.info(f"日足データ件数: {len(quotes_df)}")
 
         logger.info("STEP5: スクリーニング")
-        candidates = screen_candidates(stmt_df, quotes_df, listed_df, roe_min=0.12)
+        # 0 = 上限なし、それ以外は億円単位をYen単位に変換
+        cap_max = None if args.market_cap_max == 0 else args.market_cap_max * 1e8
+        candidates = screen_candidates(stmt_df, quotes_df, listed_df, roe_min=0.12,
+                                       market_cap_max=cap_max)
 
         if candidates.empty:
             logger.warning("候補銘柄が見つかりませんでした。")
@@ -478,6 +481,8 @@ def build_parser() -> argparse.ArgumentParser:
     bt = sub.add_parser("backtest", help="バックテスト実行")
     bt.add_argument("--start", default=BACKTEST_START, help="開始日 (YYYY-MM-DD)")
     bt.add_argument("--end", default=BACKTEST_END, help="終了日 (YYYY-MM-DD)")
+    bt.add_argument("--market-cap-max", type=float, default=3000.0,
+                    help="時価総額上限 (億円, デフォルト3000, 0=上限なし=大型株も含む)")
     bt.set_defaults(func=cmd_backtest)
 
     # screen_sweep サブコマンド

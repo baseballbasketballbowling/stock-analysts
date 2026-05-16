@@ -55,6 +55,17 @@ jobs:
           END="${{ inputs.end_date }}"
           python main.py backtest --start "${START:-2025-01-01}" --end "${END:-2025-12-31}" 2>&1 | tee debug/last_run.txt
 
+      - name: 大型株込みバックテスト (時価総額上限なし)
+        id: backtest_nocap
+        continue-on-error: true
+        env:
+          JQUANTS_API_KEY: ${{ inputs.api_key || secrets.JQUANTS_API_KEY }}
+        run: |
+          START="${{ inputs.start_date }}"
+          END="${{ inputs.end_date }}"
+          echo "===== BACKTEST (上限なし: 大型株含む) =====" >> debug/last_run.txt
+          python main.py backtest --market-cap-max 0 --start "${START:-2025-01-01}" --end "${END:-2025-12-31}" 2>&1 | tee -a debug/last_run.txt
+
       - name: パラメータスイープ実行
         id: sweep
         continue-on-error: true

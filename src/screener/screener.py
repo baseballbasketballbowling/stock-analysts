@@ -211,6 +211,7 @@ def screen_candidates(
     sectors: Optional[list] = None,
     require_entry_price: bool = True,
     gap_min: Optional[float] = -0.05,
+    market_cap_max: Optional[float] = MARKET_CAP_MAX,
 ) -> pd.DataFrame:
     """
     スクリーニング条件を適用して候補銘柄を返す。
@@ -353,9 +354,11 @@ def screen_candidates(
 
     has_cap = passed["MarketCapitalization"].notna().any()
     if has_cap:
-        cond_cap = passed["MarketCapitalization"].between(MARKET_CAP_MIN, MARKET_CAP_MAX)
+        _cap_max = market_cap_max if market_cap_max is not None else float("inf")
+        cond_cap = (passed["MarketCapitalization"] >= MARKET_CAP_MIN) & (passed["MarketCapitalization"] <= _cap_max)
         passed = passed[cond_cap].copy()
-        logger.info(f"  時価総額 {MARKET_CAP_MIN/1e8:.0f}〜{MARKET_CAP_MAX/1e8:.0f}億円: {len(passed)} 件")
+        cap_max_label = f"{_cap_max/1e8:.0f}億円" if _cap_max != float("inf") else "上限なし"
+        logger.info(f"  時価総額 {MARKET_CAP_MIN/1e8:.0f}億〜{cap_max_label}: {len(passed)} 件")
     else:
         # 時価総額なし → ScaleCat (規模別分類) で代替フィルタ
         if "ScaleCat" in listed_df.columns:
