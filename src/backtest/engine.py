@@ -35,6 +35,7 @@ class Trade:
     market_cap: Optional[float] = None
     prev_close: Optional[float] = None
     gap_pct: Optional[float] = None
+    scale_cat: Optional[str] = None
 
     def close(self, exit_date: pd.Timestamp, exit_price: float, reason: str) -> None:
         self.exit_date = exit_date
@@ -56,6 +57,7 @@ class Trade:
             "MarketCap": self.market_cap,
             "PrevClose": self.prev_close,
             "GapPct": self.gap_pct,
+            "ScaleCat": self.scale_cat,
         }
 
 
@@ -201,6 +203,7 @@ def run_backtest(
             market_cap=row.get("MarketCap"),
             prev_close=prev_close,
             gap_pct=gap_pct,
+            scale_cat=row.get("ScaleCat"),
         )
         trade.close(exit_date, exit_price, reason)
         trades.append(trade)

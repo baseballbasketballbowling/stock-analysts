@@ -133,6 +133,17 @@ def compute_metrics(trades_df: pd.DataFrame) -> dict:
                 "is_earnings_month": month in earnings_months,
             }
 
+    # スケール別分析 (TOPIX規模分類)
+    scale_stats = {}
+    if "ScaleCat" in df.columns and df["ScaleCat"].notna().any():
+        for scale, grp in df.groupby("ScaleCat"):
+            w = grp[grp["PnLPct"] > 0]
+            scale_stats[str(scale)] = {
+                "count": len(grp),
+                "win_rate": round(len(w) / len(grp), 4),
+                "avg_pnl": round(grp["PnLPct"].mean(), 4),
+            }
+
     metrics = {
         "total_trades": n,
         "win_rate": round(win_rate, 4),
@@ -148,6 +159,7 @@ def compute_metrics(trades_df: pd.DataFrame) -> dict:
         "gap_analysis": gap_analysis,
         "gap_detail": gap_detail,
         "monthly_stats": monthly_stats,
+        "scale_stats": scale_stats,
     }
     return metrics
 
@@ -184,6 +196,16 @@ def print_metrics(metrics: dict) -> None:
             m = monthly[month]
             mark = "★" if m["is_earnings_month"] else "  "
             print(f"    {mark}{month:>2}月: {m['count']:>3}件  勝率{m['win_rate']:.1%}  平均{m['avg_pnl']:+.2%}")
+    scale = metrics.get("scale_stats", {})
+    if scale:
+        print("  規模別分析 (TOPIX分類):")
+        order = ["TOPIX Core30", "TOPIX Large70", "TOPIX Mid400", "TOPIX Small 1", "TOPIX Small 2"]
+        keys = order + [k for k in sorted(scale) if k not in order]
+        for key in keys:
+            if key not in scale:
+                continue
+            s = scale[key]
+            print(f"    {key:<20}: {s['count']:>3}件  勝率{s['win_rate']:.1%}  平均{s['avg_pnl']:+.2%}")
     print("=" * 50 + "\n")
 
 
