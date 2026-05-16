@@ -210,6 +210,7 @@ def screen_candidates(
     period_types: Optional[list] = None,
     sectors: Optional[list] = None,
     require_entry_price: bool = True,
+    gap_min: Optional[float] = -0.05,
 ) -> pd.DataFrame:
     """
     スクリーニング条件を適用して候補銘柄を返す。
@@ -460,6 +461,33 @@ def screen_candidates(
     passed["EntryOpen"] = passed.apply(get_open, axis=1)
     if require_entry_price:
         passed = passed.dropna(subset=["EntryOpen"])
+
+    # 大幅ギャップダウンフィルタ (EntryOpen と PrevClose が両方ある場合のみ適用)
+    if gap_min is not None and "PrevClose" not in passed.columns:
+        # PrevCloseはこの後で付与するため、ここでは一時計算用に取得
+        _close_col_tmp = next(
+            (c for c in ["AdjustmentClose", "Close"] if c in quotes_df.columns), None
+        )
+        if _close_col_tmp:
+            _tmp_close = quotes_df[["Code", "Date", _close_col_tmp]].dropna(subset=[_close_col_tmp]).sort_values("Date")
+            _tmp = passed[["Code", "DisclosedDate"]].copy().reset_index()
+            _tmp = _tmp.sort_values("DisclosedDate")
+            _tmp_m = pd.merge_asof(
+                _tmp,
+                _tmp_close.rename(columns={"Date": "DisclosedDate", _close_col_tmp: "_PC"}),
+                on="DisclosedDate", by="Code", direction="backward",
+            )
+            passed["_TmpPrevClose"] = _tmp_m.set_index("index")["_PC"].reindex(passed.index).values
+
+    if gap_min is not None:
+        pc_col = "PrevClose" if "PrevClose" in passed.columns else "_TmpPrevClose"
+        if pc_col in passed.columns and "EntryOpen" in passed.columns:
+            gap_ser = passed["EntryOpen"] / passed[pc_col] - 1
+            before = len(passed)
+            passed = passed[gap_ser.isna() | (gap_ser >= gap_min)].copy()
+            passed.drop(columns=["_TmpPrevClose"], inplace=True, errors="ignore")
+            if len(passed) < before:
+                logger.info(f"  大幅GDフィルタ(gap>={gap_min:.0%}): {before} → {len(passed)} 件")
 
     # 開示日の終値 (PrevClose) — 翌日寄付きとのギャップ率算出用
     _close_col_gap = next(

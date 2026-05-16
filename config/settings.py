@@ -19,7 +19,7 @@ EARNINGS_GROWTH_MIN = 0.20  # 前年同期比 +20%
 # --- 売買ルール ---
 TAKE_PROFIT = 0.15   # +15%
 STOP_LOSS = -0.05    # −5%
-MAX_HOLD_DAYS = 20   # 最大20営業日（約1ヶ月）
+MAX_HOLD_DAYS = 30   # 最大30営業日（約1.5ヶ月）
 
 # --- バックテスト ---
 BACKTEST_START = "2025-01-01"
