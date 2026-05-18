@@ -38,12 +38,13 @@ jobs:
       - name: ライブラリをインストール
         run: pip install -r requirements.txt
 
-      - name: 毎日スクリーニング & メール通知
+      - name: 毎日スクリーニング & メール通知 & Threads投稿
         env:
           JQUANTS_API_KEY: ${{ secrets.JQUANTS_API_KEY }}
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           NOTIFY_TO: ${{ secrets.NOTIFY_TO }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
         run: |
           mkdir -p debug results
           DATE="${{ inputs.target_date }}"
