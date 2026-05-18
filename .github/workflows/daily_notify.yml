@@ -7,7 +7,9 @@ on:
     paths:
       - .github/workflows/daily_notify.yml
   schedule:
-    # 平日 10:00 UTC = 19:00 JST（市場終了後、決算開示が揃うタイミング）[test]
+    # 朝 0:15 UTC = 9:15 JST（前日終値で保有状況投稿）
+    - cron: '15 0 * * 1-5'
+    # 夜 10:00 UTC = 19:00 JST（スクリーニング & 保有状況投稿）
     - cron: '0 10 * * 1-5'
   workflow_dispatch:
     inputs:
@@ -20,7 +22,32 @@ on:
         default: '1'
 
 jobs:
+  # ── 朝ジョブ: 保有状況のみ ──────────────────────────────
+  morning-portfolio:
+    if: github.event_name == 'schedule' && startsWith(github.event.schedule, '15 0')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/stock-screening-backtest-RTDEv
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: ライブラリをインストール
+        run: pip install -r requirements.txt
+
+      - name: 保有ポジション損益をThreadsに投稿（朝）
+        env:
+          JQUANTS_API_KEY: ${{ secrets.JQUANTS_API_KEY }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+        run: python main.py portfolio_post
+
+  # ── 夜ジョブ: スクリーニング + 保有状況 ─────────────────
   daily-screen:
+    if: github.event_name != 'schedule' || startsWith(github.event.schedule, '0 10')
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -38,13 +65,14 @@ jobs:
       - name: ライブラリをインストール
         run: pip install -r requirements.txt
 
-      - name: 保有ポジション損益をThreadsに投稿
+      - name: 保有ポジション損益をThreadsに投稿（夜）
         env:
           JQUANTS_API_KEY: ${{ secrets.JQUANTS_API_KEY }}
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
         run: |
+          mkdir -p debug
           DATE="${{ inputs.target_date }}"
-          python main.py portfolio_post ${DATE:+--date "$DATE"} 2>&1 | tee -a debug/daily_notify_last_run.txt
+          python main.py portfolio_post ${DATE:+--date "$DATE"} 2>&1 | tee debug/daily_notify_last_run.txt
 
       - name: 毎日スクリーニング & メール通知 & Threads投稿
         env:
@@ -54,10 +82,9 @@ jobs:
           NOTIFY_TO: ${{ secrets.NOTIFY_TO }}
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
         run: |
-          mkdir -p debug results
+          mkdir -p results
           DATE="${{ inputs.target_date }}"
           DAYS="${{ inputs.lookback_days || '1' }}"
-          # pushトリガー時は当日の日付・月曜は3日遡及
           if [ -z "$DATE" ] && [ "${{ github.event_name }}" = "push" ]; then
             DATE=$(date -u +%Y-%m-%d)
             DOW=$(date -u +%u)
