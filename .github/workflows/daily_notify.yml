@@ -38,6 +38,14 @@ jobs:
       - name: ライブラリをインストール
         run: pip install -r requirements.txt
 
+      - name: 保有ポジション損益をThreadsに投稿
+        env:
+          JQUANTS_API_KEY: ${{ secrets.JQUANTS_API_KEY }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+        run: |
+          DATE="${{ inputs.target_date }}"
+          python main.py portfolio_post ${DATE:+--date "$DATE"} 2>&1 | tee -a debug/daily_notify_last_run.txt
+
       - name: 毎日スクリーニング & メール通知 & Threads投稿
         env:
           JQUANTS_API_KEY: ${{ secrets.JQUANTS_API_KEY }}
@@ -57,7 +65,7 @@ jobs:
           fi
           python main.py notify \
             ${DATE:+--date "$DATE"} \
-            --lookback-days "$DAYS" 2>&1 | tee debug/daily_notify_last_run.txt
+            --lookback-days "$DAYS" 2>&1 | tee -a debug/daily_notify_last_run.txt
 
       - name: ログをリポジトリに保存
         if: always()
