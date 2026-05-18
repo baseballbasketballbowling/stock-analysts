@@ -1,0 +1,14 @@
+{
+  "positions": [
+    {
+      "code": "77470",
+      "company": "朝日インテック",
+      "shares": 5,
+      "entry_price": 3420,
+      "entry_date": "2026-05-18",
+      "tp_price": 3933,
+      "sl_price": 3249
+    }
+  ],
+  "closed": []
+}

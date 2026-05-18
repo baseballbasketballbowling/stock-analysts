@@ -514,6 +514,55 @@ def cmd_entry_delay(args) -> None:
         sys.exit(1)
 
 
+def cmd_portfolio_post(args) -> None:
+    """保有ポジションの損益をThreadsに投稿する。"""
+    import os
+    import traceback as _tb
+    from datetime import timedelta
+    from src.api.jquants_client import JQuantsClient
+    from src.screener.screener import load_daily_quotes
+    from src.notifier.portfolio_notify import (
+        load_portfolio, build_portfolio_threads_message, get_latest_prices
+    )
+    from src.notifier.threads_notify import post_to_threads
+
+    threads_token = os.environ.get("THREADS_ACCESS_TOKEN", "")
+    if not threads_token:
+        logger.warning("THREADS_ACCESS_TOKEN 未設定。スキップ。")
+        return
+
+    target_date = args.date or datetime.today().strftime("%Y-%m-%d")
+
+    try:
+        portfolio = load_portfolio()
+        positions = portfolio.get("positions", [])
+        if not positions:
+            logger.info("保有ポジションなし。スキップ。")
+            return
+
+        codes = [str(p["code"]) for p in positions]
+        logger.info(f"保有銘柄: {codes}")
+
+        client = JQuantsClient()
+        quotes_start = (
+            datetime.strptime(target_date, "%Y-%m-%d") - timedelta(days=10)
+        ).strftime("%Y-%m-%d")
+        quotes_df = load_daily_quotes(client, date_from=quotes_start, date_to=target_date)
+
+        prices = get_latest_prices(codes, quotes_df)
+        logger.info(f"取得価格: {prices}")
+
+        message = build_portfolio_threads_message(portfolio, prices, target_date)
+        print(message)
+
+        post_to_threads(threads_token, message)
+
+    except Exception as e:
+        logger.error(f"エラー: {type(e).__name__}: {e}")
+        _tb.print_exc()
+        sys.exit(1)
+
+
 def pd_import():
     import pandas as pd
     return pd
@@ -556,8 +605,13 @@ def build_parser() -> argparse.ArgumentParser:
     ed.add_argument("--end", default=BACKTEST_END, help="終了日 (YYYY-MM-DD)")
     ed.set_defaults(func=cmd_entry_delay)
 
+    # portfolio_post サブコマンド
+    pp = sub.add_parser("portfolio_post", help="保有ポジション損益をThreadsに投稿")
+    pp.add_argument("--date", default=None, help="基準日 (YYYY-MM-DD、省略時は今日)")
+    pp.set_defaults(func=cmd_portfolio_post)
+
     # notify サブコマンド
-    nt = sub.add_parser("notify", help="毎日スクリーニング & LINE通知")
+    nt = sub.add_parser("notify", help="毎日スクリーニング & メール通知")
     nt.add_argument("--date", default=None, help="スクリーニング基準日 (YYYY-MM-DD、省略時は今日)")
     nt.add_argument("--lookback-days", type=int, default=1,
                     help="何日前まで遡って開示をチェックするか (デフォルト: 1)")
