@@ -307,6 +307,46 @@ def _build_notify_message(candidates, target_date: str, lookback_days: int, list
     return "\n".join(lines)
 
 
+def _build_threads_message(candidates, target_date: str, listed_df=None) -> str:
+    """Threads投稿用メッセージ（500文字以内）。"""
+    import pandas as pd
+    from config.settings import TAKE_PROFIT, STOP_LOSS, MAX_HOLD_DAYS
+
+    name_map = {}
+    if listed_df is not None:
+        for col in ["CompanyName", "Name", "会社名"]:
+            if col in listed_df.columns:
+                for _, r in listed_df[["Code", col]].iterrows():
+                    c = str(r["Code"])
+                    name_map[c] = r[col]
+                    if len(c) == 5 and c.endswith("0"):
+                        name_map[c[:-1]] = r[col]
+                break
+
+    dt = pd.to_datetime(target_date)
+    n = len(candidates)
+    lines = [
+        f"【AI株式スクリーニング {dt.strftime('%m/%d')}】",
+        f"決算開示から{n}銘柄が条件クリア！",
+        "",
+    ]
+    for _, row in candidates.iterrows():
+        code = str(row.get("Code", ""))
+        company = name_map.get(code, code)
+        eg = row.get("EarningsGrowth", float("nan"))
+        entry_date = row.get("EntryDate")
+        entry_str = pd.to_datetime(entry_date).strftime("%m/%d") if pd.notna(entry_date) else "TBD"
+        eg_str = f"+{eg:.0%}" if pd.notna(eg) else "-"
+        lines.append(f"◆{company}  営業利益{eg_str}")
+        lines.append(f"  {entry_str}寄付きエントリー予定")
+    lines += [
+        "",
+        f"TP+{TAKE_PROFIT:.0%} / SL{STOP_LOSS:.0%} / 最大{MAX_HOLD_DAYS}日保有",
+        "#株式投資 #決算スクリーニング #AIトレード",
+    ]
+    return "\n".join(lines)
+
+
 def cmd_notify(args) -> None:
     import os
     import traceback as _tb
@@ -385,9 +425,17 @@ def cmd_notify(args) -> None:
 
         if not gmail_user or not app_password:
             logger.warning("GMAIL_USER / GMAIL_APP_PASSWORD 未設定。メール送信をスキップ（結果はCSVに保存済み）。")
-            return
+        else:
+            send_email(gmail_user, app_password, notify_to, subject, body)
 
-        send_email(gmail_user, app_password, notify_to, subject, body)
+        # Threads 投稿
+        threads_token = os.environ.get("THREADS_ACCESS_TOKEN", "")
+        if threads_token:
+            from src.notifier.threads_notify import post_to_threads
+            threads_text = _build_threads_message(recent, target_date, listed_df=listed_df)
+            post_to_threads(threads_token, threads_text)
+        else:
+            logger.info("THREADS_ACCESS_TOKEN 未設定。Threads投稿をスキップ。")
 
     except Exception as e:
         logger.error(f"エラー: {type(e).__name__}: {e}")
