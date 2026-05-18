@@ -1,6 +1,11 @@
 name: 毎日スクリーニング & メール通知
 
 on:
+  push:
+    branches:
+      - claude/stock-screening-backtest-RTDEv
+    paths:
+      - .github/workflows/daily_notify.yml
   schedule:
     # 平日 10:00 UTC = 19:00 JST（市場終了後、決算開示が揃うタイミング）[test]
     - cron: '0 10 * * 1-5'
@@ -43,10 +48,11 @@ jobs:
           mkdir -p debug results
           DATE="${{ inputs.target_date }}"
           DAYS="${{ inputs.lookback_days || '1' }}"
-          # pushトリガー時はテスト用に過去日付を使用（本番cronは今日の日付）
+          # pushトリガー時は当日の日付・月曜は3日遡及
           if [ -z "$DATE" ] && [ "${{ github.event_name }}" = "push" ]; then
-            DATE="2025-12-01"
-            DAYS="30"
+            DATE=$(date -u +%Y-%m-%d)
+            DOW=$(date -u +%u)
+            DAYS=$([ "$DOW" = "1" ] && echo "3" || echo "1")
           fi
           python main.py notify \
             ${DATE:+--date "$DATE"} \
