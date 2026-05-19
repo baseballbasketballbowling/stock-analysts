@@ -518,11 +518,10 @@ def cmd_portfolio_post(args) -> None:
     """保有ポジションの損益をThreadsに投稿する。"""
     import os
     import traceback as _tb
-    from datetime import timedelta
+    import pandas as pd
     from src.api.jquants_client import JQuantsClient
-    from src.screener.screener import load_daily_quotes
     from src.notifier.portfolio_notify import (
-        load_portfolio, build_portfolio_threads_message, get_latest_prices
+        load_portfolio, build_portfolio_threads_message,
     )
     from src.notifier.threads_notify import post_to_threads
 
@@ -543,13 +542,24 @@ def cmd_portfolio_post(args) -> None:
         codes = [str(p["code"]) for p in positions]
         logger.info(f"保有銘柄: {codes}")
 
+        # 全銘柄一括ダウンロードは不要 — 保有銘柄を1件ずつ取得（軽量）
         client = JQuantsClient()
-        quotes_start = (
-            datetime.strptime(target_date, "%Y-%m-%d") - timedelta(days=10)
-        ).strftime("%Y-%m-%d")
-        quotes_df = load_daily_quotes(client, date_from=quotes_start, date_to=target_date)
+        prices = {}
+        for code in codes:
+            try:
+                rows = client.get_daily_quotes(code=code)
+                if rows:
+                    df = pd.DataFrame(rows)
+                    close_col = "AdjustmentClose" if "AdjustmentClose" in df.columns else "Close"
+                    df["Date"] = pd.to_datetime(df["Date"])
+                    df = df[df["Date"] <= pd.Timestamp(target_date)]
+                    if not df.empty:
+                        latest = df.sort_values("Date").iloc[-1]
+                        prices[code] = float(latest[close_col])
+                        logger.info(f"  {code}: {prices[code]:,.0f}円 ({latest['Date'].date()})")
+            except Exception as e:
+                logger.warning(f"  {code} 価格取得失敗: {e}")
 
-        prices = get_latest_prices(codes, quotes_df)
         logger.info(f"取得価格: {prices}")
 
         message = build_portfolio_threads_message(portfolio, prices, target_date)
