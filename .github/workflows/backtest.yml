@@ -99,6 +99,17 @@ jobs:
           echo "===== ENTRY TIMING ANALYSIS =====" >> debug/last_run.txt
           python main.py entry_delay --start "${START:-2025-01-01}" --end "${END:-2025-12-31}" 2>&1 | tee -a debug/last_run.txt
 
+      - name: 出来高急騰バックテスト
+        id: volume_backtest
+        continue-on-error: true
+        env:
+          JQUANTS_API_KEY: ${{ inputs.api_key || secrets.JQUANTS_API_KEY }}
+        run: |
+          START="${{ inputs.start_date }}"
+          END="${{ inputs.end_date }}"
+          echo "===== VOLUME SURGE BACKTEST =====" >> debug/last_run.txt
+          python main.py volume_backtest --start "${START:-2025-01-01}" --end "${END:-2025-12-31}" 2>&1 | tee -a debug/last_run.txt
+
       - name: ログをリポジトリに保存
         if: always()
         uses: actions/github-script@v7

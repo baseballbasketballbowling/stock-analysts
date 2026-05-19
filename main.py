@@ -573,6 +573,107 @@ def cmd_portfolio_post(args) -> None:
         sys.exit(1)
 
 
+def cmd_volume_backtest(args) -> None:
+    """出来高急騰バックテスト（単独 & 決算AND両スイープ）。"""
+    import traceback as _tb
+    import pandas as pd
+    from src.api.jquants_client import JQuantsClient
+    from src.screener.screener import (
+        load_listed_info, load_statements, load_daily_quotes, screen_candidates,
+    )
+    from src.screener.volume_screener import screen_volume_surge
+    from src.backtest.engine import run_backtest, build_price_dict, Trade
+    from src.backtest.metrics import trades_to_df, compute_metrics
+
+    start = args.start
+    end   = args.end
+    multipliers = [2.0, 3.0, 5.0]
+    mid_large = ["TOPIX Mid400", "TOPIX Large70"]
+
+    logger.info(f"出来高急騰バックテスト: {start} 〜 {end}")
+
+    try:
+        client    = JQuantsClient()
+        listed_df = load_listed_info(client)
+
+        stmt_start = str(int(start[:4]) - 1) + start[4:]
+        stmt_df   = load_statements(client, date_from=stmt_start, date_to=end)
+        quotes_df = load_daily_quotes(client, date_from=start, date_to=end)
+        price_dict = build_price_dict(quotes_df)
+
+        # ── 決算スクリーニング候補（AND用）
+        earnings_candidates = screen_candidates(
+            stmt_df, quotes_df, listed_df, roe_min=0.12,
+        )
+        earnings_keys = set(
+            zip(earnings_candidates["Code"].astype(str),
+                pd.to_datetime(earnings_candidates["EntryDate"]).dt.date)
+        ) if not earnings_candidates.empty else set()
+        logger.info(f"決算候補: {len(earnings_keys)} 件")
+
+        header = "=" * 68
+        print(f"\n{header}")
+        print("  【出来高急騰バックテスト】")
+        print(header)
+
+        for mult in multipliers:
+            # 出来高急騰候補（中型+大型株のみ）
+            vol_cands = screen_volume_surge(
+                quotes_df, listed_df,
+                vol_multiplier=mult,
+                require_up=True,
+                date_from=start,
+                date_to=end,
+                scale_cats=mid_large,
+            )
+            if vol_cands.empty:
+                print(f"\n[{mult:.0f}倍] 候補なし")
+                continue
+
+            # run_backtest 用に列名を合わせる
+            vol_cands_bt = vol_cands.rename(columns={"SurgeDate": "DisclosedDate"}).copy()
+            vol_cands_bt["EarningsGrowth"] = float("nan")
+
+            # AND候補: 決算スクリーニング通過 & 出来高急騰
+            and_mask = vol_cands_bt.apply(
+                lambda r: (str(r["Code"]), pd.Timestamp(r["EntryDate"]).date())
+                          in earnings_keys,
+                axis=1,
+            )
+            and_cands = vol_cands_bt[and_mask].copy()
+
+            for label, cands in [
+                (f"出来高{mult:.0f}倍（単独）", vol_cands_bt),
+                (f"出来高{mult:.0f}倍 AND 決算",  and_cands),
+            ]:
+                if cands.empty:
+                    print(f"\n--- {label}: 0件 ---")
+                    continue
+                trades = run_backtest(cands, quotes_df, price_dict=price_dict)
+                if not trades:
+                    print(f"\n--- {label}: トレードなし ---")
+                    continue
+                df = trades_to_df(trades)
+                m  = compute_metrics(df)
+                n  = m.get("total_trades", 0)
+                wr = m.get("win_rate", 0)
+                pf = m.get("profit_factor", 0)
+                ret = m.get("total_return", 0)
+                mdd = m.get("max_drawdown", 0)
+                exp = m.get("expectancy_pct", 0)
+                print(f"\n--- {label} ({n}件) ---")
+                print(f"  勝率 {wr:.1%}  PF {pf:.2f}  期待値 {exp:+.2%}")
+                print(f"  総リターン {ret:+.1%}  最大DD {mdd:.1%}")
+
+        print(f"\n{header}\n")
+        logger.info("完了")
+
+    except Exception as e:
+        logger.error(f"エラー: {type(e).__name__}: {e}")
+        _tb.print_exc()
+        sys.exit(1)
+
+
 def pd_import():
     import pandas as pd
     return pd
@@ -614,6 +715,12 @@ def build_parser() -> argparse.ArgumentParser:
     ed.add_argument("--start", default=BACKTEST_START, help="開始日 (YYYY-MM-DD)")
     ed.add_argument("--end", default=BACKTEST_END, help="終了日 (YYYY-MM-DD)")
     ed.set_defaults(func=cmd_entry_delay)
+
+    # volume_backtest サブコマンド
+    vb = sub.add_parser("volume_backtest", help="出来高急騰バックテスト (2/3/5倍スイープ)")
+    vb.add_argument("--start", default=BACKTEST_START, help="開始日 (YYYY-MM-DD)")
+    vb.add_argument("--end",   default=BACKTEST_END,   help="終了日 (YYYY-MM-DD)")
+    vb.set_defaults(func=cmd_volume_backtest)
 
     # portfolio_post サブコマンド
     pp = sub.add_parser("portfolio_post", help="保有ポジション損益をThreadsに投稿")

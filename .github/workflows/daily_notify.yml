@@ -1,11 +1,6 @@
 name: 毎日スクリーニング & メール通知
 
 on:
-  push:
-    branches:
-      - claude/stock-screening-backtest-RTDEv
-    paths:
-      - .github/workflows/daily_notify.yml
   schedule:
     # 朝 0:15 UTC = 9:15 JST（前日終値で保有状況投稿）
     - cron: '15 0 * * 1-5'
