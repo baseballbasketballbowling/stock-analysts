@@ -358,6 +358,7 @@ def cmd_notify(args) -> None:
         load_statements,
         load_daily_quotes,
         screen_candidates,
+        compute_financial_metrics,
     )
     from src.notifier.email_notify import send_email
     from config.settings import RESULTS_DIR
@@ -389,6 +390,35 @@ def cmd_notify(args) -> None:
             logger.info("データが空です。終了。")
             return
 
+        # 指定期間を先に確定
+        cutoff = target_dt - timedelta(days=lookback_days - 1)
+
+        # 開示全件CSV（スクリーニングフィルタ前の全銘柄）
+        _fin_all = compute_financial_metrics(stmt_df)
+        if not _fin_all.empty:
+            _disc_window = _fin_all[
+                (_fin_all["DisclosedDate"] >= cutoff) & (_fin_all["DisclosedDate"] <= target_dt)
+            ].copy()
+            if not _disc_window.empty:
+                _name_col = next(
+                    (c for c in ["CompanyName", "Name", "会社名"] if c in listed_df.columns), None
+                )
+                if _name_col:
+                    _disc_window["CompanyName"] = _disc_window["Code"].astype(str).map(
+                        dict(zip(listed_df["Code"].astype(str), listed_df[_name_col]))
+                    )
+                _scale_col = next(
+                    (c for c in ["ScaleCategory", "ScaleCat"] if c in listed_df.columns), None
+                )
+                if _scale_col:
+                    _disc_window["ScaleCat"] = _disc_window["Code"].astype(str).map(
+                        dict(zip(listed_df["Code"].astype(str), listed_df[_scale_col]))
+                    )
+                RESULTS_DIR.mkdir(exist_ok=True)
+                _disc_csv = RESULTS_DIR / f"daily_disclosed_{target_date}.csv"
+                _disc_window.to_csv(_disc_csv, index=False, encoding="utf-8-sig")
+                logger.info(f"開示全件CSV: {_disc_csv} ({len(_disc_window)} 件)")
+
         # 全候補スクリーニング（EntryOpenなしも含む = 当日開示銘柄対応）
         all_candidates = screen_candidates(
             stmt_df, quotes_df, listed_df,
@@ -400,8 +430,6 @@ def cmd_notify(args) -> None:
             logger.info("条件に合致する銘柄なし。通知しません。")
             return
 
-        # 指定期間内の開示に絞る
-        cutoff = target_dt - timedelta(days=lookback_days - 1)
         recent = all_candidates[
             (all_candidates["DisclosedDate"] >= cutoff) &
             (all_candidates["DisclosedDate"] <= target_dt)
