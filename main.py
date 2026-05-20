@@ -347,7 +347,150 @@ def _build_threads_message(candidates, target_date: str, listed_df=None) -> str:
     return "\n".join(lines)
 
 
-def cmd_notify(args) -> None:
+def _build_disclosure_threads_message(
+    total_disclosed: int,
+    mid_large_disclosed: int,
+    hits,
+    target_date: str,
+    listed_df=None,
+) -> str:
+    """18:00 JST用・開示まとめThreadsメッセージ。"""
+    import pandas as pd
+
+    name_map = {}
+    if listed_df is not None:
+        for col in ["CompanyName", "Name", "会社名"]:
+            if col in listed_df.columns:
+                for _, r in listed_df[["Code", col]].iterrows():
+                    c = str(r["Code"])
+                    name_map[c] = r[col]
+                    if len(c) == 5 and c.endswith("0"):
+                        name_map[c[:-1]] = r[col]
+                break
+
+    dt = pd.to_datetime(target_date).strftime("%m/%d")
+    n_hits = len(hits) if hits is not None and not hits.empty else 0
+
+    lines = [
+        f"【決算開示まとめ {dt}】",
+        f"本日開示: {total_disclosed}件 / 中大型株: {mid_large_disclosed}件",
+        f"条件クリア: {n_hits}件{'  🎯' if n_hits > 0 else ''}",
+        "",
+    ]
+
+    if n_hits == 0:
+        lines.append("本日はヒットなし")
+    else:
+        for _, row in hits.iterrows():
+            code = str(row.get("Code", ""))
+            company = name_map.get(code, code)
+            s17 = row.get("S17Nm", "")
+            cap = row.get("MarketCap", float("nan"))
+            eg = row.get("EarningsGrowth", float("nan"))
+            sg = row.get("SalesGrowth", float("nan"))
+            roe = row.get("ROE", float("nan"))
+            entry_open = row.get("EntryOpen")
+            entry_date = row.get("EntryDate")
+
+            cap_str = f"{cap/1e8:.0f}億円" if pd.notna(cap) else "-"
+            eg_str = f"{eg:+.0%}" if pd.notna(eg) else "-"
+            sg_str = f"{sg:+.0%}" if pd.notna(sg) else "-"
+            roe_str = f"{roe:.0%}" if pd.notna(roe) else "-"
+            entry_str = pd.to_datetime(entry_date).strftime("%m/%d") if pd.notna(entry_date) else "TBD"
+            price_str = f"{entry_open:,.0f}円" if pd.notna(entry_open) else "-"
+
+            header = f"◆{company}"
+            if s17:
+                header += f"（{s17}）"
+            lines.append(header)
+            lines.append(f"  OP {eg_str} / 売上 {sg_str} / ROE {roe_str}")
+            lines.append(f"  {cap_str} / {entry_str}寄り {price_str}予定")
+            lines.append("")
+
+    lines.append("#株式投資 #決算スクリーニング #AIトレード")
+    return "\n".join(lines)
+
+
+def cmd_disclosure_post(args) -> None:
+    """本日の開示銘柄一覧をThreadsに投稿する（18:00 JST用）。"""
+    import os
+    import traceback as _tb
+    from datetime import timedelta
+    import pandas as pd
+    from src.api.jquants_client import JQuantsClient
+    from src.screener.screener import (
+        load_listed_info, load_statements, load_daily_quotes,
+        screen_candidates, compute_financial_metrics,
+    )
+    from src.notifier.threads_notify import post_to_threads
+
+    threads_token = os.environ.get("THREADS_ACCESS_TOKEN", "")
+    if not threads_token:
+        logger.warning("THREADS_ACCESS_TOKEN 未設定。スキップ。")
+        return
+
+    target_date = args.date or datetime.today().strftime("%Y-%m-%d")
+    target_dt = pd.to_datetime(target_date)
+    stmt_start = str(int(target_date[:4]) - 2) + target_date[4:]
+    quotes_start = (target_dt - timedelta(days=90)).strftime("%Y-%m-%d")
+
+    logger.info(f"開示銘柄一覧投稿: {target_date}")
+
+    try:
+        client = JQuantsClient()
+        listed_df = load_listed_info(client)
+        stmt_df = load_statements(client, date_from=stmt_start, date_to=target_date)
+        quotes_df = load_daily_quotes(client, date_from=quotes_start, date_to=target_date)
+
+        if stmt_df.empty:
+            logger.info("財務データなし。スキップ。")
+            return
+
+        # 本日の全開示件数
+        today_stmt = stmt_df[stmt_df["DisclosedDate"] == target_dt]
+        total_disclosed = len(today_stmt)
+
+        # 本日のMid400+Large70開示件数
+        mid_large_count = 0
+        if not today_stmt.empty:
+            fin_today = compute_financial_metrics(today_stmt)
+            if not fin_today.empty:
+                scale_col = next(
+                    (c for c in ["ScaleCategory", "ScaleCat"] if c in listed_df.columns), None
+                )
+                if scale_col:
+                    fin_today["ScaleCat"] = fin_today["Code"].astype(str).map(
+                        dict(zip(listed_df["Code"].astype(str), listed_df[scale_col]))
+                    )
+                    mid_large_count = int(fin_today["ScaleCat"].isin(
+                        ["TOPIX Mid400", "TOPIX Large70"]
+                    ).sum())
+
+        # ヒット銘柄（本日開示のみ）
+        hits = pd.DataFrame()
+        if not quotes_df.empty:
+            all_cands = screen_candidates(
+                stmt_df, quotes_df, listed_df,
+                roe_min=0.12, require_entry_price=False,
+            )
+            if not all_cands.empty:
+                hits = all_cands[all_cands["DisclosedDate"] == target_dt].copy()
+
+        logger.info(f"全開示: {total_disclosed}件 / 中大型: {mid_large_count}件 / ヒット: {len(hits)}件")
+
+        message = _build_disclosure_threads_message(
+            total_disclosed, mid_large_count, hits, target_date, listed_df
+        )
+        print(message)
+        post_to_threads(threads_token, message)
+
+    except Exception as e:
+        logger.error(f"エラー: {type(e).__name__}: {e}")
+        _tb.print_exc()
+        sys.exit(1)
+
+
+
     import os
     import traceback as _tb
     from datetime import timedelta
@@ -754,6 +897,11 @@ def build_parser() -> argparse.ArgumentParser:
     pp = sub.add_parser("portfolio_post", help="保有ポジション損益をThreadsに投稿")
     pp.add_argument("--date", default=None, help="基準日 (YYYY-MM-DD、省略時は今日)")
     pp.set_defaults(func=cmd_portfolio_post)
+
+    # disclosure_post サブコマンド
+    dp = sub.add_parser("disclosure_post", help="本日の開示銘柄一覧をThreadsに投稿（18:00 JST用）")
+    dp.add_argument("--date", default=None, help="基準日 (YYYY-MM-DD、省略時は今日)")
+    dp.set_defaults(func=cmd_disclosure_post)
 
     # notify サブコマンド
     nt = sub.add_parser("notify", help="毎日スクリーニング & メール通知")

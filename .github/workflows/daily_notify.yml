@@ -4,6 +4,8 @@ on:
   schedule:
     # 朝 0:15 UTC = 9:15 JST（前日終値で保有状況投稿）
     - cron: '15 0 * * 1-5'
+    # 夕方 9:00 UTC = 18:00 JST（本日の開示銘柄一覧投稿）
+    - cron: '0 9 * * 1-5'
     # 夜 10:00 UTC = 19:00 JST（スクリーニング & 保有状況投稿）
     - cron: '0 10 * * 1-5'
   workflow_dispatch:
@@ -39,6 +41,31 @@ jobs:
           JQUANTS_API_KEY: ${{ secrets.JQUANTS_API_KEY }}
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
         run: python main.py portfolio_post
+
+  # ── 夕方ジョブ: 開示銘柄一覧投稿 ──────────────────────
+  disclosure-post:
+    if: github.event_name == 'schedule' && startsWith(github.event.schedule, '0 9')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/stock-screening-backtest-RTDEv
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: ライブラリをインストール
+        run: pip install -r requirements.txt
+
+      - name: 本日の開示銘柄一覧をThreadsに投稿
+        env:
+          JQUANTS_API_KEY: ${{ secrets.JQUANTS_API_KEY }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+        run: |
+          DATE="${{ inputs.target_date }}"
+          python main.py disclosure_post ${DATE:+--date "$DATE"}
 
   # ── 夜ジョブ: スクリーニング + 保有状況 ─────────────────
   daily-screen:
