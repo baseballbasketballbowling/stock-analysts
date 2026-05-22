@@ -490,7 +490,7 @@ def cmd_disclosure_post(args) -> None:
         sys.exit(1)
 
 
-
+def cmd_notify(args) -> None:
     import os
     import traceback as _tb
     from datetime import timedelta
