@@ -8,6 +8,24 @@
       "entry_date": "2026-05-18",
       "tp_price": 3933,
       "sl_price": 3249
+    },
+    {
+      "code": "285A0",
+      "company": "285A0（参考）",
+      "shares": 1,
+      "entry_price": 51450,
+      "entry_date": "2026-05-18",
+      "tp_price": 59168,
+      "sl_price": 48878
+    },
+    {
+      "code": "96160",
+      "company": "96160（参考）",
+      "shares": 1,
+      "entry_price": 2452,
+      "entry_date": "2026-05-18",
+      "tp_price": 2820,
+      "sl_price": 2329
     }
   ],
   "closed": []
