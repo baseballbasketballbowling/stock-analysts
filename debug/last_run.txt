@@ -1,74 +1,75 @@
-01:27:12 [INFO] Failed to extract font properties from /usr/share/fonts/truetype/noto/NotoColorEmoji.ttf: Can not load face (unknown file format; error code 0x2)
-01:27:12 [INFO] generated new fontManager
-01:27:12 [INFO] バックテスト期間: 2025-01-01 〜 2025-12-31
-01:27:12 [INFO] STEP1: クライアント初期化
-01:27:12 [INFO] STEP2: 上場銘柄取得
-01:27:12 [INFO] J-Quants: 上場銘柄情報を取得中...
-01:27:15 [INFO] 上場銘柄数: 4446
-01:27:15 [INFO] STEP3: 財務データ取得 (2024-01-01 〜 2025-12-31)
-01:27:15 [INFO] J-Quants: 財務データを取得中 (2024-01-01 〜 2025-12-31)...
-01:27:15 [INFO]   fin_summary バルク: 25 ファイル
-01:27:16 [INFO]     バルクCSV列名: ['DiscDate', 'DiscTime', 'Code', 'DiscNo', 'DocType', 'CurPerType', 'CurPerSt', 'CurPerEn', 'CurFYSt', 'CurFYEn', 'NxtFYSt', 'NxtFYEn', 'Sales', 'OP', 'OdP', 'NP', 'EPS', 'DEPS', 'TA', 'Eq', 'EqAR', 'BPS', 'CFO', 'CFI', 'CFF', 'CashEq', 'Div1Q', 'Div2Q', 'Div3Q', 'DivFY', 'DivAnn', 'DivUnit', 'DivTotalAnn', 'PayoutRatioAnn', 'FDiv1Q', 'FDiv2Q', 'FDiv3Q', 'FDivFY', 'FDivAnn', 'FDivUnit', 'FDivTotalAnn', 'FPayoutRatioAnn', 'NxFDiv1Q', 'NxFDiv2Q', 'NxFDiv3Q', 'NxFDivFY', 'NxFDivAnn', 'NxFDivUnit', 'NxFPayoutRatioAnn', 'FSales2Q', 'FOP2Q', 'FOdP2Q', 'FNP2Q', 'FEPS2Q', 'NxFSales2Q', 'NxFOP2Q', 'NxFOdP2Q', 'NxFNp2Q', 'NxFEPS2Q', 'FSales', 'FOP', 'FOdP', 'FNP', 'FEPS', 'NxFSales', 'NxFOP', 'NxFOdP', 'NxFNp', 'NxFEPS', 'MatChgSub', 'SigChgInC', 'ChgByASRev', 'ChgNoASRev', 'ChgAcEst', 'RetroRst', 'ShOutFY', 'TrShFY', 'AvgSh', 'NCSales', 'NCOP', 'NCOdP', 'NCNP', 'NCEPS', 'NCTA', 'NCEq', 'NCEqAR', 'NCBPS', 'FNCSales2Q', 'FNCOP2Q', 'FNCOdP2Q', 'FNCNP2Q', 'FNCEPS2Q', 'NxFNCSales2Q', 'NxFNCOP2Q', 'NxFNCOdP2Q', 'NxFNCNP2Q', 'NxFNCEPS2Q', 'FNCSales', 'FNCOP', 'FNCOdP', 'FNCNP', 'FNCEPS', 'NxFNCSales', 'NxFNCOP', 'NxFNCOdP', 'NxFNCNP', 'NxFNCEPS']
-01:27:16 [INFO]     1/25: fins/summary/historical/2024/fins_summary_202401.csv.gz (1174件)
-01:27:17 [INFO]     2/25: fins/summary/historical/2024/fins_summary_202402.csv.gz (3013件)
-01:27:18 [INFO]     3/25: fins/summary/historical/2024/fins_summary_202403.csv.gz (622件)
-01:27:19 [INFO]     4/25: fins/summary/historical/2024/fins_summary_202404.csv.gz (1211件)
-01:27:20 [INFO]     5/25: fins/summary/historical/2024/fins_summary_202405.csv.gz (3273件)
-01:27:21 [INFO]     6/25: fins/summary/historical/2024/fins_summary_202406.csv.gz (451件)
-01:27:22 [INFO]     7/25: fins/summary/historical/2024/fins_summary_202407.csv.gz (1220件)
-01:27:23 [INFO]     8/25: fins/summary/historical/2024/fins_summary_202408.csv.gz (2877件)
-01:27:24 [INFO]     9/25: fins/summary/historical/2024/fins_summary_202409.csv.gz (445件)
-01:27:25 [INFO]     10/25: fins/summary/historical/2024/fins_summary_202410.csv.gz (1323件)
-01:27:26 [INFO]     11/25: fins/summary/historical/2024/fins_summary_202411.csv.gz (3009件)
-01:27:27 [INFO]     12/25: fins/summary/historical/2024/fins_summary_202412.csv.gz (417件)
-01:27:28 [INFO]     13/25: fins/summary/historical/2025/fins_summary_202501.csv.gz (1176件)
-01:27:29 [INFO]     14/25: fins/summary/historical/2025/fins_summary_202502.csv.gz (3135件)
-01:27:30 [INFO]     15/25: fins/summary/historical/2025/fins_summary_202503.csv.gz (580件)
-01:27:31 [INFO]     16/25: fins/summary/historical/2025/fins_summary_202504.csv.gz (1119件)
-01:27:33 [INFO]     17/25: fins/summary/historical/2025/fins_summary_202505.csv.gz (3277件)
-01:27:34 [INFO]     18/25: fins/summary/historical/2025/fins_summary_202506.csv.gz (425件)
-01:27:35 [INFO]     19/25: fins/summary/historical/2025/fins_summary_202507.csv.gz (1246件)
-01:27:36 [INFO]     20/25: fins/summary/historical/2025/fins_summary_202508.csv.gz (2790件)
-01:27:37 [INFO]     21/25: fins/summary/historical/2025/fins_summary_202509.csv.gz (452件)
-01:27:38 [INFO]     22/25: fins/summary/historical/2025/fins_summary_202510.csv.gz (1372件)
-01:27:39 [INFO]     23/25: fins/summary/historical/2025/fins_summary_202511.csv.gz (2907件)
-01:27:40 [INFO]     24/25: fins/summary/historical/2025/fins_summary_202512.csv.gz (410件)
-01:27:41 [INFO]     25/25: fins/summary/historical/2026/fins_summary_202601.csv.gz (1097件)
-01:27:44 [INFO] 財務データ件数: 32235
-01:27:44 [INFO] STEP4: 日足データ取得 (2025-01-01 〜 2025-12-31)
-01:27:44 [INFO] J-Quants: 日足データを取得中 (2025-01-01 〜 2025-12-31)...
-01:27:45 [INFO]   eq_bars_daily バルク: 13 ファイル
-01:27:45 [INFO]     バルクCSV列名: ['Date', 'Code', 'O', 'H', 'L', 'C', 'UL', 'LL', 'Vo', 'Va', 'AdjFactor']
-01:27:45 [INFO]     1/13: equities/bars/daily/historical/2025/equities_bars_daily_202501.csv.gz (83868件)
-01:27:46 [INFO]     2/13: equities/bars/daily/historical/2025/equities_bars_daily_202502.csv.gz (79344件)
-01:27:48 [INFO]     3/13: equities/bars/daily/historical/2025/equities_bars_daily_202503.csv.gz (88102件)
-01:27:49 [INFO]     4/13: equities/bars/daily/historical/2025/equities_bars_daily_202504.csv.gz (92697件)
-01:27:50 [INFO]     5/13: equities/bars/daily/historical/2025/equities_bars_daily_202505.csv.gz (88239件)
-01:27:51 [INFO]     6/13: equities/bars/daily/historical/2025/equities_bars_daily_202506.csv.gz (92514件)
-01:27:52 [INFO]     7/13: equities/bars/daily/historical/2025/equities_bars_daily_202507.csv.gz (97092件)
-01:27:54 [INFO]     8/13: equities/bars/daily/historical/2025/equities_bars_daily_202508.csv.gz (88287件)
-01:27:55 [INFO]     9/13: equities/bars/daily/historical/2025/equities_bars_daily_202509.csv.gz (88184件)
-01:27:56 [INFO]     10/13: equities/bars/daily/historical/2025/equities_bars_daily_202510.csv.gz (97117件)
-01:27:57 [INFO]     11/13: equities/bars/daily/historical/2025/equities_bars_daily_202511.csv.gz (79574件)
-01:27:58 [INFO]     12/13: equities/bars/daily/historical/2025/equities_bars_daily_202512.csv.gz (97483件)
-01:27:59 [INFO]     13/13: equities/bars/daily/historical/2026/equities_bars_daily_202601.csv.gz (84260件)
-01:28:20 [INFO] 日足データ件数: 1072501
-01:28:20 [INFO] STEP5: スクリーニング
-01:28:20 [INFO]   決算成長率 >= 20%: 5145 件
-01:28:20 [INFO]   ROE >= 12%: 5145 → 921 件
-01:28:20 [INFO]   Code形式 listed='13010', passed='137A0'
-01:28:20 [INFO]   ScaleCat値分布: {'-': 531, 'TOPIX Small 2': 122, 'TOPIX Small 1': 121, 'TOPIX Mid400': 89, None: 27, 'TOPIX Large70': 22, 'TOPIX Core30': 9}
-01:28:20 [INFO]   ScaleCat Mid400+Large70(['TOPIX Mid400', 'TOPIX Large70']): 921 → 111 件
-01:28:21 [INFO]   始値カラム: AdjustmentOpen
-01:28:22 [INFO]   大幅GDフィルタ(gap>=-5%): 111 → 101 件
-01:28:26 [INFO]   RSI14: 100 件に付与
-01:28:26 [INFO]   最終候補: 101 件
-01:28:26 [INFO] 候補銘柄数: 101
-01:28:26 [INFO] STEP6: バックテスト
-01:28:27 [INFO] バックテスト開始: 101 候補 (entry_delay=0)
-01:28:27 [INFO] バックテスト完了: 101 トレード
-01:28:27 [INFO] トレード一覧を保存: /home/runner/work/stock-analysts/stock-analysts/results/backtest_summary.csv
-01:28:27 [INFO] 指標を保存: /home/runner/work/stock-analysts/stock-analysts/results/backtest_metrics.json
+03:14:04 [INFO] Failed to extract font properties from /usr/share/fonts/truetype/noto/NotoColorEmoji.ttf: Can not load face (unknown file format; error code 0x2)
+03:14:05 [INFO] generated new fontManager
+03:14:05 [INFO] バックテスト期間: 2025-01-01 〜 2025-12-31
+03:14:05 [INFO] STEP1: クライアント初期化
+03:14:05 [INFO] STEP2: 上場銘柄取得
+03:14:05 [INFO] J-Quants: 上場銘柄情報を取得中...
+03:14:07 [INFO] 上場銘柄数: 4451
+03:14:07 [INFO] STEP3: 財務データ取得 (2024-01-01 〜 2025-12-31)
+03:14:07 [INFO] J-Quants: 財務データを取得中 (2024-01-01 〜 2025-12-31)...
+03:14:08 [INFO]   fin_summary バルク: 25 ファイル
+03:14:08 [INFO]     バルクCSV列名: ['DiscDate', 'DiscTime', 'Code', 'DiscNo', 'DocType', 'CurPerType', 'CurPerSt', 'CurPerEn', 'CurFYSt', 'CurFYEn', 'NxtFYSt', 'NxtFYEn', 'Sales', 'OP', 'OdP', 'NP', 'EPS', 'DEPS', 'TA', 'Eq', 'EqAR', 'BPS', 'CFO', 'CFI', 'CFF', 'CashEq', 'Div1Q', 'Div2Q', 'Div3Q', 'DivFY', 'DivAnn', 'DivUnit', 'DivTotalAnn', 'PayoutRatioAnn', 'FDiv1Q', 'FDiv2Q', 'FDiv3Q', 'FDivFY', 'FDivAnn', 'FDivUnit', 'FDivTotalAnn', 'FPayoutRatioAnn', 'NxFDiv1Q', 'NxFDiv2Q', 'NxFDiv3Q', 'NxFDivFY', 'NxFDivAnn', 'NxFDivUnit', 'NxFPayoutRatioAnn', 'FSales2Q', 'FOP2Q', 'FOdP2Q', 'FNP2Q', 'FEPS2Q', 'NxFSales2Q', 'NxFOP2Q', 'NxFOdP2Q', 'NxFNp2Q', 'NxFEPS2Q', 'FSales', 'FOP', 'FOdP', 'FNP', 'FEPS', 'NxFSales', 'NxFOP', 'NxFOdP', 'NxFNp', 'NxFEPS', 'MatChgSub', 'SigChgInC', 'ChgByASRev', 'ChgNoASRev', 'ChgAcEst', 'RetroRst', 'ShOutFY', 'TrShFY', 'AvgSh', 'NCSales', 'NCOP', 'NCOdP', 'NCNP', 'NCEPS', 'NCTA', 'NCEq', 'NCEqAR', 'NCBPS', 'FNCSales2Q', 'FNCOP2Q', 'FNCOdP2Q', 'FNCNP2Q', 'FNCEPS2Q', 'NxFNCSales2Q', 'NxFNCOP2Q', 'NxFNCOdP2Q', 'NxFNCNP2Q', 'NxFNCEPS2Q', 'FNCSales', 'FNCOP', 'FNCOdP', 'FNCNP', 'FNCEPS', 'NxFNCSales', 'NxFNCOP', 'NxFNCOdP', 'NxFNCNP', 'NxFNCEPS']
+03:14:08 [INFO]     1/25: fins/summary/historical/2024/fins_summary_202401.csv.gz (1174件)
+03:14:09 [INFO]     2/25: fins/summary/historical/2024/fins_summary_202402.csv.gz (3013件)
+03:14:10 [INFO]     3/25: fins/summary/historical/2024/fins_summary_202403.csv.gz (622件)
+03:14:11 [INFO]     4/25: fins/summary/historical/2024/fins_summary_202404.csv.gz (1211件)
+03:14:12 [INFO]     5/25: fins/summary/historical/2024/fins_summary_202405.csv.gz (3273件)
+03:14:13 [INFO]     6/25: fins/summary/historical/2024/fins_summary_202406.csv.gz (451件)
+03:14:14 [INFO]     7/25: fins/summary/historical/2024/fins_summary_202407.csv.gz (1220件)
+03:14:15 [INFO]     8/25: fins/summary/historical/2024/fins_summary_202408.csv.gz (2877件)
+03:14:16 [INFO]     9/25: fins/summary/historical/2024/fins_summary_202409.csv.gz (445件)
+03:14:17 [INFO]     10/25: fins/summary/historical/2024/fins_summary_202410.csv.gz (1323件)
+03:14:18 [INFO]     11/25: fins/summary/historical/2024/fins_summary_202411.csv.gz (3009件)
+03:14:19 [INFO]     12/25: fins/summary/historical/2024/fins_summary_202412.csv.gz (417件)
+03:14:20 [INFO]     13/25: fins/summary/historical/2025/fins_summary_202501.csv.gz (1176件)
+03:14:21 [INFO]     14/25: fins/summary/historical/2025/fins_summary_202502.csv.gz (3135件)
+03:14:22 [INFO]     15/25: fins/summary/historical/2025/fins_summary_202503.csv.gz (580件)
+03:14:23 [INFO]     16/25: fins/summary/historical/2025/fins_summary_202504.csv.gz (1119件)
+03:14:24 [INFO]     17/25: fins/summary/historical/2025/fins_summary_202505.csv.gz (3277件)
+03:14:25 [INFO]     18/25: fins/summary/historical/2025/fins_summary_202506.csv.gz (425件)
+03:14:26 [INFO]     19/25: fins/summary/historical/2025/fins_summary_202507.csv.gz (1246件)
+03:14:26 [INFO]     20/25: fins/summary/historical/2025/fins_summary_202508.csv.gz (2790件)
+03:14:27 [INFO]     21/25: fins/summary/historical/2025/fins_summary_202509.csv.gz (452件)
+03:14:28 [INFO]     22/25: fins/summary/historical/2025/fins_summary_202510.csv.gz (1372件)
+03:14:29 [INFO]     23/25: fins/summary/historical/2025/fins_summary_202511.csv.gz (2907件)
+03:14:30 [INFO]     24/25: fins/summary/historical/2025/fins_summary_202512.csv.gz (410件)
+03:14:31 [INFO]     25/25: fins/summary/historical/2026/fins_summary_202601.csv.gz (1097件)
+03:14:35 [INFO] 財務データ件数: 32235
+03:14:35 [INFO] STEP4: 日足データ取得 (2025-01-01 〜 2025-12-31)
+03:14:35 [INFO] J-Quants: 日足データを取得中 (2025-01-01 〜 2025-12-31)...
+03:14:35 [INFO]   eq_bars_daily バルク: 13 ファイル
+03:14:35 [INFO]     バルクCSV列名: ['Date', 'Code', 'O', 'H', 'L', 'C', 'UL', 'LL', 'Vo', 'Va', 'AdjFactor']
+03:14:35 [INFO]     1/13: equities/bars/daily/historical/2025/equities_bars_daily_202501.csv.gz (83868件)
+03:14:36 [INFO]     2/13: equities/bars/daily/historical/2025/equities_bars_daily_202502.csv.gz (79344件)
+03:14:37 [INFO]     3/13: equities/bars/daily/historical/2025/equities_bars_daily_202503.csv.gz (88102件)
+03:14:38 [INFO]     4/13: equities/bars/daily/historical/2025/equities_bars_daily_202504.csv.gz (92697件)
+03:14:40 [INFO]     5/13: equities/bars/daily/historical/2025/equities_bars_daily_202505.csv.gz (88239件)
+03:14:41 [INFO]     6/13: equities/bars/daily/historical/2025/equities_bars_daily_202506.csv.gz (92514件)
+03:14:42 [INFO]     7/13: equities/bars/daily/historical/2025/equities_bars_daily_202507.csv.gz (97092件)
+03:14:43 [INFO]     8/13: equities/bars/daily/historical/2025/equities_bars_daily_202508.csv.gz (88287件)
+03:14:44 [INFO]     9/13: equities/bars/daily/historical/2025/equities_bars_daily_202509.csv.gz (88184件)
+03:14:45 [INFO]     10/13: equities/bars/daily/historical/2025/equities_bars_daily_202510.csv.gz (97117件)
+03:14:46 [INFO]     11/13: equities/bars/daily/historical/2025/equities_bars_daily_202511.csv.gz (79574件)
+03:14:47 [INFO]     12/13: equities/bars/daily/historical/2025/equities_bars_daily_202512.csv.gz (97483件)
+03:14:48 [INFO]     13/13: equities/bars/daily/historical/2026/equities_bars_daily_202601.csv.gz (84260件)
+03:15:09 [INFO] 日足データ件数: 1072501
+03:15:09 [INFO] STEP5: スクリーニング
+03:15:09 [INFO]   黒字転換補正: 790 件
+03:15:09 [INFO]   決算成長率 >= 20%: 5935 件
+03:15:09 [INFO]   ROE >= 12%: 5935 → 1003 件
+03:15:09 [INFO]   Code形式 listed='13010', passed='137A0'
+03:15:09 [INFO]   ScaleCat値分布: {'-': 594, 'TOPIX Small 2': 130, 'TOPIX Small 1': 121, 'TOPIX Mid400': 96, None: 31, 'TOPIX Large70': 22, 'TOPIX Core30': 9}
+03:15:09 [INFO]   ScaleCat Mid400+Large70(['TOPIX Mid400', 'TOPIX Large70']): 1003 → 118 件
+03:15:10 [INFO]   始値カラム: AdjustmentOpen
+03:15:10 [INFO]   大幅GDフィルタ(gap>=-5%): 118 → 107 件
+03:15:16 [INFO]   RSI14: 106 件に付与
+03:15:16 [INFO]   最終候補: 107 件
+03:15:16 [INFO] 候補銘柄数: 107
+03:15:16 [INFO] STEP6: バックテスト
+03:15:17 [INFO] バックテスト開始: 107 候補 (entry_delay=0)
+03:15:17 [INFO] バックテスト完了: 107 トレード
+03:15:17 [INFO] トレード一覧を保存: /home/runner/work/stock-analysts/stock-analysts/results/backtest_summary.csv
+03:15:17 [INFO] 指標を保存: /home/runner/work/stock-analysts/stock-analysts/results/backtest_metrics.json
 /home/runner/work/stock-analysts/stock-analysts/src/backtest/metrics.py:260: UserWarning: Glyph 12496 (\N{KATAKANA LETTER BA}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
 /home/runner/work/stock-analysts/stock-analysts/src/backtest/metrics.py:260: UserWarning: Glyph 12483 (\N{KATAKANA LETTER SMALL TU}) missing from font(s) DejaVu Sans.
@@ -101,73 +102,74 @@
   plt.savefig(out_path, dpi=150, bbox_inches="tight")
 /home/runner/work/stock-analysts/stock-analysts/src/backtest/metrics.py:262: UserWarning: Glyph 26524 (\N{CJK UNIFIED IDEOGRAPH-679C}) missing from font(s) DejaVu Sans.
   plt.savefig(out_path, dpi=150, bbox_inches="tight")
-01:28:27 [INFO] 資産曲線を保存: /home/runner/work/stock-analysts/stock-analysts/results/equity_curve.png
-01:28:27 [INFO] 完了。results/ フォルダに結果を保存しました。
+03:15:17 [INFO] 資産曲線を保存: /home/runner/work/stock-analysts/stock-analysts/results/equity_curve.png
+03:15:17 [INFO] 完了。results/ フォルダに結果を保存しました。
 
 ==================================================
   バックテスト結果サマリー
 ==================================================
-  総トレード数        :      101
-  勝率                :    49.5%
-  平均利益 (勝ち)     :    9.25%
-  平均損失 (負け)     :   -4.29%
-  プロフィットファクタ:     2.11
-  期待値              :    2.41%
-  総損益              :  2,436,611 円
-  総リターン          :    24.4%
-  最大ドローダウン    :    -3.2%
+  総トレード数        :      107
+  勝率                :    51.4%
+  平均利益 (勝ち)     :    9.63%
+  平均損失 (負け)     :   -4.31%
+  プロフィットファクタ:     2.36
+  期待値              :    2.86%
+  総損益              :  3,054,971 円
+  総リターン          :    30.6%
+  最大ドローダウン    :    -2.7%
   エグジット理由 (件数 / 勝率 / 平均損益 / 平均保有日数):
-    損切り  :  41件  勝率0.0%  平均-5.00%  保有8日
-    利確   :  19件  勝率100.0%  平均+15.00%  保有12日
-    期間切れ:  41件  勝率75.6%  平均+3.99%  保有29日
+    損切り  :  42件  勝率0.0%  平均-5.00%  保有7日
+    利確   :  23件  勝率100.0%  平均+15.00%  保有12日
+    期間切れ:  42件  勝率76.2%  平均+4.06%  保有29日
   ギャップ詳細分析 (5段階):
     ②GD(-5%~-1%):  23件  勝率60.9%  平均損益+3.63%  平均Gap-2.89%
-    ③フラット(±1%):  31件  勝率38.7%  平均損益+0.09%  平均Gap-0.10%
-    ④GU(+1%~+5%):  28件  勝率57.1%  平均損益+4.06%  平均Gap+2.54%
-    ⑤大幅GU(>+5%):  19件  勝率42.1%  平均損益+2.30%  平均Gap+8.46%
+    ③フラット(±1%):  32件  勝率40.6%  平均損益+0.56%  平均Gap-0.09%
+    ④GU(+1%~+5%):  30件  勝率56.7%  平均損益+4.12%  平均Gap+2.48%
+    ⑤大幅GU(>+5%):  22件  勝率50.0%  平均損益+3.66%  平均Gap+8.90%
   月別分析 (★=決算集中月):
        1月:   2件  勝率100.0%  平均+15.00%
-    ★ 2月:  32件  勝率37.5%  平均+0.55%
+    ★ 2月:  34件  勝率41.2%  平均+1.40%
        4月:   7件  勝率100.0%  平均+11.77%
-    ★ 5月:  33件  勝率51.5%  平均+2.14%
+    ★ 5月:  35件  勝率51.4%  平均+2.30%
        7月:   3件  勝率33.3%  平均+0.11%
-    ★ 8月:   9件  勝率77.8%  平均+6.78%
+    ★ 8月:  10件  勝率80.0%  平均+6.78%
        9月:   1件  勝率0.0%  平均-5.00%
       10月:   3件  勝率33.3%  平均-1.02%
-    ★11月:  11件  勝率27.3%  平均-0.92%
+    ★11月:  12件  勝率33.3%  平均+0.40%
   規模別分析 (TOPIX分類):
     TOPIX Large70       :  21件  勝率61.9%  平均+4.15%
-    TOPIX Mid400        :  80件  勝率46.2%  平均+1.96%
+    TOPIX Mid400        :  86件  勝率48.8%  平均+2.54%
 ==================================================
 
 ===== BACKTEST (上限なし: 大型株含む) =====
-01:28:28 [INFO] バックテスト期間: 2025-01-01 〜 2025-12-31
-01:28:28 [INFO] STEP1: クライアント初期化
-01:28:28 [INFO] STEP2: 上場銘柄取得
-01:28:28 [INFO] 上場銘柄情報をキャッシュから読み込み
-01:28:28 [INFO] 上場銘柄数: 4446
-01:28:28 [INFO] STEP3: 財務データ取得 (2024-01-01 〜 2025-12-31)
-01:28:28 [INFO] 財務データをキャッシュから読み込み
-01:28:29 [INFO] 財務データ件数: 32235
-01:28:29 [INFO] STEP4: 日足データ取得 (2025-01-01 〜 2025-12-31)
-01:28:29 [INFO] 日足データをキャッシュから読み込み
-01:28:35 [INFO] 日足データ件数: 1072501
-01:28:35 [INFO] STEP5: スクリーニング
-01:28:35 [INFO]   決算成長率 >= 20%: 5145 件
-01:28:35 [INFO]   ROE >= 12%: 5145 → 921 件
-01:28:35 [INFO]   Code形式 listed='13010', passed='137A0'
-01:28:35 [INFO]   ScaleCat値分布: {'-': 531, 'TOPIX Small 2': 122, 'TOPIX Small 1': 121, 'TOPIX Mid400': 89, None: 27, 'TOPIX Large70': 22, 'TOPIX Core30': 9}
-01:28:35 [INFO]   ScaleCat Mid400+Large70+Core30(['TOPIX Mid400', 'TOPIX Large70', 'TOPIX Core30']): 921 → 120 件
-01:28:37 [INFO]   始値カラム: AdjustmentOpen
-01:28:37 [INFO]   大幅GDフィルタ(gap>=-5%): 120 → 109 件
-01:28:42 [INFO]   RSI14: 108 件に付与
-01:28:42 [INFO]   最終候補: 109 件
-01:28:42 [INFO] 候補銘柄数: 109
-01:28:42 [INFO] STEP6: バックテスト
-01:28:43 [INFO] バックテスト開始: 109 候補 (entry_delay=0)
-01:28:43 [INFO] バックテスト完了: 109 トレード
-01:28:43 [INFO] トレード一覧を保存: /home/runner/work/stock-analysts/stock-analysts/results/backtest_summary.csv
-01:28:43 [INFO] 指標を保存: /home/runner/work/stock-analysts/stock-analysts/results/backtest_metrics.json
+03:15:18 [INFO] バックテスト期間: 2025-01-01 〜 2025-12-31
+03:15:18 [INFO] STEP1: クライアント初期化
+03:15:18 [INFO] STEP2: 上場銘柄取得
+03:15:18 [INFO] 上場銘柄情報をキャッシュから読み込み
+03:15:18 [INFO] 上場銘柄数: 4451
+03:15:18 [INFO] STEP3: 財務データ取得 (2024-01-01 〜 2025-12-31)
+03:15:18 [INFO] 財務データをキャッシュから読み込み
+03:15:19 [INFO] 財務データ件数: 32235
+03:15:19 [INFO] STEP4: 日足データ取得 (2025-01-01 〜 2025-12-31)
+03:15:19 [INFO] 日足データをキャッシュから読み込み
+03:15:25 [INFO] 日足データ件数: 1072501
+03:15:25 [INFO] STEP5: スクリーニング
+03:15:25 [INFO]   黒字転換補正: 790 件
+03:15:25 [INFO]   決算成長率 >= 20%: 5935 件
+03:15:25 [INFO]   ROE >= 12%: 5935 → 1003 件
+03:15:25 [INFO]   Code形式 listed='13010', passed='137A0'
+03:15:25 [INFO]   ScaleCat値分布: {'-': 594, 'TOPIX Small 2': 130, 'TOPIX Small 1': 121, 'TOPIX Mid400': 96, None: 31, 'TOPIX Large70': 22, 'TOPIX Core30': 9}
+03:15:25 [INFO]   ScaleCat Mid400+Large70+Core30(['TOPIX Mid400', 'TOPIX Large70', 'TOPIX Core30']): 1003 → 127 件
+03:15:27 [INFO]   始値カラム: AdjustmentOpen
+03:15:27 [INFO]   大幅GDフィルタ(gap>=-5%): 127 → 115 件
+03:15:34 [INFO]   RSI14: 114 件に付与
+03:15:34 [INFO]   最終候補: 115 件
+03:15:34 [INFO] 候補銘柄数: 115
+03:15:34 [INFO] STEP6: バックテスト
+03:15:35 [INFO] バックテスト開始: 115 候補 (entry_delay=0)
+03:15:35 [INFO] バックテスト完了: 115 トレード
+03:15:35 [INFO] トレード一覧を保存: /home/runner/work/stock-analysts/stock-analysts/results/backtest_summary.csv
+03:15:35 [INFO] 指標を保存: /home/runner/work/stock-analysts/stock-analysts/results/backtest_metrics.json
 /home/runner/work/stock-analysts/stock-analysts/src/backtest/metrics.py:260: UserWarning: Glyph 12496 (\N{KATAKANA LETTER BA}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
 /home/runner/work/stock-analysts/stock-analysts/src/backtest/metrics.py:260: UserWarning: Glyph 12483 (\N{KATAKANA LETTER SMALL TU}) missing from font(s) DejaVu Sans.
@@ -200,527 +202,529 @@
   plt.savefig(out_path, dpi=150, bbox_inches="tight")
 /home/runner/work/stock-analysts/stock-analysts/src/backtest/metrics.py:262: UserWarning: Glyph 26524 (\N{CJK UNIFIED IDEOGRAPH-679C}) missing from font(s) DejaVu Sans.
   plt.savefig(out_path, dpi=150, bbox_inches="tight")
-01:28:44 [INFO] 資産曲線を保存: /home/runner/work/stock-analysts/stock-analysts/results/equity_curve.png
-01:28:44 [INFO] 完了。results/ フォルダに結果を保存しました。
+03:15:35 [INFO] 資産曲線を保存: /home/runner/work/stock-analysts/stock-analysts/results/equity_curve.png
+03:15:35 [INFO] 完了。results/ フォルダに結果を保存しました。
 
 ==================================================
   バックテスト結果サマリー
 ==================================================
-  総トレード数        :      109
-  勝率                :    48.6%
-  平均利益 (勝ち)     :    9.39%
-  平均損失 (負け)     :   -4.36%
-  プロフィットファクタ:     2.04
-  期待値              :    2.33%
-  総損益              :  2,536,541 円
-  総リターン          :    25.4%
-  最大ドローダウン    :    -3.3%
+  総トレード数        :      115
+  勝率                :    50.4%
+  平均利益 (勝ち)     :    9.73%
+  平均損失 (負け)     :   -4.37%
+  プロフィットファクタ:     2.27
+  期待値              :    2.74%
+  総損益              :  3,154,901 円
+  総リターン          :    31.6%
+  最大ドローダウン    :    -3.2%
   エグジット理由 (件数 / 勝率 / 平均損益 / 平均保有日数):
-    損切り  :  46件  勝率0.0%  平均-5.00%  保有7日
-    利確   :  21件  勝率100.0%  平均+15.00%  保有12日
-    期間切れ:  42件  勝率76.2%  平均+4.02%  保有29日
+    損切り  :  47件  勝率0.0%  平均-5.00%  保有7日
+    利確   :  25件  勝率100.0%  平均+15.00%  保有12日
+    期間切れ:  43件  勝率76.7%  平均+4.08%  保有29日
   ギャップ詳細分析 (5段階):
     ②GD(-5%~-1%):  24件  勝率58.3%  平均損益+3.27%  平均Gap-2.89%
-    ③フラット(±1%):  33件  勝率39.4%  平均損益+0.39%  平均Gap-0.10%
-    ④GU(+1%~+5%):  32件  勝率53.1%  平均損益+3.24%  平均Gap+2.40%
-    ⑤大幅GU(>+5%):  20件  勝率45.0%  平均損益+2.94%  平均Gap+8.46%
+    ③フラット(±1%):  34件  勝率41.2%  平均損益+0.82%  平均Gap-0.09%
+    ④GU(+1%~+5%):  34件  勝率52.9%  平均損益+3.34%  平均Gap+2.36%
+    ⑤大幅GU(>+5%):  23件  勝率52.2%  平均損益+4.15%  平均Gap+8.88%
   月別分析 (★=決算集中月):
        1月:   3件  勝率100.0%  平均+15.00%
-    ★ 2月:  33件  勝率36.4%  平均+0.38%
+    ★ 2月:  35件  勝率40.0%  平均+1.21%
        4月:   9件  勝率77.8%  平均+8.04%
-    ★ 5月:  35件  勝率51.4%  平均+2.02%
+    ★ 5月:  37件  勝率51.3%  平均+2.18%
        7月:   4件  勝率25.0%  平均-1.17%
-    ★ 8月:   9件  勝率77.8%  平均+6.78%
+    ★ 8月:  10件  勝率80.0%  平均+6.78%
        9月:   1件  勝率0.0%  平均-5.00%
       10月:   4件  勝率50.0%  平均+2.99%
-    ★11月:  11件  勝率27.3%  平均-0.92%
+    ★11月:  12件  勝率33.3%  平均+0.40%
   規模別分析 (TOPIX分類):
     TOPIX Core30        :   8件  勝率37.5%  平均+1.25%
     TOPIX Large70       :  21件  勝率61.9%  平均+4.15%
-    TOPIX Mid400        :  80件  勝率46.2%  平均+1.96%
+    TOPIX Mid400        :  86件  勝率48.8%  平均+2.54%
 ==================================================
 
 ===== PARAMETER SWEEP =====
-01:28:45 [INFO] パラメータスイープ期間: 2025-01-01 〜 2025-12-31
-01:28:45 [INFO] 上場銘柄情報をキャッシュから読み込み
-01:28:45 [INFO] 財務データをキャッシュから読み込み
-01:28:46 [INFO] 日足データをキャッシュから読み込み
-01:28:51 [INFO] ベーススクリーニング（成長率 >= 10%）
-01:28:52 [INFO]   決算成長率 >= 10%: 6535 件
-01:28:52 [INFO]   Code形式 listed='13010', passed='13010'
-01:28:52 [INFO]   ScaleCat値分布: {'-': 3454, 'TOPIX Small 2': 1096, 'TOPIX Small 1': 858, 'TOPIX Mid400': 645, None: 338, 'TOPIX Large70': 107, 'TOPIX Core30': 37}
-01:28:52 [INFO]   ScaleCat Mid400+Large70(['TOPIX Mid400', 'TOPIX Large70']): 6535 → 752 件
-01:28:54 [INFO]   始値カラム: AdjustmentOpen
-01:28:54 [INFO]   大幅GDフィルタ(gap>=-5%): 752 → 694 件
-01:28:59 [INFO]   RSI14: 684 件に付与
-01:28:59 [INFO]   最終候補: 694 件
-01:28:59 [INFO] ベース候補数: 694
-01:28:59 [INFO] パラメータスイープ: 144 通り
-01:29:00 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:01 [INFO] バックテスト完了: 694 トレード
-01:29:01 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:01 [INFO] バックテスト完了: 489 トレード
-01:29:01 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:01 [INFO] バックテスト完了: 321 トレード
-01:29:01 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:01 [INFO] バックテスト完了: 184 トレード
-01:29:01 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:02 [INFO] バックテスト完了: 694 トレード
-01:29:02 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:02 [INFO] バックテスト完了: 489 トレード
-01:29:02 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:02 [INFO] バックテスト完了: 321 トレード
-01:29:02 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:02 [INFO] バックテスト完了: 184 トレード
-01:29:02 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:03 [INFO] バックテスト完了: 694 トレード
-01:29:03 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:03 [INFO] バックテスト完了: 489 トレード
-01:29:03 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:04 [INFO] バックテスト完了: 321 トレード
-01:29:04 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:04 [INFO] バックテスト完了: 184 トレード
-01:29:04 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:04 [INFO] バックテスト完了: 694 トレード
-01:29:04 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:05 [INFO] バックテスト完了: 489 トレード
-01:29:05 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:05 [INFO] バックテスト完了: 321 トレード
-01:29:05 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:05 [INFO] バックテスト完了: 184 トレード
-01:29:05 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:05 [INFO] バックテスト完了: 694 トレード
-01:29:05 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:06 [INFO] バックテスト完了: 489 トレード
-01:29:06 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:06 [INFO] バックテスト完了: 321 トレード
-01:29:06 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:06 [INFO] バックテスト完了: 184 トレード
-01:29:06 [INFO]   スイープ進捗: 20/144
-01:29:06 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:07 [INFO] バックテスト完了: 694 トレード
-01:29:07 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:07 [INFO] バックテスト完了: 489 トレード
-01:29:07 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:07 [INFO] バックテスト完了: 321 トレード
-01:29:07 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:07 [INFO] バックテスト完了: 184 トレード
-01:29:07 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:08 [INFO] バックテスト完了: 694 トレード
-01:29:08 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:08 [INFO] バックテスト完了: 489 トレード
-01:29:08 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:09 [INFO] バックテスト完了: 321 トレード
-01:29:09 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:09 [INFO] バックテスト完了: 184 トレード
-01:29:09 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:09 [INFO] バックテスト完了: 694 トレード
-01:29:09 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:10 [INFO] バックテスト完了: 489 トレード
-01:29:10 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:10 [INFO] バックテスト完了: 321 トレード
-01:29:10 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:10 [INFO] バックテスト完了: 184 トレード
-01:29:10 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:11 [INFO] バックテスト完了: 694 トレード
-01:29:11 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:11 [INFO] バックテスト完了: 489 トレード
-01:29:11 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:11 [INFO] バックテスト完了: 321 トレード
-01:29:11 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:11 [INFO] バックテスト完了: 184 トレード
-01:29:11 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:12 [INFO] バックテスト完了: 694 トレード
-01:29:12 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:12 [INFO] バックテスト完了: 489 トレード
-01:29:12 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:12 [INFO] バックテスト完了: 321 トレード
-01:29:13 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:13 [INFO] バックテスト完了: 184 トレード
-01:29:13 [INFO]   スイープ進捗: 40/144
-01:29:13 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:13 [INFO] バックテスト完了: 694 トレード
-01:29:13 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:13 [INFO] バックテスト完了: 489 トレード
-01:29:13 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:14 [INFO] バックテスト完了: 321 トレード
-01:29:14 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:14 [INFO] バックテスト完了: 184 トレード
-01:29:14 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:14 [INFO] バックテスト完了: 694 トレード
-01:29:14 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:15 [INFO] バックテスト完了: 489 トレード
-01:29:15 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:15 [INFO] バックテスト完了: 321 トレード
-01:29:15 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:15 [INFO] バックテスト完了: 184 トレード
-01:29:15 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:16 [INFO] バックテスト完了: 694 トレード
-01:29:16 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:16 [INFO] バックテスト完了: 489 トレード
-01:29:16 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:16 [INFO] バックテスト完了: 321 トレード
-01:29:16 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:16 [INFO] バックテスト完了: 184 トレード
-01:29:16 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:17 [INFO] バックテスト完了: 694 トレード
-01:29:17 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:17 [INFO] バックテスト完了: 489 トレード
-01:29:17 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:18 [INFO] バックテスト完了: 321 トレード
-01:29:18 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:18 [INFO] バックテスト完了: 184 トレード
-01:29:18 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:18 [INFO] バックテスト完了: 694 トレード
-01:29:18 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:19 [INFO] バックテスト完了: 489 トレード
-01:29:19 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:19 [INFO] バックテスト完了: 321 トレード
-01:29:19 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:19 [INFO] バックテスト完了: 184 トレード
-01:29:19 [INFO]   スイープ進捗: 60/144
-01:29:19 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:20 [INFO] バックテスト完了: 694 トレード
-01:29:20 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:20 [INFO] バックテスト完了: 489 トレード
-01:29:20 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:20 [INFO] バックテスト完了: 321 トレード
-01:29:20 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:20 [INFO] バックテスト完了: 184 トレード
-01:29:20 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:21 [INFO] バックテスト完了: 694 トレード
-01:29:21 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:21 [INFO] バックテスト完了: 489 トレード
-01:29:21 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:22 [INFO] バックテスト完了: 321 トレード
-01:29:22 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:22 [INFO] バックテスト完了: 184 トレード
-01:29:22 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:22 [INFO] バックテスト完了: 694 トレード
-01:29:22 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:23 [INFO] バックテスト完了: 489 トレード
-01:29:23 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:23 [INFO] バックテスト完了: 321 トレード
-01:29:23 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:23 [INFO] バックテスト完了: 184 トレード
-01:29:23 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:24 [INFO] バックテスト完了: 694 トレード
-01:29:24 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:24 [INFO] バックテスト完了: 489 トレード
-01:29:24 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:24 [INFO] バックテスト完了: 321 トレード
-01:29:24 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:24 [INFO] バックテスト完了: 184 トレード
-01:29:24 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:25 [INFO] バックテスト完了: 694 トレード
-01:29:25 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:25 [INFO] バックテスト完了: 489 トレード
-01:29:25 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:26 [INFO] バックテスト完了: 321 トレード
-01:29:26 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:26 [INFO] バックテスト完了: 184 トレード
-01:29:26 [INFO]   スイープ進捗: 80/144
-01:29:26 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:26 [INFO] バックテスト完了: 694 トレード
-01:29:26 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:27 [INFO] バックテスト完了: 489 トレード
-01:29:27 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:27 [INFO] バックテスト完了: 321 トレード
-01:29:27 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:27 [INFO] バックテスト完了: 184 トレード
-01:29:27 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:28 [INFO] バックテスト完了: 694 トレード
-01:29:28 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:28 [INFO] バックテスト完了: 489 トレード
-01:29:28 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:28 [INFO] バックテスト完了: 321 トレード
-01:29:28 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:28 [INFO] バックテスト完了: 184 トレード
-01:29:28 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:29 [INFO] バックテスト完了: 694 トレード
-01:29:29 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:29 [INFO] バックテスト完了: 489 トレード
-01:29:29 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:30 [INFO] バックテスト完了: 321 トレード
-01:29:30 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:30 [INFO] バックテスト完了: 184 トレード
-01:29:30 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:30 [INFO] バックテスト完了: 694 トレード
-01:29:30 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:31 [INFO] バックテスト完了: 489 トレード
-01:29:31 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:31 [INFO] バックテスト完了: 321 トレード
-01:29:31 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:31 [INFO] バックテスト完了: 184 トレード
-01:29:31 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:32 [INFO] バックテスト完了: 694 トレード
-01:29:32 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:32 [INFO] バックテスト完了: 489 トレード
-01:29:32 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:32 [INFO] バックテスト完了: 321 トレード
-01:29:32 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:32 [INFO] バックテスト完了: 184 トレード
-01:29:32 [INFO]   スイープ進捗: 100/144
-01:29:32 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:33 [INFO] バックテスト完了: 694 トレード
-01:29:33 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:33 [INFO] バックテスト完了: 489 トレード
-01:29:33 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:34 [INFO] バックテスト完了: 321 トレード
-01:29:34 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:34 [INFO] バックテスト完了: 184 トレード
-01:29:34 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:35 [INFO] バックテスト完了: 694 トレード
-01:29:35 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:35 [INFO] バックテスト完了: 489 トレード
-01:29:35 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:35 [INFO] バックテスト完了: 321 トレード
-01:29:35 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:36 [INFO] バックテスト完了: 184 トレード
-01:29:36 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:36 [INFO] バックテスト完了: 694 トレード
-01:29:36 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:36 [INFO] バックテスト完了: 489 トレード
-01:29:36 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:37 [INFO] バックテスト完了: 321 トレード
-01:29:37 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:37 [INFO] バックテスト完了: 184 トレード
-01:29:37 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:37 [INFO] バックテスト完了: 694 トレード
-01:29:37 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:38 [INFO] バックテスト完了: 489 トレード
-01:29:38 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:38 [INFO] バックテスト完了: 321 トレード
-01:29:38 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:38 [INFO] バックテスト完了: 184 トレード
-01:29:38 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:39 [INFO] バックテスト完了: 694 トレード
-01:29:39 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:39 [INFO] バックテスト完了: 489 トレード
-01:29:39 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:39 [INFO] バックテスト完了: 321 トレード
-01:29:39 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:39 [INFO] バックテスト完了: 184 トレード
-01:29:39 [INFO]   スイープ進捗: 120/144
-01:29:39 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:40 [INFO] バックテスト完了: 694 トレード
-01:29:40 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:40 [INFO] バックテスト完了: 489 トレード
-01:29:40 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:41 [INFO] バックテスト完了: 321 トレード
-01:29:41 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:41 [INFO] バックテスト完了: 184 トレード
-01:29:41 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:41 [INFO] バックテスト完了: 694 トレード
-01:29:41 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:42 [INFO] バックテスト完了: 489 トレード
-01:29:42 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:42 [INFO] バックテスト完了: 321 トレード
-01:29:42 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:42 [INFO] バックテスト完了: 184 トレード
-01:29:42 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:43 [INFO] バックテスト完了: 694 トレード
-01:29:43 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:43 [INFO] バックテスト完了: 489 トレード
-01:29:43 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:43 [INFO] バックテスト完了: 321 トレード
-01:29:43 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:44 [INFO] バックテスト完了: 184 トレード
-01:29:44 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:44 [INFO] バックテスト完了: 694 トレード
-01:29:44 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:44 [INFO] バックテスト完了: 489 トレード
-01:29:44 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:45 [INFO] バックテスト完了: 321 トレード
-01:29:45 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:45 [INFO] バックテスト完了: 184 トレード
-01:29:45 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:45 [INFO] バックテスト完了: 694 トレード
-01:29:45 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:46 [INFO] バックテスト完了: 489 トレード
-01:29:46 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:46 [INFO] バックテスト完了: 321 トレード
-01:29:46 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:46 [INFO] バックテスト完了: 184 トレード
-01:29:46 [INFO]   スイープ進捗: 140/144
-01:29:46 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:29:47 [INFO] バックテスト完了: 694 トレード
-01:29:47 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:29:48 [INFO] バックテスト完了: 489 トレード
-01:29:48 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:29:48 [INFO] バックテスト完了: 321 トレード
-01:29:48 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:29:48 [INFO] バックテスト完了: 184 トレード
-01:29:48 [INFO]   スイープ進捗: 144/144
-01:29:48 [INFO] スイープ結果を保存: /home/runner/work/stock-analysts/stock-analysts/results/sweep_results.csv
-01:29:48 [INFO] 完了。results/sweep_results.csv に保存しました。
+03:15:36 [INFO] パラメータスイープ期間: 2025-01-01 〜 2025-12-31
+03:15:36 [INFO] 上場銘柄情報をキャッシュから読み込み
+03:15:36 [INFO] 財務データをキャッシュから読み込み
+03:15:37 [INFO] 日足データをキャッシュから読み込み
+03:15:43 [INFO] ベーススクリーニング（成長率 >= 10%）
+03:15:43 [INFO]   黒字転換補正: 790 件
+03:15:43 [INFO]   決算成長率 >= 10%: 7325 件
+03:15:43 [INFO]   Code形式 listed='13010', passed='13010'
+03:15:43 [INFO]   ScaleCat値分布: {'-': 4005, 'TOPIX Small 2': 1205, 'TOPIX Small 1': 888, 'TOPIX Mid400': 678, None: 405, 'TOPIX Large70': 107, 'TOPIX Core30': 37}
+03:15:43 [INFO]   ScaleCat Mid400+Large70(['TOPIX Mid400', 'TOPIX Large70']): 7325 → 785 件
+03:15:45 [INFO]   始値カラム: AdjustmentOpen
+03:15:46 [INFO]   大幅GDフィルタ(gap>=-5%): 785 → 724 件
+03:15:52 [INFO]   RSI14: 714 件に付与
+03:15:52 [INFO]   最終候補: 724 件
+03:15:52 [INFO] ベース候補数: 724
+03:15:52 [INFO] パラメータスイープ: 144 通り
+03:15:53 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:15:54 [INFO] バックテスト完了: 724 トレード
+03:15:54 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:15:54 [INFO] バックテスト完了: 519 トレード
+03:15:54 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:15:54 [INFO] バックテスト完了: 351 トレード
+03:15:54 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:15:54 [INFO] バックテスト完了: 214 トレード
+03:15:54 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:15:55 [INFO] バックテスト完了: 724 トレード
+03:15:55 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:15:55 [INFO] バックテスト完了: 519 トレード
+03:15:55 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:15:56 [INFO] バックテスト完了: 351 トレード
+03:15:56 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:15:56 [INFO] バックテスト完了: 214 トレード
+03:15:56 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:15:57 [INFO] バックテスト完了: 724 トレード
+03:15:57 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:15:57 [INFO] バックテスト完了: 519 トレード
+03:15:57 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:15:57 [INFO] バックテスト完了: 351 トレード
+03:15:57 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:15:57 [INFO] バックテスト完了: 214 トレード
+03:15:57 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:15:58 [INFO] バックテスト完了: 724 トレード
+03:15:58 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:15:59 [INFO] バックテスト完了: 519 トレード
+03:15:59 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:15:59 [INFO] バックテスト完了: 351 トレード
+03:15:59 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:15:59 [INFO] バックテスト完了: 214 トレード
+03:15:59 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:00 [INFO] バックテスト完了: 724 トレード
+03:16:00 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:00 [INFO] バックテスト完了: 519 トレード
+03:16:00 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:00 [INFO] バックテスト完了: 351 トレード
+03:16:00 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:01 [INFO] バックテスト完了: 214 トレード
+03:16:01 [INFO]   スイープ進捗: 20/144
+03:16:01 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:01 [INFO] バックテスト完了: 724 トレード
+03:16:01 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:02 [INFO] バックテスト完了: 519 トレード
+03:16:02 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:02 [INFO] バックテスト完了: 351 トレード
+03:16:02 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:02 [INFO] バックテスト完了: 214 トレード
+03:16:02 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:03 [INFO] バックテスト完了: 724 トレード
+03:16:03 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:03 [INFO] バックテスト完了: 519 トレード
+03:16:03 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:04 [INFO] バックテスト完了: 351 トレード
+03:16:04 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:04 [INFO] バックテスト完了: 214 トレード
+03:16:04 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:05 [INFO] バックテスト完了: 724 トレード
+03:16:05 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:05 [INFO] バックテスト完了: 519 トレード
+03:16:05 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:05 [INFO] バックテスト完了: 351 トレード
+03:16:05 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:06 [INFO] バックテスト完了: 214 トレード
+03:16:06 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:06 [INFO] バックテスト完了: 724 トレード
+03:16:06 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:07 [INFO] バックテスト完了: 519 トレード
+03:16:07 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:07 [INFO] バックテスト完了: 351 トレード
+03:16:07 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:08 [INFO] バックテスト完了: 214 トレード
+03:16:08 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:08 [INFO] バックテスト完了: 724 トレード
+03:16:08 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:09 [INFO] バックテスト完了: 519 トレード
+03:16:09 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:09 [INFO] バックテスト完了: 351 トレード
+03:16:09 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:09 [INFO] バックテスト完了: 214 トレード
+03:16:09 [INFO]   スイープ進捗: 40/144
+03:16:09 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:10 [INFO] バックテスト完了: 724 トレード
+03:16:10 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:10 [INFO] バックテスト完了: 519 トレード
+03:16:10 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:10 [INFO] バックテスト完了: 351 トレード
+03:16:10 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:11 [INFO] バックテスト完了: 214 トレード
+03:16:11 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:11 [INFO] バックテスト完了: 724 トレード
+03:16:11 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:12 [INFO] バックテスト完了: 519 トレード
+03:16:12 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:12 [INFO] バックテスト完了: 351 トレード
+03:16:12 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:12 [INFO] バックテスト完了: 214 トレード
+03:16:12 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:13 [INFO] バックテスト完了: 724 トレード
+03:16:13 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:14 [INFO] バックテスト完了: 519 トレード
+03:16:14 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:14 [INFO] バックテスト完了: 351 トレード
+03:16:14 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:14 [INFO] バックテスト完了: 214 トレード
+03:16:14 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:15 [INFO] バックテスト完了: 724 トレード
+03:16:15 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:15 [INFO] バックテスト完了: 519 トレード
+03:16:15 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:15 [INFO] バックテスト完了: 351 トレード
+03:16:15 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:16 [INFO] バックテスト完了: 214 トレード
+03:16:16 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:16 [INFO] バックテスト完了: 724 トレード
+03:16:16 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:17 [INFO] バックテスト完了: 519 トレード
+03:16:17 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:17 [INFO] バックテスト完了: 351 トレード
+03:16:17 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:17 [INFO] バックテスト完了: 214 トレード
+03:16:17 [INFO]   スイープ進捗: 60/144
+03:16:17 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:18 [INFO] バックテスト完了: 724 トレード
+03:16:18 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:19 [INFO] バックテスト完了: 519 トレード
+03:16:19 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:19 [INFO] バックテスト完了: 351 トレード
+03:16:19 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:19 [INFO] バックテスト完了: 214 トレード
+03:16:19 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:20 [INFO] バックテスト完了: 724 トレード
+03:16:20 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:20 [INFO] バックテスト完了: 519 トレード
+03:16:20 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:21 [INFO] バックテスト完了: 351 トレード
+03:16:21 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:21 [INFO] バックテスト完了: 214 トレード
+03:16:21 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:22 [INFO] バックテスト完了: 724 トレード
+03:16:22 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:22 [INFO] バックテスト完了: 519 トレード
+03:16:22 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:23 [INFO] バックテスト完了: 351 トレード
+03:16:23 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:23 [INFO] バックテスト完了: 214 トレード
+03:16:23 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:24 [INFO] バックテスト完了: 724 トレード
+03:16:24 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:24 [INFO] バックテスト完了: 519 トレード
+03:16:24 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:24 [INFO] バックテスト完了: 351 トレード
+03:16:24 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:25 [INFO] バックテスト完了: 214 トレード
+03:16:25 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:25 [INFO] バックテスト完了: 724 トレード
+03:16:25 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:26 [INFO] バックテスト完了: 519 トレード
+03:16:26 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:26 [INFO] バックテスト完了: 351 トレード
+03:16:26 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:26 [INFO] バックテスト完了: 214 トレード
+03:16:26 [INFO]   スイープ進捗: 80/144
+03:16:26 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:27 [INFO] バックテスト完了: 724 トレード
+03:16:27 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:27 [INFO] バックテスト完了: 519 トレード
+03:16:28 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:28 [INFO] バックテスト完了: 351 トレード
+03:16:28 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:28 [INFO] バックテスト完了: 214 トレード
+03:16:28 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:29 [INFO] バックテスト完了: 724 トレード
+03:16:29 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:29 [INFO] バックテスト完了: 519 トレード
+03:16:29 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:29 [INFO] バックテスト完了: 351 トレード
+03:16:29 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:30 [INFO] バックテスト完了: 214 トレード
+03:16:30 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:30 [INFO] バックテスト完了: 724 トレード
+03:16:30 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:31 [INFO] バックテスト完了: 519 トレード
+03:16:31 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:31 [INFO] バックテスト完了: 351 トレード
+03:16:31 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:31 [INFO] バックテスト完了: 214 トレード
+03:16:31 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:32 [INFO] バックテスト完了: 724 トレード
+03:16:32 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:33 [INFO] バックテスト完了: 519 トレード
+03:16:33 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:33 [INFO] バックテスト完了: 351 トレード
+03:16:33 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:33 [INFO] バックテスト完了: 214 トレード
+03:16:33 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:34 [INFO] バックテスト完了: 724 トレード
+03:16:34 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:34 [INFO] バックテスト完了: 519 トレード
+03:16:34 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:35 [INFO] バックテスト完了: 351 トレード
+03:16:35 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:35 [INFO] バックテスト完了: 214 トレード
+03:16:35 [INFO]   スイープ進捗: 100/144
+03:16:35 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:36 [INFO] バックテスト完了: 724 トレード
+03:16:36 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:36 [INFO] バックテスト完了: 519 トレード
+03:16:36 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:37 [INFO] バックテスト完了: 351 トレード
+03:16:37 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:37 [INFO] バックテスト完了: 214 トレード
+03:16:37 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:38 [INFO] バックテスト完了: 724 トレード
+03:16:38 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:38 [INFO] バックテスト完了: 519 トレード
+03:16:38 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:39 [INFO] バックテスト完了: 351 トレード
+03:16:39 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:39 [INFO] バックテスト完了: 214 トレード
+03:16:39 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:40 [INFO] バックテスト完了: 724 トレード
+03:16:40 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:40 [INFO] バックテスト完了: 519 トレード
+03:16:40 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:41 [INFO] バックテスト完了: 351 トレード
+03:16:41 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:41 [INFO] バックテスト完了: 214 トレード
+03:16:41 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:41 [INFO] バックテスト完了: 724 トレード
+03:16:41 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:42 [INFO] バックテスト完了: 519 トレード
+03:16:42 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:42 [INFO] バックテスト完了: 351 トレード
+03:16:42 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:42 [INFO] バックテスト完了: 214 トレード
+03:16:42 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:43 [INFO] バックテスト完了: 724 トレード
+03:16:43 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:44 [INFO] バックテスト完了: 519 トレード
+03:16:44 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:44 [INFO] バックテスト完了: 351 トレード
+03:16:44 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:44 [INFO] バックテスト完了: 214 トレード
+03:16:44 [INFO]   スイープ進捗: 120/144
+03:16:44 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:45 [INFO] バックテスト完了: 724 トレード
+03:16:45 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:45 [INFO] バックテスト完了: 519 トレード
+03:16:45 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:46 [INFO] バックテスト完了: 351 トレード
+03:16:46 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:46 [INFO] バックテスト完了: 214 トレード
+03:16:46 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:47 [INFO] バックテスト完了: 724 トレード
+03:16:47 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:47 [INFO] バックテスト完了: 519 トレード
+03:16:47 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:47 [INFO] バックテスト完了: 351 トレード
+03:16:47 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:48 [INFO] バックテスト完了: 214 トレード
+03:16:48 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:48 [INFO] バックテスト完了: 724 トレード
+03:16:48 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:49 [INFO] バックテスト完了: 519 トレード
+03:16:49 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:49 [INFO] バックテスト完了: 351 トレード
+03:16:49 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:50 [INFO] バックテスト完了: 214 トレード
+03:16:50 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:50 [INFO] バックテスト完了: 724 トレード
+03:16:50 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:51 [INFO] バックテスト完了: 519 トレード
+03:16:51 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:51 [INFO] バックテスト完了: 351 トレード
+03:16:51 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:51 [INFO] バックテスト完了: 214 トレード
+03:16:51 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:52 [INFO] バックテスト完了: 724 トレード
+03:16:52 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:53 [INFO] バックテスト完了: 519 トレード
+03:16:53 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:53 [INFO] バックテスト完了: 351 トレード
+03:16:53 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:53 [INFO] バックテスト完了: 214 トレード
+03:16:53 [INFO]   スイープ進捗: 140/144
+03:16:53 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:16:54 [INFO] バックテスト完了: 724 トレード
+03:16:54 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:16:55 [INFO] バックテスト完了: 519 トレード
+03:16:55 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:16:56 [INFO] バックテスト完了: 351 トレード
+03:16:56 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:16:56 [INFO] バックテスト完了: 214 トレード
+03:16:56 [INFO]   スイープ進捗: 144/144
+03:16:56 [INFO] スイープ結果を保存: /home/runner/work/stock-analysts/stock-analysts/results/sweep_results.csv
+03:16:56 [INFO] 完了。results/sweep_results.csv に保存しました。
 
 ==========================================================================================
   パラメータスイープ TOP 20  (PF 降順)
 ==========================================================================================
      TP   SL  MaxHold Growth  Trades WinRate     PF Expect  Return  MaxDD
-0   15%  -5%       20    50%     184   56.5%  2.484   2.8%   52.1%  -5.5%
-1   10%  -5%       20    50%     184   57.6%  2.326   2.5%   45.2%  -4.2%
-2   15%  -5%       20    30%     321   56.1%  2.325   2.5%   81.5%  -7.3%
-3   10%  -5%       20    30%     321   57.6%  2.298   2.4%   77.2%  -6.3%
-4   15%  -3%       20    50%     184   41.3%  2.241   2.1%   39.1%  -5.0%
-5   15%  -2%       20    50%     184   31.0%  2.205   1.6%   30.0%  -4.5%
-6   10%  -5%       20    20%     489   57.5%  2.163   2.1%  102.7%  -7.7%
-7   15%  -5%       20    20%     489   55.8%  2.158   2.2%  106.0%  -9.3%
-8   15%  -5%       10    50%     184   54.4%  2.101   2.0%   36.1%  -6.6%
-9    7%  -5%       20    20%     489   61.6%  2.100   1.8%   89.7%  -7.9%
-10   7%  -5%       20    30%     321   60.8%  2.073   1.8%   59.0%  -6.2%
-11  15%  -5%       20    10%     694   54.8%  2.043   2.0%  137.1%  -9.0%
-12  10%  -5%       20    10%     694   56.2%  2.029   1.9%  131.4%  -8.0%
-13  10%  -3%       20    50%     184   42.4%  2.023   1.7%   31.6%  -4.3%
-14   7%  -5%       20    10%     694   60.1%  2.015   1.7%  119.7%  -7.0%
-15   7%  -5%       20    50%     184   59.2%  2.007   1.8%   32.8%  -4.9%
-16   5%  -5%       20    20%     489   66.0%  1.998   1.5%   73.0%  -4.5%
-17  10%  -5%       10    50%     184   56.5%  1.988   1.7%   31.3%  -5.3%
-18   5%  -5%       20    30%     321   66.0%  1.987   1.5%   48.1%  -4.3%
-19  15%  -3%       10    50%     184   41.9%  1.965   1.6%   29.2%  -4.4%
+0   15%  -5%       20    50%     214   56.1%  2.395   2.8%   58.8%  -5.5%
+1   15%  -5%       20    30%     351   55.8%  2.286   2.5%   88.2%  -7.8%
+2   15%  -2%       20    50%     214   31.3%  2.233   1.7%   35.7%  -5.3%
+3   10%  -5%       20    30%     351   57.3%  2.232   2.3%   81.9%  -7.0%
+4   10%  -5%       20    50%     214   57.0%  2.214   2.3%   49.9%  -6.2%
+5   15%  -3%       20    50%     214   40.6%  2.197   2.1%   44.5%  -4.9%
+6   15%  -5%       20    20%     519   55.7%  2.143   2.2%  112.7%  -9.1%
+7   10%  -5%       20    20%     519   57.2%  2.127   2.1%  107.5%  -8.1%
+8    7%  -5%       20    20%     519   61.3%  2.061   1.8%   93.3%  -6.5%
+9   10%  -2%       20    50%     214   32.7%  2.044   1.4%   29.6%  -4.6%
+10  15%  -5%       20    10%     724   54.7%  2.038   2.0%  143.7%  -7.6%
+11   7%  -5%       20    30%     351   60.4%  2.019   1.8%   62.6%  -7.2%
+12  10%  -3%       20    50%     214   42.1%  2.017   1.7%   36.9%  -4.5%
+13  10%  -5%       20    10%     724   56.1%  2.011   1.9%  136.1%  -6.7%
+14   7%  -5%       20    10%     724   59.9%  1.992   1.7%  123.4%  -6.2%
+15  15%  -2%       20    30%     351   29.6%  1.975   1.4%   47.5%  -9.4%
+16  15%  -5%       10    50%     214   52.3%  1.970   1.8%   39.0%  -7.6%
+17  15%  -2%       10    50%     214   32.7%  1.957   1.3%   27.5%  -5.3%
+18   5%  -5%       20    20%     519   65.7%  1.950   1.5%   75.2%  -4.0%
+19  15%  -3%       10    50%     214   41.1%  1.943   1.6%   33.8%  -4.8%
 ==========================================================================================
 
 ===== SCREENING SWEEP =====
-01:29:49 [INFO] スクリーニング条件スイープ期間: 2025-01-01 〜 2025-12-31
-01:29:49 [INFO] 上場銘柄情報をキャッシュから読み込み
-01:29:49 [INFO] 財務データをキャッシュから読み込み
-01:29:50 [INFO] 日足データをキャッシュから読み込み
-01:29:56 [INFO] ベーススクリーニング（成長率 >= 5%）
-01:29:56 [INFO]   決算成長率 >= 5%: 7351 件
-01:29:56 [INFO]   Code形式 listed='13010', passed='13010'
-01:29:56 [INFO]   ScaleCat値分布: {'-': 3787, 'TOPIX Small 2': 1244, 'TOPIX Small 1': 998, 'TOPIX Mid400': 760, None: 388, 'TOPIX Large70': 130, 'TOPIX Core30': 44}
-01:29:56 [INFO]   ScaleCat Mid400+Large70(['TOPIX Mid400', 'TOPIX Large70']): 7351 → 890 件
-01:29:58 [INFO]   始値カラム: AdjustmentOpen
-01:29:59 [INFO]   大幅GDフィルタ(gap>=-5%): 890 → 825 件
-01:30:04 [INFO]   RSI14: 814 件に付与
-01:30:04 [INFO]   最終候補: 825 件
-01:30:04 [INFO] 全候補数: 825
-01:30:04 [INFO] 利用可能な指標列: ['EarningsGrowth', 'SalesGrowth', 'OperatingMargin', 'ROE', 'EquityRatio', 'ForwardGuidance', 'CurPerType', 'S17Nm', 'RSI14', 'ScaleCat', 'PrevClose']
-01:30:05 [INFO] ベース候補数: 489
-01:30:05 [INFO] 次元1: 営業利益成長率
-01:30:05 [INFO] バックテスト開始: 694 候補 (entry_delay=0)
-01:30:05 [INFO] バックテスト完了: 694 トレード
-01:30:06 [INFO] バックテスト開始: 584 候補 (entry_delay=0)
-01:30:06 [INFO] バックテスト完了: 584 トレード
-01:30:06 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:30:07 [INFO] バックテスト完了: 489 トレード
-01:30:07 [INFO] バックテスト開始: 321 候補 (entry_delay=0)
-01:30:07 [INFO] バックテスト完了: 321 トレード
-01:30:07 [INFO] バックテスト開始: 184 候補 (entry_delay=0)
-01:30:07 [INFO] バックテスト完了: 184 トレード
-01:30:07 [INFO] 次元2: 売上高成長率
-01:30:07 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:30:08 [INFO] バックテスト完了: 489 トレード
-01:30:08 [INFO] バックテスト開始: 334 候補 (entry_delay=0)
-01:30:08 [INFO] バックテスト完了: 334 トレード
-01:30:08 [INFO] バックテスト開始: 210 候補 (entry_delay=0)
-01:30:08 [INFO] バックテスト完了: 210 トレード
-01:30:08 [INFO] バックテスト開始: 73 候補 (entry_delay=0)
-01:30:08 [INFO] バックテスト完了: 73 トレード
-01:30:08 [INFO] バックテスト開始: 29 候補 (entry_delay=0)
-01:30:08 [INFO] バックテスト完了: 29 トレード
-01:30:08 [INFO] 次元3: 営業利益率
-01:30:08 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:30:09 [INFO] バックテスト完了: 489 トレード
-01:30:09 [INFO] バックテスト開始: 469 候補 (entry_delay=0)
-01:30:09 [INFO] バックテスト完了: 469 トレード
-01:30:09 [INFO] バックテスト開始: 400 候補 (entry_delay=0)
-01:30:10 [INFO] バックテスト完了: 400 トレード
-01:30:10 [INFO] バックテスト開始: 306 候補 (entry_delay=0)
-01:30:10 [INFO] バックテスト完了: 306 トレード
-01:30:10 [INFO] バックテスト開始: 195 候補 (entry_delay=0)
-01:30:10 [INFO] バックテスト完了: 195 トレード
-01:30:10 [INFO] バックテスト開始: 138 候補 (entry_delay=0)
-01:30:10 [INFO] バックテスト完了: 138 トレード
-01:30:10 [INFO] 次元4: 自己資本比率
-01:30:10 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:30:11 [INFO] バックテスト完了: 489 トレード
-01:30:11 [INFO] 次元5: ROE
-01:30:11 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:30:11 [INFO] バックテスト完了: 489 トレード
-01:30:11 [INFO] バックテスト開始: 185 候補 (entry_delay=0)
-01:30:12 [INFO] バックテスト完了: 185 トレード
-01:30:12 [INFO] バックテスト開始: 101 候補 (entry_delay=0)
-01:30:12 [INFO] バックテスト完了: 101 トレード
-01:30:12 [INFO] バックテスト開始: 60 候補 (entry_delay=0)
-01:30:12 [INFO] バックテスト完了: 60 トレード
-01:30:12 [INFO] バックテスト開始: 29 候補 (entry_delay=0)
-01:30:12 [INFO] バックテスト完了: 29 トレード
-01:30:12 [INFO] 次元6: 来期予想増益率
-01:30:12 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:30:12 [INFO] バックテスト完了: 489 トレード
-01:30:12 [INFO] バックテスト開始: 69 候補 (entry_delay=0)
-01:30:12 [INFO] バックテスト完了: 69 トレード
-01:30:12 [INFO] バックテスト開始: 45 候補 (entry_delay=0)
-01:30:12 [INFO] バックテスト完了: 45 トレード
-01:30:12 [INFO] バックテスト開始: 28 候補 (entry_delay=0)
-01:30:13 [INFO] バックテスト完了: 28 トレード
-01:30:13 [INFO] バックテスト開始: 14 候補 (entry_delay=0)
-01:30:13 [INFO] バックテスト完了: 14 トレード
-01:30:13 [INFO] 次元7: 決算種別 ['1Q', '2Q', '3Q', 'FY']
-01:30:13 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:30:13 [INFO] バックテスト完了: 489 トレード
-01:30:13 [INFO] バックテスト開始: 128 候補 (entry_delay=0)
-01:30:13 [INFO] バックテスト完了: 128 トレード
-01:30:13 [INFO] バックテスト開始: 103 候補 (entry_delay=0)
-01:30:13 [INFO] バックテスト完了: 103 トレード
-01:30:13 [INFO] バックテスト開始: 136 候補 (entry_delay=0)
-01:30:13 [INFO] バックテスト完了: 136 トレード
-01:30:14 [INFO] バックテスト開始: 122 候補 (entry_delay=0)
-01:30:14 [INFO] バックテスト完了: 122 トレード
-01:30:14 [INFO] 次元8: 業種別 (16業種)
-01:30:14 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:30:14 [INFO] バックテスト完了: 489 トレード
-01:30:14 [INFO] バックテスト開始: 16 候補 (entry_delay=0)
-01:30:14 [INFO] バックテスト完了: 16 トレード
-01:30:14 [INFO] バックテスト開始: 19 候補 (entry_delay=0)
-01:30:14 [INFO] バックテスト完了: 19 トレード
-01:30:14 [INFO] バックテスト開始: 11 候補 (entry_delay=0)
-01:30:14 [INFO] バックテスト完了: 11 トレード
-01:30:14 [INFO] バックテスト開始: 39 候補 (entry_delay=0)
-01:30:14 [INFO] バックテスト完了: 39 トレード
-01:30:14 [INFO] バックテスト開始: 75 候補 (entry_delay=0)
-01:30:14 [INFO] バックテスト完了: 75 トレード
-01:30:14 [INFO] バックテスト開始: 91 候補 (entry_delay=0)
-01:30:15 [INFO] バックテスト完了: 91 トレード
-01:30:15 [INFO] バックテスト開始: 33 候補 (entry_delay=0)
-01:30:15 [INFO] バックテスト完了: 33 トレード
-01:30:15 [INFO] バックテスト開始: 45 候補 (entry_delay=0)
-01:30:15 [INFO] バックテスト完了: 45 トレード
-01:30:15 [INFO] バックテスト開始: 12 候補 (entry_delay=0)
-01:30:15 [INFO] バックテスト完了: 12 トレード
-01:30:15 [INFO] バックテスト開始: 35 候補 (entry_delay=0)
-01:30:15 [INFO] バックテスト完了: 35 トレード
-01:30:15 [INFO] バックテスト開始: 13 候補 (entry_delay=0)
-01:30:15 [INFO] バックテスト完了: 13 トレード
-01:30:15 [INFO] バックテスト開始: 13 候補 (entry_delay=0)
-01:30:15 [INFO] バックテスト完了: 13 トレード
-01:30:15 [INFO] バックテスト開始: 67 候補 (entry_delay=0)
-01:30:15 [INFO] バックテスト完了: 67 トレード
-01:30:15 [INFO] バックテスト開始: 14 候補 (entry_delay=0)
-01:30:15 [INFO] バックテスト完了: 14 トレード
-01:30:15 [INFO] バックテスト開始: 5 候補 (entry_delay=0)
-01:30:15 [INFO] バックテスト完了: 5 トレード
-01:30:15 [INFO] 次元9: RSI(14日)
-01:30:15 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
-01:30:15 [INFO] バックテスト完了: 489 トレード
-01:30:15 [INFO] バックテスト開始: 54 候補 (entry_delay=0)
-01:30:15 [INFO] バックテスト完了: 54 トレード
-01:30:15 [INFO] バックテスト開始: 154 候補 (entry_delay=0)
-01:30:16 [INFO] バックテスト完了: 154 トレード
-01:30:16 [INFO] バックテスト開始: 283 候補 (entry_delay=0)
-01:30:16 [INFO] バックテスト完了: 283 トレード
-01:30:16 [INFO] バックテスト開始: 404 候補 (entry_delay=0)
-01:30:16 [INFO] バックテスト完了: 404 トレード
-01:30:16 [INFO] バックテスト開始: 327 候補 (entry_delay=0)
-01:30:17 [INFO] バックテスト完了: 327 トレード
-01:30:17 [INFO] バックテスト開始: 198 候補 (entry_delay=0)
-01:30:17 [INFO] バックテスト完了: 198 トレード
-01:30:17 [INFO] バックテスト開始: 77 候補 (entry_delay=0)
-01:30:17 [INFO] バックテスト完了: 77 トレード
-01:30:17 [INFO] スクリーニングスイープ結果を保存: /home/runner/work/stock-analysts/stock-analysts/results/screening_sweep_results.csv
-01:30:17 [INFO] 完了。results/screening_sweep_results.csv に保存しました。
+03:16:57 [INFO] スクリーニング条件スイープ期間: 2025-01-01 〜 2025-12-31
+03:16:57 [INFO] 上場銘柄情報をキャッシュから読み込み
+03:16:57 [INFO] 財務データをキャッシュから読み込み
+03:16:58 [INFO] 日足データをキャッシュから読み込み
+03:17:04 [INFO] ベーススクリーニング（成長率 >= 5%）
+03:17:04 [INFO]   黒字転換補正: 790 件
+03:17:04 [INFO]   決算成長率 >= 5%: 8141 件
+03:17:04 [INFO]   Code形式 listed='13010', passed='13010'
+03:17:04 [INFO]   ScaleCat値分布: {'-': 4339, 'TOPIX Small 2': 1353, 'TOPIX Small 1': 1027, 'TOPIX Mid400': 793, None: 455, 'TOPIX Large70': 130, 'TOPIX Core30': 44}
+03:17:04 [INFO]   ScaleCat Mid400+Large70(['TOPIX Mid400', 'TOPIX Large70']): 8141 → 923 件
+03:17:06 [INFO]   始値カラム: AdjustmentOpen
+03:17:06 [INFO]   大幅GDフィルタ(gap>=-5%): 923 → 855 件
+03:17:12 [INFO]   RSI14: 844 件に付与
+03:17:12 [INFO]   最終候補: 855 件
+03:17:12 [INFO] 全候補数: 855
+03:17:12 [INFO] 利用可能な指標列: ['EarningsGrowth', 'SalesGrowth', 'OperatingMargin', 'ROE', 'EquityRatio', 'ForwardGuidance', 'CurPerType', 'S17Nm', 'RSI14', 'ScaleCat', 'PrevClose']
+03:17:14 [INFO] ベース候補数: 519
+03:17:14 [INFO] 次元1: 営業利益成長率
+03:17:14 [INFO] バックテスト開始: 724 候補 (entry_delay=0)
+03:17:15 [INFO] バックテスト完了: 724 トレード
+03:17:15 [INFO] バックテスト開始: 614 候補 (entry_delay=0)
+03:17:15 [INFO] バックテスト完了: 614 トレード
+03:17:15 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:17:16 [INFO] バックテスト完了: 519 トレード
+03:17:16 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:17:17 [INFO] バックテスト完了: 351 トレード
+03:17:17 [INFO] バックテスト開始: 214 候補 (entry_delay=0)
+03:17:17 [INFO] バックテスト完了: 214 トレード
+03:17:17 [INFO] 次元2: 売上高成長率
+03:17:17 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:17:18 [INFO] バックテスト完了: 519 トレード
+03:17:18 [INFO] バックテスト開始: 351 候補 (entry_delay=0)
+03:17:18 [INFO] バックテスト完了: 351 トレード
+03:17:18 [INFO] バックテスト開始: 222 候補 (entry_delay=0)
+03:17:18 [INFO] バックテスト完了: 222 トレード
+03:17:18 [INFO] バックテスト開始: 78 候補 (entry_delay=0)
+03:17:18 [INFO] バックテスト完了: 78 トレード
+03:17:18 [INFO] バックテスト開始: 30 候補 (entry_delay=0)
+03:17:18 [INFO] バックテスト完了: 30 トレード
+03:17:18 [INFO] 次元3: 営業利益率
+03:17:18 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:17:19 [INFO] バックテスト完了: 519 トレード
+03:17:19 [INFO] バックテスト開始: 489 候補 (entry_delay=0)
+03:17:20 [INFO] バックテスト完了: 489 トレード
+03:17:20 [INFO] バックテスト開始: 410 候補 (entry_delay=0)
+03:17:20 [INFO] バックテスト完了: 410 トレード
+03:17:20 [INFO] バックテスト開始: 312 候補 (entry_delay=0)
+03:17:21 [INFO] バックテスト完了: 312 トレード
+03:17:21 [INFO] バックテスト開始: 198 候補 (entry_delay=0)
+03:17:21 [INFO] バックテスト完了: 198 トレード
+03:17:21 [INFO] バックテスト開始: 141 候補 (entry_delay=0)
+03:17:21 [INFO] バックテスト完了: 141 トレード
+03:17:21 [INFO] 次元4: 自己資本比率
+03:17:21 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:17:22 [INFO] バックテスト完了: 519 トレード
+03:17:22 [INFO] 次元5: ROE
+03:17:22 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:17:23 [INFO] バックテスト完了: 519 トレード
+03:17:23 [INFO] バックテスト開始: 192 候補 (entry_delay=0)
+03:17:23 [INFO] バックテスト完了: 192 トレード
+03:17:23 [INFO] バックテスト開始: 107 候補 (entry_delay=0)
+03:17:23 [INFO] バックテスト完了: 107 トレード
+03:17:23 [INFO] バックテスト開始: 63 候補 (entry_delay=0)
+03:17:23 [INFO] バックテスト完了: 63 トレード
+03:17:23 [INFO] バックテスト開始: 31 候補 (entry_delay=0)
+03:17:23 [INFO] バックテスト完了: 31 トレード
+03:17:23 [INFO] 次元6: 来期予想増益率
+03:17:23 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:17:24 [INFO] バックテスト完了: 519 トレード
+03:17:24 [INFO] バックテスト開始: 75 候補 (entry_delay=0)
+03:17:24 [INFO] バックテスト完了: 75 トレード
+03:17:24 [INFO] バックテスト開始: 50 候補 (entry_delay=0)
+03:17:24 [INFO] バックテスト完了: 50 トレード
+03:17:24 [INFO] バックテスト開始: 32 候補 (entry_delay=0)
+03:17:24 [INFO] バックテスト完了: 32 トレード
+03:17:24 [INFO] バックテスト開始: 18 候補 (entry_delay=0)
+03:17:24 [INFO] バックテスト完了: 18 トレード
+03:17:24 [INFO] 次元7: 決算種別 ['1Q', '2Q', '3Q', 'FY']
+03:17:24 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:17:25 [INFO] バックテスト完了: 519 トレード
+03:17:25 [INFO] バックテスト開始: 136 候補 (entry_delay=0)
+03:17:25 [INFO] バックテスト完了: 136 トレード
+03:17:25 [INFO] バックテスト開始: 106 候補 (entry_delay=0)
+03:17:25 [INFO] バックテスト完了: 106 トレード
+03:17:25 [INFO] バックテスト開始: 146 候補 (entry_delay=0)
+03:17:25 [INFO] バックテスト完了: 146 トレード
+03:17:25 [INFO] バックテスト開始: 131 候補 (entry_delay=0)
+03:17:26 [INFO] バックテスト完了: 131 トレード
+03:17:26 [INFO] 次元8: 業種別 (16業種)
+03:17:26 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:17:26 [INFO] バックテスト完了: 519 トレード
+03:17:26 [INFO] バックテスト開始: 16 候補 (entry_delay=0)
+03:17:26 [INFO] バックテスト完了: 16 トレード
+03:17:26 [INFO] バックテスト開始: 23 候補 (entry_delay=0)
+03:17:26 [INFO] バックテスト完了: 23 トレード
+03:17:26 [INFO] バックテスト開始: 11 候補 (entry_delay=0)
+03:17:26 [INFO] バックテスト完了: 11 トレード
+03:17:26 [INFO] バックテスト開始: 39 候補 (entry_delay=0)
+03:17:26 [INFO] バックテスト完了: 39 トレード
+03:17:26 [INFO] バックテスト開始: 80 候補 (entry_delay=0)
+03:17:27 [INFO] バックテスト完了: 80 トレード
+03:17:27 [INFO] バックテスト開始: 97 候補 (entry_delay=0)
+03:17:27 [INFO] バックテスト完了: 97 トレード
+03:17:27 [INFO] バックテスト開始: 35 候補 (entry_delay=0)
+03:17:27 [INFO] バックテスト完了: 35 トレード
+03:17:27 [INFO] バックテスト開始: 52 候補 (entry_delay=0)
+03:17:27 [INFO] バックテスト完了: 52 トレード
+03:17:27 [INFO] バックテスト開始: 12 候補 (entry_delay=0)
+03:17:27 [INFO] バックテスト完了: 12 トレード
+03:17:27 [INFO] バックテスト開始: 35 候補 (entry_delay=0)
+03:17:27 [INFO] バックテスト完了: 35 トレード
+03:17:27 [INFO] バックテスト開始: 13 候補 (entry_delay=0)
+03:17:27 [INFO] バックテスト完了: 13 トレード
+03:17:27 [INFO] バックテスト開始: 14 候補 (entry_delay=0)
+03:17:27 [INFO] バックテスト完了: 14 トレード
+03:17:27 [INFO] バックテスト開始: 72 候補 (entry_delay=0)
+03:17:27 [INFO] バックテスト完了: 72 トレード
+03:17:27 [INFO] バックテスト開始: 14 候補 (entry_delay=0)
+03:17:27 [INFO] バックテスト完了: 14 トレード
+03:17:27 [INFO] バックテスト開始: 5 候補 (entry_delay=0)
+03:17:27 [INFO] バックテスト完了: 5 トレード
+03:17:27 [INFO] 次元9: RSI(14日)
+03:17:27 [INFO] バックテスト開始: 519 候補 (entry_delay=0)
+03:17:28 [INFO] バックテスト完了: 519 トレード
+03:17:28 [INFO] バックテスト開始: 57 候補 (entry_delay=0)
+03:17:28 [INFO] バックテスト完了: 57 トレード
+03:17:28 [INFO] バックテスト開始: 161 候補 (entry_delay=0)
+03:17:28 [INFO] バックテスト完了: 161 トレード
+03:17:28 [INFO] バックテスト開始: 296 候補 (entry_delay=0)
+03:17:28 [INFO] バックテスト完了: 296 トレード
+03:17:29 [INFO] バックテスト開始: 427 候補 (entry_delay=0)
+03:17:29 [INFO] バックテスト完了: 427 トレード
+03:17:29 [INFO] バックテスト開始: 350 候補 (entry_delay=0)
+03:17:30 [INFO] バックテスト完了: 350 トレード
+03:17:30 [INFO] バックテスト開始: 215 候補 (entry_delay=0)
+03:17:30 [INFO] バックテスト完了: 215 トレード
+03:17:30 [INFO] バックテスト開始: 84 候補 (entry_delay=0)
+03:17:30 [INFO] バックテスト完了: 84 トレード
+03:17:30 [INFO] スクリーニングスイープ結果を保存: /home/runner/work/stock-analysts/stock-analysts/results/screening_sweep_results.csv
+03:17:30 [INFO] 完了。results/screening_sweep_results.csv に保存しました。
 
 ====================================================================================================
   スクリーニング条件スイープ TOP 30  (PF降順, TP=15%/SL=-5%/Hold=20日固定)
@@ -730,132 +734,134 @@
 1            Sector       EG>=20% & 業種=不動産      16   62.5%   5.988  3.66%    5.9%  -1.2%
 2            Sector  EG>=20% & 業種=金融（除く銀行）      13   84.6%   5.016  2.32%    3.0%  -0.5%
 3            Sector        EG>=20% & 業種=食品       5   80.0%   4.194  3.19%    1.6%  -0.5%
-4        PeriodType        EG>=20% & 種別=1Q     128   66.4%   3.960  4.05%   51.8%  -3.5%
-5          RSI_high      EG>=20% & RSI>=70      77   70.1%   3.717  3.98%   30.7%  -2.9%
+4        PeriodType        EG>=20% & 種別=1Q     136   66.2%   3.787  3.90%   53.0%  -3.5%
+5          RSI_high      EG>=20% & RSI>=70      84   70.2%   3.696  3.94%   33.1%  -2.9%
 6            Sector   EG>=20% & 業種=自動車・輸送機      12   58.3%   3.476  3.72%    4.5%  -0.7%
 7            Sector     EG>=20% & 業種=運輸・物流      35   71.4%   3.200  2.73%    9.6%  -1.4%
-8          RSI_high      EG>=20% & RSI>=60     198   63.1%   2.844  2.97%   58.9%  -5.0%
-9            Sector     EG>=20% & 業種=建設・資材      75   61.3%   2.763  2.55%   19.1%  -3.1%
-10              ROE     EG>=20% & ROE>=15%      60   53.3%   2.682  3.45%   20.7%  -2.3%
-11           Sector     EG>=20% & 業種=商社・卸売      11   63.6%   2.560  2.84%    3.1%  -1.0%
-12         RSI_high      EG>=20% & RSI>=50     327   59.9%   2.537  2.64%   86.2%  -8.7%
-13   EarningsGrowth                EG>=50%     184   56.5%   2.484  2.83%   52.1%  -5.5%
-14           Sector        EG>=20% & 業種=機械      33   57.6%   2.371  2.91%    9.6%  -2.0%
-15  ForwardGuidance      EG>=20% & FG>=20%      14   57.1%   2.350  2.37%    3.3%  -0.9%
-16   EarningsGrowth                EG>=30%     321   56.1%   2.325  2.54%   81.5%  -7.3%
-17  OperatingMargin      EG>=20% & OM>=15%     138   52.9%   2.210  2.60%   35.9%  -3.2%
-18  OperatingMargin      EG>=20% & OM>=12%     195   52.8%   2.188  2.45%   47.7%  -4.3%
-19  ForwardGuidance       EG>=20% (FG条件なし)     489   55.8%   2.158  2.17%  106.0%  -9.3%
-20              ROE      EG>=20% (ROE条件なし)     489   55.8%   2.158  2.17%  106.0%  -9.3%
-21  OperatingMargin       EG>=20% (OM条件なし)     489   55.8%   2.158  2.17%  106.0%  -9.3%
-22      SalesGrowth       EG>=20% (SG条件なし)     489   55.8%   2.158  2.17%  106.0%  -9.3%
-23   EarningsGrowth                EG>=20%     489   55.8%   2.158  2.17%  106.0%  -9.3%
-24              RSI      EG>=20% (RSI条件なし)     489   55.8%   2.158  2.17%  106.0%  -9.3%
-25      EquityRatio      EG>=20% (EqR条件なし)     489   55.8%   2.158  2.17%  106.0%  -9.3%
-26       PeriodType          EG>=20% (全種別)     489   55.8%   2.158  2.17%  106.0%  -9.3%
-27           Sector          EG>=20% (全業種)     489   55.8%   2.158  2.17%  106.0%  -9.3%
-28  OperatingMargin       EG>=20% & OM>=3%     469   55.4%   2.145  2.16%  101.1%  -9.9%
-29       PeriodType        EG>=20% & 種別=FY     122   54.1%   2.132  2.07%   25.2%  -5.9%
+8               ROE     EG>=20% & ROE>=15%      63   55.6%   3.047  4.00%   25.2%  -1.6%
+9            Sector     EG>=20% & 業種=建設・資材      80   62.5%   2.907  2.71%   21.6%  -3.1%
+10         RSI_high      EG>=20% & RSI>=60     215   62.8%   2.806  2.98%   64.0%  -4.3%
+11           Sector        EG>=20% & 業種=機械      35   60.0%   2.799  3.60%   12.6%  -1.8%
+12           Sector     EG>=20% & 業種=商社・卸売      11   63.6%   2.560  2.84%    3.1%  -1.0%
+13         RSI_high      EG>=20% & RSI>=50     350   59.4%   2.467  2.58%   90.4%  -8.5%
+14   EarningsGrowth                EG>=50%     214   56.1%   2.395  2.75%   58.8%  -5.5%
+15              ROE     EG>=20% & ROE>=20%      31   48.4%   2.389  3.38%   10.5%  -4.0%
+16              ROE     EG>=20% & ROE>=12%     107   51.4%   2.364  2.86%   30.6%  -2.7%
+17   EarningsGrowth                EG>=30%     351   55.8%   2.286  2.51%   88.2%  -7.8%
+18  OperatingMargin      EG>=20% & OM>=15%     141   53.2%   2.273  2.72%   38.4%  -2.4%
+19  OperatingMargin      EG>=20% & OM>=12%     198   53.0%   2.234  2.54%   50.2%  -3.6%
+20      SalesGrowth      EG>=20% & SG>=20%      78   51.3%   2.211  2.76%   21.5%  -2.6%
+21  OperatingMargin       EG>=20% & OM>=8%     312   54.2%   2.162  2.29%   71.4%  -5.3%
+22  OperatingMargin       EG>=20% & OM>=3%     489   55.4%   2.155  2.19%  107.2%  -9.4%
+23  ForwardGuidance       EG>=20% (FG条件なし)     519   55.7%   2.143  2.17%  112.7%  -9.1%
+24      EquityRatio      EG>=20% (EqR条件なし)     519   55.7%   2.143  2.17%  112.7%  -9.1%
+25  OperatingMargin       EG>=20% (OM条件なし)     519   55.7%   2.143  2.17%  112.7%  -9.1%
+26      SalesGrowth       EG>=20% (SG条件なし)     519   55.7%   2.143  2.17%  112.7%  -9.1%
+27   EarningsGrowth                EG>=20%     519   55.7%   2.143  2.17%  112.7%  -9.1%
+28              ROE      EG>=20% (ROE条件なし)     519   55.7%   2.143  2.17%  112.7%  -9.1%
+29       PeriodType          EG>=20% (全種別)     519   55.7%   2.143  2.17%  112.7%  -9.1%
 ====================================================================================================
 
 ── カテゴリ別ベスト ──
-  EarningsGrowth     EG>=50%                                       PF=2.484  Return=52.1%  Trades=184
-  EquityRatio        EG>=20% (EqR条件なし)                             PF=2.158  Return=106.0%  Trades=489
-  ForwardGuidance    EG>=20% & FG>=20%                             PF=2.350  Return=3.3%  Trades=14
-  OperatingMargin    EG>=20% & OM>=15%                             PF=2.210  Return=35.9%  Trades=138
-  PeriodType         EG>=20% & 種別=1Q                               PF=3.960  Return=51.8%  Trades=128
-  ROE                EG>=20% & ROE>=15%                            PF=2.682  Return=20.7%  Trades=60
-  RSI                EG>=20% (RSI条件なし)                             PF=2.158  Return=106.0%  Trades=489
-  RSI_high           EG>=20% & RSI>=70                             PF=3.717  Return=30.7%  Trades=77
-  RSI_low            EG>=20% & RSI<=70                             PF=1.935  Return=73.7%  Trades=404
-  SalesGrowth        EG>=20% (SG条件なし)                              PF=2.158  Return=106.0%  Trades=489
+  EarningsGrowth     EG>=50%                                       PF=2.395  Return=58.8%  Trades=214
+  EquityRatio        EG>=20% (EqR条件なし)                             PF=2.143  Return=112.7%  Trades=519
+  ForwardGuidance    EG>=20% (FG条件なし)                              PF=2.143  Return=112.7%  Trades=519
+  OperatingMargin    EG>=20% & OM>=15%                             PF=2.273  Return=38.4%  Trades=141
+  PeriodType         EG>=20% & 種別=1Q                               PF=3.787  Return=53.0%  Trades=136
+  ROE                EG>=20% & ROE>=15%                            PF=3.047  Return=25.2%  Trades=63
+  RSI                EG>=20% (RSI条件なし)                             PF=2.143  Return=112.7%  Trades=519
+  RSI_high           EG>=20% & RSI>=70                             PF=3.696  Return=33.1%  Trades=84
+  RSI_low            EG>=20% & RSI<=70                             PF=1.918  Return=77.8%  Trades=427
+  SalesGrowth        EG>=20% & SG>=20%                             PF=2.211  Return=21.5%  Trades=78
   Sector             EG>=20% & 業種=電気・ガス                            PF=13.380  Return=12.4%  Trades=14
 
 ===== ENTRY TIMING ANALYSIS =====
-01:30:18 [INFO] エントリータイミング比較分析: 2025-01-01 〜 2025-12-31
-01:30:18 [INFO] 上場銘柄情報をキャッシュから読み込み
-01:30:18 [INFO] 財務データをキャッシュから読み込み
-01:30:19 [INFO] 日足データをキャッシュから読み込み
-01:30:25 [INFO]   決算成長率 >= 20%: 5145 件
-01:30:25 [INFO]   ROE >= 12%: 5145 → 921 件
-01:30:25 [INFO]   Code形式 listed='13010', passed='137A0'
-01:30:25 [INFO]   ScaleCat値分布: {'-': 531, 'TOPIX Small 2': 122, 'TOPIX Small 1': 121, 'TOPIX Mid400': 89, None: 27, 'TOPIX Large70': 22, 'TOPIX Core30': 9}
-01:30:25 [INFO]   ScaleCat Mid400+Large70(['TOPIX Mid400', 'TOPIX Large70']): 921 → 111 件
-01:30:27 [INFO]   始値カラム: AdjustmentOpen
-01:30:28 [INFO]   大幅GDフィルタ(gap>=-5%): 111 → 101 件
-01:30:33 [INFO]   RSI14: 100 件に付与
-01:30:33 [INFO]   最終候補: 101 件
-01:30:34 [INFO] 候補銘柄数: 101
-01:30:34 [INFO] バックテスト開始: 101 候補 (entry_delay=0)
-01:30:34 [INFO] バックテスト完了: 101 トレード
-01:30:34 [INFO] バックテスト開始: 101 候補 (entry_delay=1)
-01:30:34 [INFO] バックテスト完了: 101 トレード
-01:30:34 [INFO] 完了
+03:17:31 [INFO] エントリータイミング比較分析: 2025-01-01 〜 2025-12-31
+03:17:31 [INFO] 上場銘柄情報をキャッシュから読み込み
+03:17:31 [INFO] 財務データをキャッシュから読み込み
+03:17:32 [INFO] 日足データをキャッシュから読み込み
+03:17:38 [INFO]   黒字転換補正: 790 件
+03:17:38 [INFO]   決算成長率 >= 20%: 5935 件
+03:17:38 [INFO]   ROE >= 12%: 5935 → 1003 件
+03:17:38 [INFO]   Code形式 listed='13010', passed='137A0'
+03:17:38 [INFO]   ScaleCat値分布: {'-': 594, 'TOPIX Small 2': 130, 'TOPIX Small 1': 121, 'TOPIX Mid400': 96, None: 31, 'TOPIX Large70': 22, 'TOPIX Core30': 9}
+03:17:38 [INFO]   ScaleCat Mid400+Large70(['TOPIX Mid400', 'TOPIX Large70']): 1003 → 118 件
+03:17:40 [INFO]   始値カラム: AdjustmentOpen
+03:17:40 [INFO]   大幅GDフィルタ(gap>=-5%): 118 → 107 件
+03:17:47 [INFO]   RSI14: 106 件に付与
+03:17:47 [INFO]   最終候補: 107 件
+03:17:48 [INFO] 候補銘柄数: 107
+03:17:48 [INFO] バックテスト開始: 107 候補 (entry_delay=0)
+03:17:48 [INFO] バックテスト完了: 107 トレード
+03:17:48 [INFO] バックテスト開始: 107 候補 (entry_delay=1)
+03:17:48 [INFO] バックテスト完了: 107 トレード
+03:17:48 [INFO] 完了
 
 =================================================================
   【比較】エントリータイミング: 決算翌日寄り vs 2日後寄り
 =================================================================
 
 --- 決算翌日寄り (現行, Day+1) ---
-  トレード数   : 101
-  勝率         : 49.5%
-  PF           : 2.11
-  期待値       : +2.41%
-  総リターン   : +24.4%
-  最大DD       : -3.2%
-  平均利益     : +9.25%
-  平均損失     : -4.29%
+  トレード数   : 107
+  勝率         : 51.4%
+  PF           : 2.36
+  期待値       : +2.86%
+  総リターン   : +30.6%
+  最大DD       : -2.7%
+  平均利益     : +9.63%
+  平均損失     : -4.31%
   エグジット内訳 (件数 / 勝率 / 平均損益 / 平均保有):
-    損切り:  41件  勝率0.0%  avg-5.00%  保有8日
-    利確  :  19件  勝率100.0%  avg+15.00%  保有12日
-    期間切れ:  41件  勝率75.6%  avg+3.99%  保有29日
+    損切り:  42件  勝率0.0%  avg-5.00%  保有7日
+    利確  :  23件  勝率100.0%  avg+15.00%  保有12日
+    期間切れ:  42件  勝率76.2%  avg+4.06%  保有29日
 
 --- 2日後寄り  (1日待ち, Day+2) ---
-  トレード数   : 101
-  勝率         : 44.5%
-  PF           : 1.43
-  期待値       : +1.12%
-  総リターン   : +11.3%
-  最大DD       : -6.6%
-  平均利益     : +8.34%
-  平均損失     : -4.68%
+  トレード数   : 107
+  勝率         : 43.0%
+  PF           : 1.38
+  期待値       : +1.01%
+  総リターン   : +10.8%
+  最大DD       : -7.1%
+  平均利益     : +8.48%
+  平均損失     : -4.63%
   エグジット内訳 (件数 / 勝率 / 平均損益 / 平均保有):
-    損切り:  49件  勝率0.0%  avg-5.00%  保有8日
-    利確  :  16件  勝率100.0%  avg+15.00%  保有12日
-    期間切れ:  36件  勝率80.6%  avg+3.28%  保有29日
+    損切り:  53件  勝率0.0%  avg-5.00%  保有8日
+    利確  :  17件  勝率100.0%  avg+15.00%  保有13日
+    期間切れ:  37件  勝率78.4%  avg+3.19%  保有29日
 
 =================================================================
 ===== VOLUME SURGE BACKTEST =====
-01:30:36 [INFO] 出来高急騰バックテスト: 2025-01-01 〜 2025-12-31
-01:30:36 [INFO] 上場銘柄情報をキャッシュから読み込み
-01:30:36 [INFO] 財務データをキャッシュから読み込み
-01:30:37 [INFO] 日足データをキャッシュから読み込み
-01:30:43 [INFO]   決算成長率 >= 20%: 5145 件
-01:30:43 [INFO]   ROE >= 12%: 5145 → 921 件
-01:30:43 [INFO]   Code形式 listed='13010', passed='137A0'
-01:30:43 [INFO]   ScaleCat値分布: {'-': 531, 'TOPIX Small 2': 122, 'TOPIX Small 1': 121, 'TOPIX Mid400': 89, None: 27, 'TOPIX Large70': 22, 'TOPIX Core30': 9}
-01:30:43 [INFO]   ScaleCat Mid400+Large70(['TOPIX Mid400', 'TOPIX Large70']): 921 → 111 件
-01:30:46 [INFO]   始値カラム: AdjustmentOpen
-01:30:46 [INFO]   大幅GDフィルタ(gap>=-5%): 111 → 101 件
-01:30:51 [INFO]   RSI14: 100 件に付与
-01:30:51 [INFO]   最終候補: 101 件
-01:30:51 [INFO] 決算候補: 101 件
-01:30:53 [INFO] 出来高急騰: 2倍以上 / require_up=True → 2728 件
-01:30:53 [INFO] バックテスト開始: 2728 候補 (entry_delay=0)
-01:30:56 [INFO] バックテスト完了: 2728 トレード
-01:30:56 [INFO] バックテスト開始: 20 候補 (entry_delay=0)
-01:30:56 [INFO] バックテスト完了: 20 トレード
-01:30:58 [INFO] 出来高急騰: 3倍以上 / require_up=True → 976 件
-01:30:58 [INFO] バックテスト開始: 976 候補 (entry_delay=0)
-01:30:59 [INFO] バックテスト完了: 976 トレード
-01:30:59 [INFO] バックテスト開始: 9 候補 (entry_delay=0)
-01:30:59 [INFO] バックテスト完了: 9 トレード
-01:31:01 [INFO] 出来高急騰: 5倍以上 / require_up=True → 224 件
-01:31:01 [INFO] バックテスト開始: 224 候補 (entry_delay=0)
-01:31:01 [INFO] バックテスト完了: 224 トレード
-01:31:01 [INFO] バックテスト開始: 7 候補 (entry_delay=0)
-01:31:01 [INFO] バックテスト完了: 7 トレード
-01:31:01 [INFO] 完了
+03:17:49 [INFO] 出来高急騰バックテスト: 2025-01-01 〜 2025-12-31
+03:17:49 [INFO] 上場銘柄情報をキャッシュから読み込み
+03:17:49 [INFO] 財務データをキャッシュから読み込み
+03:17:50 [INFO] 日足データをキャッシュから読み込み
+03:17:57 [INFO]   黒字転換補正: 790 件
+03:17:57 [INFO]   決算成長率 >= 20%: 5935 件
+03:17:57 [INFO]   ROE >= 12%: 5935 → 1003 件
+03:17:57 [INFO]   Code形式 listed='13010', passed='137A0'
+03:17:57 [INFO]   ScaleCat値分布: {'-': 594, 'TOPIX Small 2': 130, 'TOPIX Small 1': 121, 'TOPIX Mid400': 96, None: 31, 'TOPIX Large70': 22, 'TOPIX Core30': 9}
+03:17:57 [INFO]   ScaleCat Mid400+Large70(['TOPIX Mid400', 'TOPIX Large70']): 1003 → 118 件
+03:17:59 [INFO]   始値カラム: AdjustmentOpen
+03:18:00 [INFO]   大幅GDフィルタ(gap>=-5%): 118 → 107 件
+03:18:06 [INFO]   RSI14: 106 件に付与
+03:18:06 [INFO]   最終候補: 107 件
+03:18:06 [INFO] 決算候補: 107 件
+03:18:08 [INFO] 出来高急騰: 2倍以上 / require_up=True → 2728 件
+03:18:08 [INFO] バックテスト開始: 2728 候補 (entry_delay=0)
+03:18:11 [INFO] バックテスト完了: 2728 トレード
+03:18:11 [INFO] バックテスト開始: 21 候補 (entry_delay=0)
+03:18:11 [INFO] バックテスト完了: 21 トレード
+03:18:13 [INFO] 出来高急騰: 3倍以上 / require_up=True → 976 件
+03:18:13 [INFO] バックテスト開始: 976 候補 (entry_delay=0)
+03:18:15 [INFO] バックテスト完了: 976 トレード
+03:18:15 [INFO] バックテスト開始: 9 候補 (entry_delay=0)
+03:18:15 [INFO] バックテスト完了: 9 トレード
+03:18:17 [INFO] 出来高急騰: 5倍以上 / require_up=True → 224 件
+03:18:17 [INFO] バックテスト開始: 224 候補 (entry_delay=0)
+03:18:17 [INFO] バックテスト完了: 224 トレード
+03:18:17 [INFO] バックテスト開始: 7 候補 (entry_delay=0)
+03:18:17 [INFO] バックテスト完了: 7 トレード
+03:18:17 [INFO] 完了
 
 ====================================================================
   【出来高急騰バックテスト】
@@ -865,9 +871,9 @@
   勝率 48.4%  PF 1.64  期待値 +1.44%
   総リターン +392.8%  最大DD -74.1%
 
---- 出来高2倍 AND 決算 (20件) ---
-  勝率 45.0%  PF 1.02  期待値 +0.05%
-  総リターン +0.1%  最大DD -2.4%
+--- 出来高2倍 AND 決算 (21件) ---
+  勝率 47.6%  PF 1.29  期待値 +0.76%
+  総リターン +1.6%  最大DD -2.3%
 
 --- 出来高3倍（単独） (976件) ---
   勝率 46.8%  PF 1.46  期待値 +1.11%
@@ -887,3 +893,256 @@
 
 ====================================================================
 
+===== 直近30日スクリーニング確認 =====
+03:18:18 [INFO] 毎日スクリーニング: 2026-05-29 (遡及30日)
+03:18:18 [INFO] 上場銘柄情報をキャッシュから読み込み
+03:18:18 [INFO] 財務データ取得: 2024-05-29 〜 2026-05-29
+03:18:18 [INFO] J-Quants: 財務データを取得中 (2024-05-29 〜 2026-05-29)...
+03:18:19 [INFO]   fin_summary バルク: 40 ファイル
+03:18:19 [INFO]     バルクCSV列名: ['DiscDate', 'DiscTime', 'Code', 'DiscNo', 'DocType', 'CurPerType', 'CurPerSt', 'CurPerEn', 'CurFYSt', 'CurFYEn', 'NxtFYSt', 'NxtFYEn', 'Sales', 'OP', 'OdP', 'NP', 'EPS', 'DEPS', 'TA', 'Eq', 'EqAR', 'BPS', 'CFO', 'CFI', 'CFF', 'CashEq', 'Div1Q', 'Div2Q', 'Div3Q', 'DivFY', 'DivAnn', 'DivUnit', 'DivTotalAnn', 'PayoutRatioAnn', 'FDiv1Q', 'FDiv2Q', 'FDiv3Q', 'FDivFY', 'FDivAnn', 'FDivUnit', 'FDivTotalAnn', 'FPayoutRatioAnn', 'NxFDiv1Q', 'NxFDiv2Q', 'NxFDiv3Q', 'NxFDivFY', 'NxFDivAnn', 'NxFDivUnit', 'NxFPayoutRatioAnn', 'FSales2Q', 'FOP2Q', 'FOdP2Q', 'FNP2Q', 'FEPS2Q', 'NxFSales2Q', 'NxFOP2Q', 'NxFOdP2Q', 'NxFNp2Q', 'NxFEPS2Q', 'FSales', 'FOP', 'FOdP', 'FNP', 'FEPS', 'NxFSales', 'NxFOP', 'NxFOdP', 'NxFNp', 'NxFEPS', 'MatChgSub', 'SigChgInC', 'ChgByASRev', 'ChgNoASRev', 'ChgAcEst', 'RetroRst', 'ShOutFY', 'TrShFY', 'AvgSh', 'NCSales', 'NCOP', 'NCOdP', 'NCNP', 'NCEPS', 'NCTA', 'NCEq', 'NCEqAR', 'NCBPS', 'FNCSales2Q', 'FNCOP2Q', 'FNCOdP2Q', 'FNCNP2Q', 'FNCEPS2Q', 'NxFNCSales2Q', 'NxFNCOP2Q', 'NxFNCOdP2Q', 'NxFNCNP2Q', 'NxFNCEPS2Q', 'FNCSales', 'FNCOP', 'FNCOdP', 'FNCNP', 'FNCEPS', 'NxFNCSales', 'NxFNCOP', 'NxFNCOdP', 'NxFNCNP', 'NxFNCEPS']
+03:18:19 [INFO]     1/40: fins/summary/historical/2024/fins_summary_202406.csv.gz (451件)
+03:18:20 [INFO]     2/40: fins/summary/historical/2024/fins_summary_202407.csv.gz (1220件)
+03:18:21 [INFO]     3/40: fins/summary/historical/2024/fins_summary_202408.csv.gz (2877件)
+03:18:22 [INFO]     4/40: fins/summary/historical/2024/fins_summary_202409.csv.gz (445件)
+03:18:23 [INFO]     5/40: fins/summary/historical/2024/fins_summary_202410.csv.gz (1323件)
+03:18:24 [INFO]     6/40: fins/summary/historical/2024/fins_summary_202411.csv.gz (3009件)
+03:18:25 [INFO]     7/40: fins/summary/historical/2024/fins_summary_202412.csv.gz (417件)
+03:18:26 [INFO]     8/40: fins/summary/historical/2025/fins_summary_202501.csv.gz (1176件)
+03:18:27 [INFO]     9/40: fins/summary/historical/2025/fins_summary_202502.csv.gz (3135件)
+03:18:27 [INFO]     10/40: fins/summary/historical/2025/fins_summary_202503.csv.gz (580件)
+03:18:28 [INFO]     11/40: fins/summary/historical/2025/fins_summary_202504.csv.gz (1119件)
+03:18:29 [INFO]     12/40: fins/summary/historical/2025/fins_summary_202505.csv.gz (3277件)
+03:18:30 [INFO]     13/40: fins/summary/historical/2025/fins_summary_202506.csv.gz (425件)
+03:18:31 [INFO]     14/40: fins/summary/historical/2025/fins_summary_202507.csv.gz (1246件)
+03:18:32 [INFO]     15/40: fins/summary/historical/2025/fins_summary_202508.csv.gz (2790件)
+03:18:33 [INFO]     16/40: fins/summary/historical/2025/fins_summary_202509.csv.gz (452件)
+03:18:34 [INFO]     17/40: fins/summary/historical/2025/fins_summary_202510.csv.gz (1372件)
+03:18:35 [INFO]     18/40: fins/summary/historical/2025/fins_summary_202511.csv.gz (2907件)
+03:18:36 [INFO]     19/40: fins/summary/historical/2025/fins_summary_202512.csv.gz (410件)
+03:18:37 [INFO]     20/40: fins/summary/historical/2026/fins_summary_202601.csv.gz (1097件)
+03:18:38 [INFO]     21/40: fins/summary/historical/2026/fins_summary_202602.csv.gz (3023件)
+03:18:39 [INFO]     22/40: fins/summary/historical/2026/fins_summary_202603.csv.gz (613件)
+03:18:40 [INFO]     23/40: fins/summary/historical/2026/fins_summary_202604.csv.gz (1087件)
+03:18:41 [INFO]     24/40: fins/summary/live/fins_summary_20260501.csv.gz (55件)
+03:18:42 [INFO]     25/40: fins/summary/live/fins_summary_20260507.csv.gz (75件)
+03:18:42 [INFO]     26/40: fins/summary/live/fins_summary_20260508.csv.gz (280件)
+03:18:43 [INFO]     27/40: fins/summary/live/fins_summary_20260511.csv.gz (220件)
+03:18:44 [INFO]     28/40: fins/summary/live/fins_summary_20260512.csv.gz (357件)
+03:18:45 [INFO]     29/40: fins/summary/live/fins_summary_20260513.csv.gz (550件)
+03:18:46 [INFO]     30/40: fins/summary/live/fins_summary_20260514.csv.gz (758件)
+03:18:47 [INFO]     31/40: fins/summary/live/fins_summary_20260515.csv.gz (762件)
+03:18:48 [INFO]     32/40: fins/summary/live/fins_summary_20260518.csv.gz (13件)
+03:18:49 [INFO]     33/40: fins/summary/live/fins_summary_20260519.csv.gz (12件)
+03:18:50 [INFO]     34/40: fins/summary/live/fins_summary_20260520.csv.gz (23件)
+03:18:51 [INFO]     35/40: fins/summary/live/fins_summary_20260521.csv.gz (7件)
+03:18:52 [INFO]     36/40: fins/summary/live/fins_summary_20260522.csv.gz (20件)
+03:18:53 [INFO]     37/40: fins/summary/live/fins_summary_20260525.csv.gz (12件)
+03:18:54 [INFO]     38/40: fins/summary/live/fins_summary_20260526.csv.gz (12件)
+03:18:55 [INFO]     39/40: fins/summary/live/fins_summary_20260527.csv.gz (10件)
+03:18:56 [INFO]     40/40: fins/summary/live/fins_summary_20260528.csv.gz (12件)
+03:18:59 [INFO] 日足データ取得: 2026-02-28 〜 2026-05-29
+03:18:59 [INFO] J-Quants: 日足データを取得中 (2026-02-28 〜 2026-05-29)...
+03:18:59 [INFO]   eq_bars_daily バルク: 19 ファイル
+03:19:00 [INFO]     バルクCSV列名: ['Date', 'Code', 'O', 'H', 'L', 'C', 'UL', 'LL', 'Vo', 'Va', 'AdjFactor']
+03:19:00 [INFO]     1/19: equities/bars/daily/historical/2026/equities_bars_daily_202603.csv.gz (93345件)
+03:19:01 [INFO]     2/19: equities/bars/daily/historical/2026/equities_bars_daily_202604.csv.gz (93437件)
+03:19:02 [INFO]     3/19: equities/bars/daily/live/equities_bars_daily_20260501.csv.gz (4449件)
+03:19:03 [INFO]     4/19: equities/bars/daily/live/equities_bars_daily_20260507.csv.gz (4451件)
+03:19:04 [INFO]     5/19: equities/bars/daily/live/equities_bars_daily_20260508.csv.gz (4450件)
+03:19:05 [INFO]     6/19: equities/bars/daily/live/equities_bars_daily_20260511.csv.gz (4449件)
+03:19:06 [INFO]     7/19: equities/bars/daily/live/equities_bars_daily_20260512.csv.gz (4449件)
+03:19:07 [INFO]     8/19: equities/bars/daily/live/equities_bars_daily_20260513.csv.gz (4449件)
+03:19:08 [INFO]     9/19: equities/bars/daily/live/equities_bars_daily_20260514.csv.gz (4449件)
+03:19:09 [INFO]     10/19: equities/bars/daily/live/equities_bars_daily_20260515.csv.gz (4446件)
+03:19:10 [INFO]     11/19: equities/bars/daily/live/equities_bars_daily_20260518.csv.gz (4446件)
+03:19:11 [INFO]     12/19: equities/bars/daily/live/equities_bars_daily_20260519.csv.gz (4444件)
+03:19:12 [INFO]     13/19: equities/bars/daily/live/equities_bars_daily_20260520.csv.gz (4446件)
+03:19:13 [INFO]     14/19: equities/bars/daily/live/equities_bars_daily_20260521.csv.gz (4446件)
+03:19:14 [INFO]     15/19: equities/bars/daily/live/equities_bars_daily_20260522.csv.gz (4446件)
+03:19:15 [INFO]     16/19: equities/bars/daily/live/equities_bars_daily_20260525.csv.gz (4446件)
+03:19:15 [INFO]     17/19: equities/bars/daily/live/equities_bars_daily_20260526.csv.gz (4446件)
+03:19:16 [INFO]     18/19: equities/bars/daily/live/equities_bars_daily_20260527.csv.gz (4451件)
+03:19:17 [INFO]     19/19: equities/bars/daily/live/equities_bars_daily_20260528.csv.gz (4453件)
+03:19:23 [INFO]   黒字転換補正: 738 件
+03:19:23 [INFO] 開示全件CSV: /home/runner/work/stock-analysts/stock-analysts/results/daily_disclosed_2026-05-29.csv (2754 件)
+03:19:23 [INFO]   黒字転換補正: 738 件
+03:19:23 [INFO]   決算成長率 >= 20%: 5900 件
+03:19:23 [INFO]   ROE >= 12%: 5900 → 1049 件
+03:19:23 [INFO]   Code形式 listed='13010', passed='135A0'
+03:19:23 [INFO]   ScaleCat値分布: {'-': 651, 'TOPIX Small 2': 146, 'TOPIX Small 1': 118, 'TOPIX Mid400': 78, None: 31, 'TOPIX Large70': 16, 'TOPIX Core30': 9}
+03:19:23 [INFO]   ScaleCat Mid400+Large70(['TOPIX Mid400', 'TOPIX Large70']): 1049 → 94 件
+03:19:23 [INFO]   始値カラム: AdjustmentOpen
+03:19:23 [INFO]   大幅GDフィルタ(gap>=-5%): 94 → 90 件
+03:19:28 [INFO]   RSI14: 27 件に付与
+03:19:28 [INFO]   最終候補: 90 件
+03:19:28 [INFO] 直近30日の候補: 23 件
+03:19:28 [INFO] 保存: /home/runner/work/stock-analysts/stock-analysts/results/daily_screen_2026-05-29.csv
+03:19:28 [WARNING] GMAIL_USER / GMAIL_APP_PASSWORD 未設定。メール送信をスキップ（結果はCSVに保存済み）。
+03:19:28 [INFO] THREADS_ACCESS_TOKEN 未設定。Threads投稿をスキップ。
+[株式スクリーニング 2026-05-29]
+直近30日の決算開示から 23件 が条件に合致しました。
+
+◆ 18010  (FY / 05/14開示)
+  業種: 建設・資材  時価総額: -
+  営業利益成長: +56.4%  売上成長: -3.0%
+  営業利益率: 9.0%  ROE: 17.2%
+  RSI14: 44  来期予想: +0.0%
+  エントリー予定: 05/15寄付き  16,050円  前日比+0.0% →FL
+
+◆ 18020  (FY / 05/13開示)
+  業種: 建設・資材  時価総額: -
+  営業利益成長: +35.7%  売上成長: -1.3%
+  営業利益率: 7.5%  ROE: 13.2%
+  RSI14: 47  来期予想: -7.5%
+  エントリー予定: 05/14寄付き  3,819円  前日比+3.2% ↑GU
+
+◆ 18030  (FY / 05/12開示)
+  業種: 建設・資材  時価総額: -
+  営業利益成長: +67.1%  売上成長: +5.8%
+  営業利益率: 5.8%  ROE: 12.6%
+  RSI14: 69  来期予想: +28.9%
+  エントリー予定: 05/13寄付き  3,395円  前日比-2.0% ↓GD
+
+◆ 18120  (FY / 05/14開示)
+  業種: 建設・資材  時価総額: -
+  営業利益成長: +58.5%  売上成長: +5.3%
+  営業利益率: 7.8%  ROE: 12.3%
+  RSI14: 49  来期予想: -16.9%
+  エントリー予定: 05/15寄付き  6,183円  前日比-0.1% →FL
+
+◆ 18930  (FY / 05/08開示)
+  業種: 建設・資材  時価総額: -
+  営業利益成長: +154.9%  売上成長: +9.2%
+  営業利益率: 7.0%  ROE: 17.4%
+  RSI14: 57  来期予想: +6.7%
+  エントリー予定: 05/11寄付き  1,960円  前日比+7.1% ↑GU
+
+◆ 28020  (FY / 05/07開示)
+  業種: 食品  時価総額: -
+  営業利益成長: +75.0%  売上成長: +3.5%
+  営業利益率: 12.6%  ROE: 16.0%
+  RSI14: 60
+  エントリー予定: 05/08寄付き  4,818円  前日比-2.8% ↓GD
+
+◆ 285A0  (FY / 05/15開示)
+  業種: 電機・精密  時価総額: -
+  営業利益成長: +92.7%  売上成長: +37.0%
+  営業利益率: 37.2%  ROE: 39.6%
+  RSI14: 65
+  エントリー予定: 05/18寄付き  51,450円  前日比+15.7% ↑GU
+
+◆ 31070  (FY / 05/13開示)
+  業種: 商社・卸売  時価総額: -
+  営業利益成長: +26.6%  売上成長: +18.8%
+  営業利益率: 3.3%  ROE: 18.9%
+  RSI14: 73  来期予想: -17.4%
+  エントリー予定: 05/14寄付き  3,485円  前日比+2.0% ↑GU
+
+◆ 35630  (2Q / 05/08開示)
+  業種: 小売  時価総額: -
+  営業利益成長: +43.7%  売上成長: +24.7%
+  営業利益率: 11.0%  ROE: 15.0%
+  RSI14: 67
+  エントリー予定: 05/11寄付き  10,500円  前日比+1.9% ↑GU
+
+◆ 39230  (FY / 05/14開示)
+  業種: 情報通信・サービスその他  時価総額: -
+  営業利益成長: +70.2%  売上成長: +23.3%
+  営業利益率: 28.8%  ROE: 51.1%
+  RSI14: 50  来期予想: +18.2%
+  エントリー予定: 05/15寄付き  850円  前日比+0.4% →FL
+
+◆ 43850  (3Q / 05/11開示)
+  業種: 情報通信・サービスその他  時価総額: -
+  営業利益成長: +69.7%  売上成長: +16.1%
+  営業利益率: 20.6%  ROE: 16.1%
+  RSI14: 52
+  エントリー予定: 05/12寄付き  4,136円  前日比+6.4% ↑GU
+
+◆ 45060  (FY / 05/13開示)
+  業種: 医薬品  時価総額: -
+  営業利益成長: +272.6%  売上成長: +13.7%
+  営業利益率: 23.7%  ROE: 36.5%
+  RSI14: 36  来期予想: -16.2%
+  エントリー予定: 05/14寄付き  1,688円  前日比+2.3% ↑GU
+
+◆ 46260  (FY / 04/30開示)
+  業種: 素材・化学  時価総額: -
+  営業利益成長: +47.4%  売上成長: +15.8%
+  営業利益率: 23.6%  ROE: 20.7%
+  RSI14: 48  来期予想: +5.4%
+  エントリー予定: 05/01寄付き  4,802円  前日比-0.6% →FL
+
+◆ 58010  (FY / 05/12開示)
+  業種: 鉄鋼・非鉄  時価総額: -
+  営業利益成長: +35.6%  売上成長: +8.8%
+  営業利益率: 4.9%  ROE: 16.7%
+  RSI14: 68  来期予想: +48.8%
+  エントリー予定: 05/13寄付き  51,180円  前日比+1.5% ↑GU
+
+◆ 58020  (FY / 05/12開示)
+  業種: 鉄鋼・非鉄  時価総額: -
+  営業利益成長: +30.4%  売上成長: +9.2%
+  営業利益率: 8.2%  ROE: 13.0%
+  RSI14: 64  来期予想: +1.6%
+  エントリー予定: 05/13寄付き  11,350円  前日比-2.6% ↓GD
+
+◆ 58030  (FY / 05/14開示)
+  業種: 鉄鋼・非鉄  時価総額: -
+  営業利益成長: +39.2%  売上成長: +20.7%
+  営業利益率: 16.0%  ROE: 26.5%
+  RSI14: 38  来期予想: +11.8%
+  エントリー予定: 05/15寄付き  6,418円  前日比+1.0% →FL
+
+◆ 63680  (FY / 05/13開示)
+  業種: 機械  時価総額: -
+  営業利益成長: +21.0%  売上成長: +8.8%
+  営業利益率: 21.2%  ROE: 19.9%
+  RSI14: 72  来期予想: +6.2%
+  エントリー予定: 05/14寄付き  19,200円  前日比+3.0% ↑GU
+
+◆ 65440  (FY / 05/14開示)
+  業種: 情報通信・サービスその他  時価総額: -
+  営業利益成長: +27.7%  売上成長: +16.7%
+  営業利益率: 19.1%  ROE: 29.3%
+  RSI14: 54  来期予想: +18.1%
+  エントリー予定: 05/15寄付き  1,792円  前日比+8.1% ↑GU
+
+◆ 70030  (FY / 05/14開示)
+  業種: 機械  時価総額: -
+  営業利益成長: +62.7%  売上成長: +12.1%
+  営業利益率: 10.7%  ROE: 16.4%
+  RSI14: 28  来期予想: -15.0%
+  エントリー予定: 05/15寄付き  4,729円  前日比+1.5% ↑GU
+
+◆ 77470  (3Q / 05/15開示)
+  業種: 電機・精密  時価総額: -
+  営業利益成長: +45.5%  売上成長: +18.0%
+  営業利益率: 34.5%  ROE: 15.9%
+  RSI14: 53
+  エントリー予定: 05/18寄付き  3,420円  前日比+0.8% →FL
+
+◆ 79360  (1Q / 05/13開示)
+  業種: 情報通信・サービスその他  時価総額: -
+  営業利益成長: +36.5%  売上成長: +29.7%
+  営業利益率: 22.5%  ROE: 14.6%
+  RSI14: 52
+  エントリー予定: 05/14寄付き  4,670円  前日比+1.5% ↑GU
+
+◆ 96160  (FY / 05/15開示)
+  業種: 情報通信・サービスその他  時価総額: -
+  営業利益成長: +21.2%  売上成長: +20.2%
+  営業利益率: 9.0%  ROE: 12.9%
+  RSI14: 38  来期予想: +4.6%
+  エントリー予定: 05/18寄付き  2,452円  前日比+3.7% ↑GU
+
+◆ 97660  (FY / 05/08開示)
+  業種: 情報通信・サービスその他  時価総額: -
+  営業利益成長: +33.3%  売上成長: +17.1%
+  営業利益率: 27.5%  ROE: 17.7%
+  RSI14: 40  来期予想: +5.2%
+  エントリー予定: 05/11寄付き  20,940円  前日比+9.5% ↑GU
+
+────────────────────────────────────────
+利確: +15%  損切り: -5%  最大保有: 20日
+※ 翌営業日始値でエントリー。価格未確定の場合は TBD。
