@@ -159,6 +159,14 @@ def compute_financial_metrics(stmt_df: pd.DataFrame) -> pd.DataFrame:
             df["OperatingProfit"] / df["OperatingProfitPriorYear"].replace(0, float("nan")) - 1
         )
 
+    # 黒字転換（前年赤字→当期黒字）: 通常計算だとマイナスになるため高成長扱いに補正
+    turnaround = (
+        df["OperatingProfitPriorYear"].fillna(0) < 0
+    ) & (df["OperatingProfit"].fillna(0) > 0)
+    if turnaround.any():
+        df.loc[turnaround, "EarningsGrowth"] = 9.99  # 999%成長として扱う
+        logger.info(f"  黒字転換補正: {int(turnaround.sum())} 件")
+
     # --- 売上高 YoY ---
     if "Sales" in df.columns:
         if "CurPerType" in df.columns:
