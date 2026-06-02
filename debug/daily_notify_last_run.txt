@@ -1,126 +1,113 @@
-16:11:48 [INFO] 保有銘柄: ['77470', '285A0', '96160']
-16:11:50 [INFO]   77470: 3,700円 (2026-06-01)
-16:11:50 [INFO]   285A0: 72,500円 (2026-06-01)
-16:11:51 [INFO]   96160: 2,390円 (2026-06-01)
-16:11:51 [INFO] 取得価格: {'77470': 3700.0, '285A0': 72500.0, '96160': 2389.5}
-16:12:01 [INFO] Threads投稿成功: id=17882479023593299
-【保有状況 06/01】
+14:13:17 [INFO] 保有銘柄: ['77470', '285A0', '96160']
+14:13:18 [INFO]   77470: 3,633円 (2026-06-02)
+14:13:19 [INFO]   285A0: 77,540円 (2026-06-02)
+14:13:20 [INFO]   96160: 2,483円 (2026-06-02)
+14:13:20 [INFO] 取得価格: {'77470': 3633.0, '285A0': 77540.0, '96160': 2483.0}
+14:13:27 [INFO] Threads投稿成功: id=18075203186440349
+【保有状況 06/02】
 
 ◆朝日インテック × 5株
-  取得 3,420円 → 現在 3,700円
-  含み損益: +1,400円 (+8.2%)
+  取得 3,420円 → 現在 3,633円
+  含み損益: +1,065円 (+6.2%)
   TP 3,933円 / SL 3,249円
 
 ◆285A0（参考） × 1株
-  取得 51,450円 → 現在 72,500円
-  含み損益: +21,050円 (+40.9%)
+  取得 51,450円 → 現在 77,540円
+  含み損益: +26,090円 (+50.7%)
   TP 59,168円 / SL 48,878円
 
 ◆96160（参考） × 1株
-  取得 2,452円 → 現在 2,390円
-  含み損益: -62円 (-2.5%)
+  取得 2,452円 → 現在 2,483円
+  含み損益: +31円 (+1.3%)
   TP 2,820円 / SL 2,329円
 
-合計含み損益: +22,388円 (+31.5%)
+合計含み損益: +27,186円 (+38.3%)
 #株式投資 #AIトレード #保有状況
-16:12:01 [INFO] 毎日スクリーニング: 2026-06-01 (遡及1日)
-16:12:01 [INFO] J-Quants: 上場銘柄情報を取得中...
-16:12:04 [INFO] 財務データ取得: 2024-06-01 〜 2026-06-01
-16:12:04 [INFO] J-Quants: 財務データを取得中 (2024-06-01 〜 2026-06-01)...
-16:12:04 [INFO]   fin_summary バルク: 42 ファイル
-16:12:05 [INFO]     バルクCSV列名: ['DiscDate', 'DiscTime', 'Code', 'DiscNo', 'DocType', 'CurPerType', 'CurPerSt', 'CurPerEn', 'CurFYSt', 'CurFYEn', 'NxtFYSt', 'NxtFYEn', 'Sales', 'OP', 'OdP', 'NP', 'EPS', 'DEPS', 'TA', 'Eq', 'EqAR', 'BPS', 'CFO', 'CFI', 'CFF', 'CashEq', 'Div1Q', 'Div2Q', 'Div3Q', 'DivFY', 'DivAnn', 'DivUnit', 'DivTotalAnn', 'PayoutRatioAnn', 'FDiv1Q', 'FDiv2Q', 'FDiv3Q', 'FDivFY', 'FDivAnn', 'FDivUnit', 'FDivTotalAnn', 'FPayoutRatioAnn', 'NxFDiv1Q', 'NxFDiv2Q', 'NxFDiv3Q', 'NxFDivFY', 'NxFDivAnn', 'NxFDivUnit', 'NxFPayoutRatioAnn', 'FSales2Q', 'FOP2Q', 'FOdP2Q', 'FNP2Q', 'FEPS2Q', 'NxFSales2Q', 'NxFOP2Q', 'NxFOdP2Q', 'NxFNp2Q', 'NxFEPS2Q', 'FSales', 'FOP', 'FOdP', 'FNP', 'FEPS', 'NxFSales', 'NxFOP', 'NxFOdP', 'NxFNp', 'NxFEPS', 'MatChgSub', 'SigChgInC', 'ChgByASRev', 'ChgNoASRev', 'ChgAcEst', 'RetroRst', 'ShOutFY', 'TrShFY', 'AvgSh', 'NCSales', 'NCOP', 'NCOdP', 'NCNP', 'NCEPS', 'NCTA', 'NCEq', 'NCEqAR', 'NCBPS', 'FNCSales2Q', 'FNCOP2Q', 'FNCOdP2Q', 'FNCNP2Q', 'FNCEPS2Q', 'NxFNCSales2Q', 'NxFNCOP2Q', 'NxFNCOdP2Q', 'NxFNCNP2Q', 'NxFNCEPS2Q', 'FNCSales', 'FNCOP', 'FNCOdP', 'FNCNP', 'FNCEPS', 'NxFNCSales', 'NxFNCOP', 'NxFNCOdP', 'NxFNCNP', 'NxFNCEPS']
-16:12:05 [INFO]     1/42: fins/summary/historical/2024/fins_summary_202406.csv.gz (451件)
-16:12:06 [INFO]     2/42: fins/summary/historical/2024/fins_summary_202407.csv.gz (1220件)
-16:12:07 [INFO]     3/42: fins/summary/historical/2024/fins_summary_202408.csv.gz (2877件)
-16:12:08 [INFO]     4/42: fins/summary/historical/2024/fins_summary_202409.csv.gz (445件)
-16:12:09 [INFO]     5/42: fins/summary/historical/2024/fins_summary_202410.csv.gz (1323件)
-16:12:10 [INFO]     6/42: fins/summary/historical/2024/fins_summary_202411.csv.gz (3009件)
-16:12:11 [INFO]     7/42: fins/summary/historical/2024/fins_summary_202412.csv.gz (417件)
-16:12:13 [INFO]     8/42: fins/summary/historical/2025/fins_summary_202501.csv.gz (1176件)
-16:12:14 [INFO]     9/42: fins/summary/historical/2025/fins_summary_202502.csv.gz (3135件)
-16:12:15 [INFO]     10/42: fins/summary/historical/2025/fins_summary_202503.csv.gz (580件)
-16:12:16 [INFO]     11/42: fins/summary/historical/2025/fins_summary_202504.csv.gz (1119件)
-16:12:17 [INFO]     12/42: fins/summary/historical/2025/fins_summary_202505.csv.gz (3277件)
-16:12:18 [INFO]     13/42: fins/summary/historical/2025/fins_summary_202506.csv.gz (425件)
-16:12:19 [INFO]     14/42: fins/summary/historical/2025/fins_summary_202507.csv.gz (1246件)
-16:12:20 [INFO]     15/42: fins/summary/historical/2025/fins_summary_202508.csv.gz (2790件)
-16:12:21 [INFO]     16/42: fins/summary/historical/2025/fins_summary_202509.csv.gz (452件)
-16:12:22 [INFO]     17/42: fins/summary/historical/2025/fins_summary_202510.csv.gz (1372件)
-16:12:23 [INFO]     18/42: fins/summary/historical/2025/fins_summary_202511.csv.gz (2907件)
-16:12:24 [INFO]     19/42: fins/summary/historical/2025/fins_summary_202512.csv.gz (410件)
-16:12:25 [INFO]     20/42: fins/summary/historical/2026/fins_summary_202601.csv.gz (1097件)
-16:12:27 [INFO]     21/42: fins/summary/historical/2026/fins_summary_202602.csv.gz (3023件)
-16:12:28 [INFO]     22/42: fins/summary/historical/2026/fins_summary_202603.csv.gz (613件)
-16:12:29 [INFO]     23/42: fins/summary/historical/2026/fins_summary_202604.csv.gz (1087件)
-16:12:30 [INFO]     24/42: fins/summary/live/fins_summary_20260501.csv.gz (55件)
-16:12:31 [INFO]     25/42: fins/summary/live/fins_summary_20260507.csv.gz (75件)
-16:12:32 [INFO]     26/42: fins/summary/live/fins_summary_20260508.csv.gz (280件)
-16:12:33 [INFO]     27/42: fins/summary/live/fins_summary_20260511.csv.gz (220件)
-16:12:34 [INFO]     28/42: fins/summary/live/fins_summary_20260512.csv.gz (357件)
-16:12:35 [INFO]     29/42: fins/summary/live/fins_summary_20260513.csv.gz (550件)
-16:12:36 [INFO]     30/42: fins/summary/live/fins_summary_20260514.csv.gz (758件)
-16:12:37 [INFO]     31/42: fins/summary/live/fins_summary_20260515.csv.gz (762件)
-16:12:38 [INFO]     32/42: fins/summary/live/fins_summary_20260518.csv.gz (13件)
-16:12:39 [INFO]     33/42: fins/summary/live/fins_summary_20260519.csv.gz (12件)
-16:12:40 [INFO]     34/42: fins/summary/live/fins_summary_20260520.csv.gz (23件)
-16:12:41 [INFO]     35/42: fins/summary/live/fins_summary_20260521.csv.gz (7件)
-16:12:42 [INFO]     36/42: fins/summary/live/fins_summary_20260522.csv.gz (20件)
-16:12:43 [INFO]     37/42: fins/summary/live/fins_summary_20260525.csv.gz (12件)
-16:12:44 [INFO]     38/42: fins/summary/live/fins_summary_20260526.csv.gz (12件)
-16:12:45 [INFO]     39/42: fins/summary/live/fins_summary_20260527.csv.gz (10件)
-16:12:47 [INFO]     40/42: fins/summary/live/fins_summary_20260528.csv.gz (12件)
-16:12:48 [INFO]     41/42: fins/summary/live/fins_summary_20260529.csv.gz (29件)
-16:12:49 [INFO]     42/42: fins/summary/live/fins_summary_20260601.csv.gz (12件)
-16:12:52 [INFO] 日足データ取得: 2026-03-03 〜 2026-06-01
-16:12:52 [INFO] J-Quants: 日足データを取得中 (2026-03-03 〜 2026-06-01)...
-16:12:52 [INFO]   eq_bars_daily バルク: 20 ファイル
-16:12:53 [INFO]     バルクCSV列名: ['Date', 'Code', 'O', 'H', 'L', 'C', 'UL', 'LL', 'Vo', 'Va', 'AdjFactor']
-16:12:53 [INFO]     1/20: equities/bars/daily/historical/2026/equities_bars_daily_202604.csv.gz (93437件)
-16:12:54 [INFO]     2/20: equities/bars/daily/live/equities_bars_daily_20260501.csv.gz (4449件)
-16:12:55 [INFO]     3/20: equities/bars/daily/live/equities_bars_daily_20260507.csv.gz (4451件)
-16:12:56 [INFO]     4/20: equities/bars/daily/live/equities_bars_daily_20260508.csv.gz (4450件)
-16:12:57 [INFO]     5/20: equities/bars/daily/live/equities_bars_daily_20260511.csv.gz (4449件)
-16:12:58 [INFO]     6/20: equities/bars/daily/live/equities_bars_daily_20260512.csv.gz (4449件)
-16:12:59 [INFO]     7/20: equities/bars/daily/live/equities_bars_daily_20260513.csv.gz (4449件)
-16:13:00 [INFO]     8/20: equities/bars/daily/live/equities_bars_daily_20260514.csv.gz (4449件)
-16:13:02 [INFO]     9/20: equities/bars/daily/live/equities_bars_daily_20260515.csv.gz (4446件)
-16:13:03 [INFO]     10/20: equities/bars/daily/live/equities_bars_daily_20260518.csv.gz (4446件)
-16:13:04 [INFO]     11/20: equities/bars/daily/live/equities_bars_daily_20260519.csv.gz (4444件)
-16:13:05 [INFO]     12/20: equities/bars/daily/live/equities_bars_daily_20260520.csv.gz (4446件)
-16:13:06 [INFO]     13/20: equities/bars/daily/live/equities_bars_daily_20260521.csv.gz (4446件)
-16:13:07 [INFO]     14/20: equities/bars/daily/live/equities_bars_daily_20260522.csv.gz (4446件)
-16:13:08 [INFO]     15/20: equities/bars/daily/live/equities_bars_daily_20260525.csv.gz (4446件)
-16:13:09 [INFO]     16/20: equities/bars/daily/live/equities_bars_daily_20260526.csv.gz (4446件)
-16:13:10 [INFO]     17/20: equities/bars/daily/live/equities_bars_daily_20260527.csv.gz (4451件)
-16:13:11 [INFO]     18/20: equities/bars/daily/live/equities_bars_daily_20260528.csv.gz (4453件)
-16:13:12 [INFO]     19/20: equities/bars/daily/live/equities_bars_daily_20260529.csv.gz (4451件)
-16:13:13 [INFO]     20/20: equities/bars/daily/live/equities_bars_daily_20260601.csv.gz (4449件)
-16:13:17 [INFO]   黒字転換補正: 738 件
-16:13:17 [INFO] 開示全件CSV: /home/runner/work/stock-analysts/stock-analysts/results/daily_disclosed_2026-06-01.csv (7 件)
-16:13:17 [INFO]   黒字転換補正: 738 件
-16:13:17 [INFO]   決算成長率 >= 20%: 5902 件
-16:13:17 [INFO]   ROE >= 12%: 5902 → 1047 件
-16:13:17 [INFO]   Code形式 listed='13010', passed='135A0'
-16:13:17 [INFO]   ScaleCat値分布: {'-': 649, 'TOPIX Small 2': 146, 'TOPIX Small 1': 118, 'TOPIX Mid400': 78, None: 31, 'TOPIX Large70': 16, 'TOPIX Core30': 9}
-16:13:17 [INFO]   ScaleCat Mid400+Large70(['TOPIX Mid400', 'TOPIX Large70']): 1047 → 94 件
-16:13:17 [INFO]   始値カラム: AdjustmentOpen
-16:13:17 [INFO]   大幅GDフィルタ(gap>=-5%): 94 → 90 件
-16:13:21 [INFO]   RSI14: 27 件に付与
-16:13:21 [INFO]   最終候補: 90 件
-16:13:21 [INFO] 直近1日の候補: 1 件
-16:13:21 [INFO] 保存: /home/runner/work/stock-analysts/stock-analysts/results/daily_screen_2026-06-01.csv
-16:13:22 [INFO] メール送信成功 → baseballbasketballbowling@gmail.com
-16:13:30 [INFO] Threads投稿成功: id=18098978261151280
-[株式スクリーニング 2026-06-01]
-2026-06-01の決算開示から 1件 が条件に合致しました。
-
-◆ 19420  (FY / 06/01開示)
-  業種: 建設・資材  時価総額: -
-  営業利益成長: +42.5%  売上成長: +10.4%
-  営業利益率: 11.2%  ROE: 15.7%
-  RSI14: 41  来期予想: +8.3%
-  エントリー予定: 06/02寄付き
-
-────────────────────────────────────────
-利確: +15%  損切り: -5%  最大保有: 20日
-※ 翌営業日始値でエントリー。価格未確定の場合は TBD。
+14:13:28 [INFO] 毎日スクリーニング: 2026-06-02 (遡及1日)
+14:13:28 [INFO] J-Quants: 上場銘柄情報を取得中...
+14:13:30 [INFO] 財務データ取得: 2024-06-02 〜 2026-06-02
+14:13:30 [INFO] J-Quants: 財務データを取得中 (2024-06-02 〜 2026-06-02)...
+14:13:30 [INFO]   fin_summary バルク: 42 ファイル
+14:13:31 [INFO]     バルクCSV列名: ['DiscDate', 'DiscTime', 'Code', 'DiscNo', 'DocType', 'CurPerType', 'CurPerSt', 'CurPerEn', 'CurFYSt', 'CurFYEn', 'NxtFYSt', 'NxtFYEn', 'Sales', 'OP', 'OdP', 'NP', 'EPS', 'DEPS', 'TA', 'Eq', 'EqAR', 'BPS', 'CFO', 'CFI', 'CFF', 'CashEq', 'Div1Q', 'Div2Q', 'Div3Q', 'DivFY', 'DivAnn', 'DivUnit', 'DivTotalAnn', 'PayoutRatioAnn', 'FDiv1Q', 'FDiv2Q', 'FDiv3Q', 'FDivFY', 'FDivAnn', 'FDivUnit', 'FDivTotalAnn', 'FPayoutRatioAnn', 'NxFDiv1Q', 'NxFDiv2Q', 'NxFDiv3Q', 'NxFDivFY', 'NxFDivAnn', 'NxFDivUnit', 'NxFPayoutRatioAnn', 'FSales2Q', 'FOP2Q', 'FOdP2Q', 'FNP2Q', 'FEPS2Q', 'NxFSales2Q', 'NxFOP2Q', 'NxFOdP2Q', 'NxFNp2Q', 'NxFEPS2Q', 'FSales', 'FOP', 'FOdP', 'FNP', 'FEPS', 'NxFSales', 'NxFOP', 'NxFOdP', 'NxFNp', 'NxFEPS', 'MatChgSub', 'SigChgInC', 'ChgByASRev', 'ChgNoASRev', 'ChgAcEst', 'RetroRst', 'ShOutFY', 'TrShFY', 'AvgSh', 'NCSales', 'NCOP', 'NCOdP', 'NCNP', 'NCEPS', 'NCTA', 'NCEq', 'NCEqAR', 'NCBPS', 'FNCSales2Q', 'FNCOP2Q', 'FNCOdP2Q', 'FNCNP2Q', 'FNCEPS2Q', 'NxFNCSales2Q', 'NxFNCOP2Q', 'NxFNCOdP2Q', 'NxFNCNP2Q', 'NxFNCEPS2Q', 'FNCSales', 'FNCOP', 'FNCOdP', 'FNCNP', 'FNCEPS', 'NxFNCSales', 'NxFNCOP', 'NxFNCOdP', 'NxFNCNP', 'NxFNCEPS']
+14:13:31 [INFO]     1/42: fins/summary/historical/2024/fins_summary_202407.csv.gz (1220件)
+14:13:32 [INFO]     2/42: fins/summary/historical/2024/fins_summary_202408.csv.gz (2877件)
+14:13:33 [INFO]     3/42: fins/summary/historical/2024/fins_summary_202409.csv.gz (445件)
+14:13:34 [INFO]     4/42: fins/summary/historical/2024/fins_summary_202410.csv.gz (1323件)
+14:13:35 [INFO]     5/42: fins/summary/historical/2024/fins_summary_202411.csv.gz (3009件)
+14:13:36 [INFO]     6/42: fins/summary/historical/2024/fins_summary_202412.csv.gz (417件)
+14:13:37 [INFO]     7/42: fins/summary/historical/2025/fins_summary_202501.csv.gz (1176件)
+14:13:38 [INFO]     8/42: fins/summary/historical/2025/fins_summary_202502.csv.gz (3135件)
+14:13:39 [INFO]     9/42: fins/summary/historical/2025/fins_summary_202503.csv.gz (580件)
+14:13:40 [INFO]     10/42: fins/summary/historical/2025/fins_summary_202504.csv.gz (1119件)
+14:13:41 [INFO]     11/42: fins/summary/historical/2025/fins_summary_202505.csv.gz (3277件)
+14:13:42 [INFO]     12/42: fins/summary/historical/2025/fins_summary_202506.csv.gz (425件)
+14:13:43 [INFO]     13/42: fins/summary/historical/2025/fins_summary_202507.csv.gz (1246件)
+14:13:44 [INFO]     14/42: fins/summary/historical/2025/fins_summary_202508.csv.gz (2790件)
+14:13:45 [INFO]     15/42: fins/summary/historical/2025/fins_summary_202509.csv.gz (452件)
+14:13:46 [INFO]     16/42: fins/summary/historical/2025/fins_summary_202510.csv.gz (1372件)
+14:13:47 [INFO]     17/42: fins/summary/historical/2025/fins_summary_202511.csv.gz (2907件)
+14:13:48 [INFO]     18/42: fins/summary/historical/2025/fins_summary_202512.csv.gz (410件)
+14:13:49 [INFO]     19/42: fins/summary/historical/2026/fins_summary_202601.csv.gz (1097件)
+14:13:50 [INFO]     20/42: fins/summary/historical/2026/fins_summary_202602.csv.gz (3023件)
+14:13:51 [INFO]     21/42: fins/summary/historical/2026/fins_summary_202603.csv.gz (613件)
+14:13:52 [INFO]     22/42: fins/summary/historical/2026/fins_summary_202604.csv.gz (1087件)
+14:13:53 [INFO]     23/42: fins/summary/live/fins_summary_20260501.csv.gz (55件)
+14:13:54 [INFO]     24/42: fins/summary/live/fins_summary_20260507.csv.gz (75件)
+14:13:55 [INFO]     25/42: fins/summary/live/fins_summary_20260508.csv.gz (280件)
+14:13:56 [INFO]     26/42: fins/summary/live/fins_summary_20260511.csv.gz (220件)
+14:13:57 [INFO]     27/42: fins/summary/live/fins_summary_20260512.csv.gz (357件)
+14:13:58 [INFO]     28/42: fins/summary/live/fins_summary_20260513.csv.gz (550件)
+14:13:59 [INFO]     29/42: fins/summary/live/fins_summary_20260514.csv.gz (758件)
+14:14:00 [INFO]     30/42: fins/summary/live/fins_summary_20260515.csv.gz (762件)
+14:14:01 [INFO]     31/42: fins/summary/live/fins_summary_20260518.csv.gz (13件)
+14:14:02 [INFO]     32/42: fins/summary/live/fins_summary_20260519.csv.gz (12件)
+14:14:03 [INFO]     33/42: fins/summary/live/fins_summary_20260520.csv.gz (23件)
+14:14:04 [INFO]     34/42: fins/summary/live/fins_summary_20260521.csv.gz (7件)
+14:14:05 [INFO]     35/42: fins/summary/live/fins_summary_20260522.csv.gz (20件)
+14:14:06 [INFO]     36/42: fins/summary/live/fins_summary_20260525.csv.gz (12件)
+14:14:07 [INFO]     37/42: fins/summary/live/fins_summary_20260526.csv.gz (12件)
+14:14:08 [INFO]     38/42: fins/summary/live/fins_summary_20260527.csv.gz (10件)
+14:14:09 [INFO]     39/42: fins/summary/live/fins_summary_20260528.csv.gz (12件)
+14:14:10 [INFO]     40/42: fins/summary/live/fins_summary_20260529.csv.gz (29件)
+14:14:11 [INFO]     41/42: fins/summary/live/fins_summary_20260601.csv.gz (12件)
+14:14:12 [INFO]     42/42: fins/summary/live/fins_summary_20260602.csv.gz (6件)
+14:14:15 [INFO] 日足データ取得: 2026-03-04 〜 2026-06-02
+14:14:15 [INFO] J-Quants: 日足データを取得中 (2026-03-04 〜 2026-06-02)...
+14:14:15 [INFO]   eq_bars_daily バルク: 21 ファイル
+14:14:16 [INFO]     バルクCSV列名: ['Date', 'Code', 'O', 'H', 'L', 'C', 'UL', 'LL', 'Vo', 'Va', 'AdjFactor']
+14:14:16 [INFO]     1/21: equities/bars/daily/historical/2026/equities_bars_daily_202604.csv.gz (93437件)
+14:14:17 [INFO]     2/21: equities/bars/daily/live/equities_bars_daily_20260501.csv.gz (4449件)
+14:14:18 [INFO]     3/21: equities/bars/daily/live/equities_bars_daily_20260507.csv.gz (4451件)
+14:14:19 [INFO]     4/21: equities/bars/daily/live/equities_bars_daily_20260508.csv.gz (4450件)
+14:14:20 [INFO]     5/21: equities/bars/daily/live/equities_bars_daily_20260511.csv.gz (4449件)
+14:14:21 [INFO]     6/21: equities/bars/daily/live/equities_bars_daily_20260512.csv.gz (4449件)
+14:14:22 [INFO]     7/21: equities/bars/daily/live/equities_bars_daily_20260513.csv.gz (4449件)
+14:14:23 [INFO]     8/21: equities/bars/daily/live/equities_bars_daily_20260514.csv.gz (4449件)
+14:14:24 [INFO]     9/21: equities/bars/daily/live/equities_bars_daily_20260515.csv.gz (4446件)
+14:14:25 [INFO]     10/21: equities/bars/daily/live/equities_bars_daily_20260518.csv.gz (4446件)
+14:14:26 [INFO]     11/21: equities/bars/daily/live/equities_bars_daily_20260519.csv.gz (4444件)
+14:14:27 [INFO]     12/21: equities/bars/daily/live/equities_bars_daily_20260520.csv.gz (4446件)
+14:14:28 [INFO]     13/21: equities/bars/daily/live/equities_bars_daily_20260521.csv.gz (4446件)
+14:14:29 [INFO]     14/21: equities/bars/daily/live/equities_bars_daily_20260522.csv.gz (4446件)
+14:14:30 [INFO]     15/21: equities/bars/daily/live/equities_bars_daily_20260525.csv.gz (4446件)
+14:14:31 [INFO]     16/21: equities/bars/daily/live/equities_bars_daily_20260526.csv.gz (4446件)
+14:14:32 [INFO]     17/21: equities/bars/daily/live/equities_bars_daily_20260527.csv.gz (4451件)
+14:14:33 [INFO]     18/21: equities/bars/daily/live/equities_bars_daily_20260528.csv.gz (4453件)
+14:14:34 [INFO]     19/21: equities/bars/daily/live/equities_bars_daily_20260529.csv.gz (4451件)
+14:14:35 [INFO]     20/21: equities/bars/daily/live/equities_bars_daily_20260601.csv.gz (4449件)
+14:14:36 [INFO]     21/21: equities/bars/daily/live/equities_bars_daily_20260602.csv.gz (4449件)
+14:14:39 [INFO]   黒字転換補正: 718 件
+14:14:39 [INFO] 開示全件CSV: /home/runner/work/stock-analysts/stock-analysts/results/daily_disclosed_2026-06-02.csv (6 件)
+14:14:39 [INFO]   黒字転換補正: 718 件
+14:14:39 [INFO]   決算成長率 >= 20%: 5768 件
+14:14:39 [INFO]   ROE >= 12%: 5768 → 1015 件
+14:14:39 [INFO]   Code形式 listed='13010', passed='135A0'
+14:14:40 [INFO]   ScaleCat値分布: {'-': 629, 'TOPIX Small 2': 140, 'TOPIX Small 1': 114, 'TOPIX Mid400': 78, None: 29, 'TOPIX Large70': 16, 'TOPIX Core30': 9}
+14:14:40 [INFO]   ScaleCat Mid400+Large70(['TOPIX Mid400', 'TOPIX Large70']): 1015 → 94 件
+14:14:40 [INFO]   始値カラム: AdjustmentOpen
+14:14:40 [INFO]   大幅GDフィルタ(gap>=-5%): 94 → 90 件
+14:14:43 [INFO]   RSI14: 27 件に付与
+14:14:43 [INFO]   最終候補: 90 件
+14:14:43 [INFO] 直近1日の候補: 0 件
+14:14:43 [INFO] 保存: /home/runner/work/stock-analysts/stock-analysts/results/daily_screen_2026-06-02.csv
+14:14:43 [INFO] 直近1日の開示で条件に合致する銘柄なし。通知しません。
