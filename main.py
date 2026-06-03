@@ -745,7 +745,7 @@ def cmd_portfolio_post(args) -> None:
 
 
 def cmd_volume_backtest(args) -> None:
-    """出来高急騰バックテスト（単独 & 決算AND両スイープ）。"""
+    """出来高急騰モメンタムバックテスト。"""
     import traceback as _tb
     import pandas as pd
     from src.api.jquants_client import JQuantsClient
@@ -753,15 +753,20 @@ def cmd_volume_backtest(args) -> None:
         load_listed_info, load_statements, load_daily_quotes, screen_candidates,
     )
     from src.screener.volume_screener import screen_volume_surge
-    from src.backtest.engine import run_backtest, build_price_dict, Trade
-    from src.backtest.metrics import trades_to_df, compute_metrics
+    from src.backtest.engine import run_backtest, build_price_dict
 
     start = args.start
     end   = args.end
-    multipliers = [2.0, 3.0, 5.0]
-    mid_large = ["TOPIX Mid400", "TOPIX Large70"]
+    # モメンタム戦略用パラメータ（決算戦略より広め）
+    MOM_TP       = 0.20   # +20% 利確
+    MOM_SL       = -0.07  # -7%  損切り
+    MOM_HOLD     = 30     # 最大30営業日
+    PRICE_CHG    = 0.03   # 当日終値 +3%以上（陽線確認）
+    multipliers  = [3.0, 5.0, 10.0]
+    mid_large    = ["TOPIX Mid400", "TOPIX Large70"]
 
-    logger.info(f"出来高急騰バックテスト: {start} 〜 {end}")
+    logger.info(f"出来高モメンタムバックテスト: {start} 〜 {end}")
+    logger.info(f"  戦略パラメータ: TP={MOM_TP:.0%}, SL={MOM_SL:.0%}, MaxHold={MOM_HOLD}日, 陽線≥{PRICE_CHG:.0%}")
 
     try:
         client    = JQuantsClient()
@@ -772,7 +777,7 @@ def cmd_volume_backtest(args) -> None:
         quotes_df = load_daily_quotes(client, date_from=start, date_to=end)
         price_dict = build_price_dict(quotes_df)
 
-        # ── 決算スクリーニング候補（AND用）
+        # ── 決算スクリーニング候補（AND比較用）
         earnings_candidates = screen_candidates(
             stmt_df, quotes_df, listed_df, roe_min=0.12,
         )
@@ -782,59 +787,87 @@ def cmd_volume_backtest(args) -> None:
         ) if not earnings_candidates.empty else set()
         logger.info(f"決算候補: {len(earnings_keys)} 件")
 
-        header = "=" * 68
+        from src.backtest.metrics import trades_to_df, compute_metrics
+
+        def _print_result(label, cands, tp, sl, hold):
+            if cands.empty:
+                print(f"\n  {label}: 候補0件")
+                return
+            trades = run_backtest(cands, quotes_df, price_dict=price_dict,
+                                  take_profit=tp, stop_loss=sl, max_hold=hold)
+            if not trades:
+                print(f"\n  {label}: トレードなし")
+                return
+            df = trades_to_df(trades)
+            m  = compute_metrics(df)
+            n  = m.get("total_trades", 0)
+            wr = m.get("win_rate", 0)
+            pf = m.get("profit_factor", 0)
+            ret = m.get("total_return", 0)
+            mdd = m.get("max_drawdown", 0)
+            exp = m.get("expectancy_pct", 0)
+            exit_d = m.get("exit_detail", {})
+            tp_n  = exit_d.get("take_profit", {}).get("count", 0)
+            sl_n  = exit_d.get("stop_loss",   {}).get("count", 0)
+            te_n  = exit_d.get("time_exit",    {}).get("count", 0)
+            print(f"\n  {label} ({n}件)")
+            print(f"    勝率 {wr:.1%}  PF {pf:.2f}  期待値 {exp:+.2%}")
+            print(f"    総リターン {ret:+.1%}  最大DD {mdd:.1%}")
+            print(f"    利確:{tp_n}件 / 損切:{sl_n}件 / 期間切:{te_n}件")
+
+        header = "=" * 70
         print(f"\n{header}")
-        print("  【出来高急騰バックテスト】")
+        print("  【出来高モメンタム戦略バックテスト】")
+        print(f"  対象: TOPIX Mid400 + Large70  /  TP={MOM_TP:.0%}  SL={MOM_SL:.0%}  最大{MOM_HOLD}日")
+        print(f"  フィルタ: 当日終値≥前日終値×{1+PRICE_CHG:.2f}（陽線+3%以上）")
         print(header)
 
         for mult in multipliers:
-            # 出来高急騰候補（中型+大型株のみ）
-            vol_cands = screen_volume_surge(
+            print(f"\n▼ 出来高 {mult:.0f}倍以上")
+
+            # 陽線確認あり（メイン戦略）
+            vol_up = screen_volume_surge(
                 quotes_df, listed_df,
                 vol_multiplier=mult,
                 require_up=True,
-                date_from=start,
-                date_to=end,
+                price_change_min=PRICE_CHG,
+                date_from=start, date_to=end,
                 scale_cats=mid_large,
             )
-            if vol_cands.empty:
-                print(f"\n[{mult:.0f}倍] 候補なし")
-                continue
+            vol_up_bt = vol_up.rename(columns={"SurgeDate": "DisclosedDate"}).copy()
+            vol_up_bt["EarningsGrowth"] = float("nan")
 
-            # run_backtest 用に列名を合わせる
-            vol_cands_bt = vol_cands.rename(columns={"SurgeDate": "DisclosedDate"}).copy()
-            vol_cands_bt["EarningsGrowth"] = float("nan")
+            # 陽線確認なし（緩い版：出来高急増のみ）
+            vol_any = screen_volume_surge(
+                quotes_df, listed_df,
+                vol_multiplier=mult,
+                require_up=True,
+                price_change_min=0.0,
+                date_from=start, date_to=end,
+                scale_cats=mid_large,
+            )
+            vol_any_bt = vol_any.rename(columns={"SurgeDate": "DisclosedDate"}).copy()
+            vol_any_bt["EarningsGrowth"] = float("nan")
 
-            # AND候補: 決算スクリーニング通過 & 出来高急騰
-            and_mask = vol_cands_bt.apply(
-                lambda r: (str(r["Code"]), pd.Timestamp(r["EntryDate"]).date())
-                          in earnings_keys,
+            # AND: 決算通過 & 出来高急騰
+            and_mask = vol_up_bt.apply(
+                lambda r: (str(r["Code"]), pd.Timestamp(r["EntryDate"]).date()) in earnings_keys,
                 axis=1,
             )
-            and_cands = vol_cands_bt[and_mask].copy()
+            and_cands = vol_up_bt[and_mask].copy()
 
-            for label, cands in [
-                (f"出来高{mult:.0f}倍（単独）", vol_cands_bt),
-                (f"出来高{mult:.0f}倍 AND 決算",  and_cands),
-            ]:
-                if cands.empty:
-                    print(f"\n--- {label}: 0件 ---")
-                    continue
-                trades = run_backtest(cands, quotes_df, price_dict=price_dict)
-                if not trades:
-                    print(f"\n--- {label}: トレードなし ---")
-                    continue
-                df = trades_to_df(trades)
-                m  = compute_metrics(df)
-                n  = m.get("total_trades", 0)
-                wr = m.get("win_rate", 0)
-                pf = m.get("profit_factor", 0)
-                ret = m.get("total_return", 0)
-                mdd = m.get("max_drawdown", 0)
-                exp = m.get("expectancy_pct", 0)
-                print(f"\n--- {label} ({n}件) ---")
-                print(f"  勝率 {wr:.1%}  PF {pf:.2f}  期待値 {exp:+.2%}")
-                print(f"  総リターン {ret:+.1%}  最大DD {mdd:.1%}")
+            _print_result(f"出来高{mult:.0f}倍＋陽線+3%", vol_up_bt, MOM_TP, MOM_SL, MOM_HOLD)
+            _print_result(f"出来高{mult:.0f}倍（陽線のみ）", vol_any_bt, MOM_TP, MOM_SL, MOM_HOLD)
+            _print_result(f"出来高{mult:.0f}倍＋陽線+3% AND 決算", and_cands, MOM_TP, MOM_SL, MOM_HOLD)
+
+        # 参考: 現行決算戦略との比較
+        from config.settings import TAKE_PROFIT, STOP_LOSS, MAX_HOLD_DAYS
+        print(f"\n{header}")
+        print(f"  【参考: 現行決算戦略】 TP={TAKE_PROFIT:.0%}  SL={STOP_LOSS:.0%}  最大{MAX_HOLD_DAYS}日")
+        print(header)
+        if not earnings_candidates.empty:
+            _print_result("現行決算スクリーニング", earnings_candidates,
+                          TAKE_PROFIT, STOP_LOSS, MAX_HOLD_DAYS)
 
         print(f"\n{header}\n")
         logger.info("完了")

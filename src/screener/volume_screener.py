@@ -21,6 +21,7 @@ def screen_volume_surge(
     vol_multiplier: float = 2.0,
     vol_window: int = 20,
     require_up: bool = True,
+    price_change_min: float = 0.0,
     date_from: Optional[str] = None,
     date_to: Optional[str] = None,
     scale_cats: Optional[list] = None,
@@ -61,6 +62,8 @@ def screen_volume_surge(
     cond = df["VolRatio"] >= vol_multiplier
     if require_up:
         cond = cond & (df[close_col] > df["PrevClose"])
+    if price_change_min > 0:
+        cond = cond & (df[close_col] >= df["PrevClose"] * (1 + price_change_min))
 
     surges = df[cond].copy()
 
@@ -97,6 +100,6 @@ def screen_volume_surge(
     ].copy()
 
     logger.info(
-        f"出来高急騰: {vol_multiplier:.0f}倍以上 / require_up={require_up} → {len(result)} 件"
+        f"出来高急騰: {vol_multiplier:.0f}倍以上 / require_up={require_up} / price_change_min={price_change_min:.0%} → {len(result)} 件"
     )
     return result.reset_index(drop=True)
