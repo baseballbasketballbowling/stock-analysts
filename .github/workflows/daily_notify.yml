@@ -19,10 +19,12 @@ on:
         default: '1'
 
 jobs:
-  # ── 朝ジョブ: 保有状況のみ ──────────────────────────────
+  # ── 朝ジョブ: 約定/売却判定 + 今日の注文プラン投稿 ──────────
   morning-portfolio:
     if: github.event_name == 'schedule' && startsWith(github.event.schedule, '15 0')
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -36,11 +38,41 @@ jobs:
       - name: ライブラリをインストール
         run: pip install -r requirements.txt
 
-      - name: 保有ポジション損益をThreadsに投稿（朝）
+      - name: ポジション管理 & 今日の注文プランをThreadsに投稿（朝）
         env:
           JQUANTS_API_KEY: ${{ secrets.JQUANTS_API_KEY }}
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
-        run: python main.py portfolio_post
+        run: |
+          mkdir -p debug
+          python main.py portfolio_post --style morning 2>&1 | tee debug/portfolio_morning_last_run.txt
+
+      - name: ポートフォリオとログをリポジトリに保存
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            for (const path of ['portfolio.json', 'debug/portfolio_morning_last_run.txt']) {
+              let content = '';
+              try { content = fs.readFileSync(path, 'utf8'); } catch(e) { continue; }
+              let sha, existing = '';
+              try {
+                const res = await github.rest.repos.getContent({
+                  owner: context.repo.owner, repo: context.repo.repo,
+                  path, ref: 'claude/stock-screening-backtest-RTDEv'
+                });
+                sha = res.data.sha;
+                existing = Buffer.from(res.data.content, 'base64').toString('utf8');
+              } catch(e) {}
+              if (existing === content) continue;
+              await github.rest.repos.createOrUpdateFileContents({
+                owner: context.repo.owner, repo: context.repo.repo,
+                path, message: `auto: ${path} 更新（朝ジョブ）`,
+                content: Buffer.from(content).toString('base64'), sha,
+                branch: 'claude/stock-screening-backtest-RTDEv'
+              });
+              core.info(`committed: ${path}`);
+            }
 
   # ── 夕方ジョブ: 開示銘柄一覧投稿 ──────────────────────
   disclosure-post:
@@ -115,15 +147,6 @@ jobs:
       - name: ライブラリをインストール
         run: pip install -r requirements.txt
 
-      - name: 保有ポジション損益をThreadsに投稿（夜）
-        env:
-          JQUANTS_API_KEY: ${{ secrets.JQUANTS_API_KEY }}
-          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
-        run: |
-          mkdir -p debug
-          DATE="${{ inputs.target_date }}"
-          python main.py portfolio_post ${DATE:+--date "$DATE"} 2>&1 | tee debug/daily_notify_last_run.txt
-
       - name: 毎日スクリーニング & メール通知 & Threads投稿
         env:
           JQUANTS_API_KEY: ${{ secrets.JQUANTS_API_KEY }}
@@ -132,7 +155,7 @@ jobs:
           NOTIFY_TO: ${{ secrets.NOTIFY_TO }}
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
         run: |
-          mkdir -p results
+          mkdir -p results debug
           DATE="${{ inputs.target_date }}"
           DAYS="${{ inputs.lookback_days || '1' }}"
           if [ -z "$DATE" ] && [ "${{ github.event_name }}" = "push" ]; then
@@ -142,7 +165,44 @@ jobs:
           fi
           python main.py notify \
             ${DATE:+--date "$DATE"} \
-            --lookback-days "$DAYS" 2>&1 | tee -a debug/daily_notify_last_run.txt
+            --lookback-days "$DAYS" 2>&1 | tee debug/daily_notify_last_run.txt
+
+      # スクリーニング直後に実行することで、新規ヒット(pending)の約定処理・
+      # 保有中のTP/SL/期限判定・売却シグナル投稿まで同じ夜に完結させる
+      - name: ポジション管理 & 保有状況をThreadsに投稿（夜）
+        env:
+          JQUANTS_API_KEY: ${{ secrets.JQUANTS_API_KEY }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+        run: |
+          DATE="${{ inputs.target_date }}"
+          python main.py portfolio_post --style evening ${DATE:+--date "$DATE"} 2>&1 | tee -a debug/daily_notify_last_run.txt
+
+      - name: ポートフォリオをリポジトリに保存
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = 'portfolio.json';
+            let content = '';
+            try { content = fs.readFileSync(path, 'utf8'); } catch(e) { return; }
+            let sha, existing = '';
+            try {
+              const res = await github.rest.repos.getContent({
+                owner: context.repo.owner, repo: context.repo.repo,
+                path, ref: 'claude/stock-screening-backtest-RTDEv'
+              });
+              sha = res.data.sha;
+              existing = Buffer.from(res.data.content, 'base64').toString('utf8');
+            } catch(e) {}
+            if (existing === content) return;
+            await github.rest.repos.createOrUpdateFileContents({
+              owner: context.repo.owner, repo: context.repo.repo,
+              path, message: 'auto: portfolio.json 更新（夜ジョブ）',
+              content: Buffer.from(content).toString('base64'), sha,
+              branch: 'claude/stock-screening-backtest-RTDEv'
+            });
+            core.info('committed: portfolio.json');
 
       - name: スクリーニング結果をリポジトリに保存
         if: always()

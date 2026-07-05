@@ -7,7 +7,8 @@
       "entry_price": 3420,
       "entry_date": "2026-05-18",
       "tp_price": 3933,
-      "sl_price": 3249
+      "sl_price": 3249,
+      "status": "open"
     },
     {
       "code": "285A0",
@@ -16,7 +17,8 @@
       "entry_price": 51450,
       "entry_date": "2026-05-18",
       "tp_price": 59168,
-      "sl_price": 48878
+      "sl_price": 48878,
+      "status": "open"
     },
     {
       "code": "96160",
@@ -25,7 +27,41 @@
       "entry_price": 2452,
       "entry_date": "2026-05-18",
       "tp_price": 2820,
-      "sl_price": 2329
+      "sl_price": 2329,
+      "status": "open"
+    },
+    {
+      "code": "19420",
+      "company": "関電工",
+      "shares": 1,
+      "entry_price": null,
+      "entry_date": "2026-06-02",
+      "tp_price": null,
+      "sl_price": null,
+      "status": "pending",
+      "source": "backfill"
+    },
+    {
+      "code": "19690",
+      "company": "高砂熱学工業",
+      "shares": 1,
+      "entry_price": null,
+      "entry_date": "2026-06-15",
+      "tp_price": null,
+      "sl_price": null,
+      "status": "pending",
+      "source": "backfill"
+    },
+    {
+      "code": "81360",
+      "company": "サンリオ",
+      "shares": 1,
+      "entry_price": null,
+      "entry_date": "2026-06-24",
+      "tp_price": null,
+      "sl_price": null,
+      "status": "pending",
+      "source": "backfill"
     }
   ],
   "closed": []

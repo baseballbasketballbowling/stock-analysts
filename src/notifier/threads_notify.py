@@ -14,8 +14,14 @@ logger = logging.getLogger(__name__)
 _BASE = "https://graph.threads.net/v1.0"
 
 
+MAX_TEXT_LEN = 500  # Threads のテキスト投稿上限
+
+
 def post_to_threads(access_token: str, text: str) -> bool:
     """Threads にテキスト投稿する。成功時 True。"""
+    if len(text) > MAX_TEXT_LEN:
+        logger.warning(f"投稿文が{len(text)}文字 → {MAX_TEXT_LEN}文字に切り詰め")
+        text = text[: MAX_TEXT_LEN - 1] + "…"
     try:
         # ユーザー ID 取得
         me = requests.get(

@@ -590,6 +590,36 @@ def cmd_notify(args) -> None:
             logger.info(f"直近{lookback_days}日の開示で条件に合致する銘柄なし。通知しません。")
             return
 
+        # ヒット銘柄をポートフォリオに自動登録（翌営業日寄り約定待ち）
+        # ※ 30日遡り確認などの長期lookback実行では登録しない
+        if lookback_days <= 3:
+            from src.notifier.portfolio_notify import (
+                load_portfolio, save_portfolio, add_pending_position,
+            )
+            _name_col2 = next(
+                (c for c in ["CompanyName", "Name", "会社名"] if c in listed_df.columns), None
+            )
+            _names = (
+                dict(zip(listed_df["Code"].astype(str), listed_df[_name_col2]))
+                if _name_col2 else {}
+            )
+            portfolio = load_portfolio()
+            added = []
+            for _, row in recent.iterrows():
+                code = str(row["Code"])
+                entry_date = row.get("EntryDate")
+                if pd.isna(entry_date):
+                    entry_date = pd.to_datetime(row["DisclosedDate"]) + pd.offsets.BDay(1)
+                company = _names.get(code, code)
+                if add_pending_position(
+                    portfolio, code, company,
+                    pd.to_datetime(entry_date).strftime("%Y-%m-%d"),
+                ):
+                    added.append(f"{code}({company})")
+            if added:
+                save_portfolio(portfolio)
+                logger.info(f"ポートフォリオに自動登録: {added}")
+
         body = _build_notify_message(recent, target_date, lookback_days, listed_df=listed_df)
         subject = f"【株式スクリーニング】{len(recent)}件ヒット ({target_date})"
         print(body)
@@ -686,22 +716,29 @@ def cmd_entry_delay(args) -> None:
 
 
 def cmd_portfolio_post(args) -> None:
-    """保有ポジションの損益をThreadsに投稿する。"""
+    """保有ポジションの自動管理（約定・売却判定）とThreads投稿。
+
+    毎回実行時に:
+      1. 約定待ち(pending)ポジションをエントリー日寄り付きで約定
+      2. openポジションのTP/SL/保有期限到達を日足High/Lowで判定 → 自動クローズ
+      3. クローズ発生時は売却シグナルをThreadsに投稿
+      4. --style morning: 今日の注文プラン / evening: 保有状況 を投稿
+    """
     import os
     import traceback as _tb
     import pandas as pd
     from src.api.jquants_client import JQuantsClient
     from src.notifier.portfolio_notify import (
-        load_portfolio, build_portfolio_threads_message,
+        load_portfolio, save_portfolio,
+        fill_pending_positions, check_exits,
+        build_portfolio_threads_message, build_morning_plan_message,
+        build_exit_alert_message,
     )
     from src.notifier.threads_notify import post_to_threads
 
     threads_token = os.environ.get("THREADS_ACCESS_TOKEN", "")
-    if not threads_token:
-        logger.warning("THREADS_ACCESS_TOKEN 未設定。スキップ。")
-        return
-
     target_date = args.date or datetime.today().strftime("%Y-%m-%d")
+    style = getattr(args, "style", "evening")
 
     try:
         portfolio = load_portfolio()
@@ -711,31 +748,61 @@ def cmd_portfolio_post(args) -> None:
             return
 
         codes = [str(p["code"]) for p in positions]
-        logger.info(f"保有銘柄: {codes}")
+        logger.info(f"管理銘柄: {codes}")
 
-        # 全銘柄一括ダウンロードは不要 — 保有銘柄を1件ずつ取得（軽量）
+        # 保有銘柄を1件ずつ取得（軽量）。High/Low含む日足履歴を構築
         client = JQuantsClient()
-        prices = {}
+        history = {}
         for code in codes:
             try:
                 rows = client.get_daily_quotes(code=code)
-                if rows:
-                    df = pd.DataFrame(rows)
-                    close_col = "AdjustmentClose" if "AdjustmentClose" in df.columns else "Close"
-                    df["Date"] = pd.to_datetime(df["Date"])
-                    df = df[df["Date"] <= pd.Timestamp(target_date)]
-                    if not df.empty:
-                        latest = df.sort_values("Date").iloc[-1]
-                        prices[code] = float(latest[close_col])
-                        logger.info(f"  {code}: {prices[code]:,.0f}円 ({latest['Date'].date()})")
+                if not rows:
+                    continue
+                df = pd.DataFrame(rows)
+                df["Date"] = pd.to_datetime(df["Date"])
+                df = df[df["Date"] <= pd.Timestamp(target_date)].sort_values("Date")
+                if df.empty:
+                    continue
+                for std, cands in [
+                    ("Open",  ["AdjustmentOpen", "Open", "O"]),
+                    ("High",  ["AdjustmentHigh", "High", "H"]),
+                    ("Low",   ["AdjustmentLow", "Low", "L"]),
+                    ("Close", ["AdjustmentClose", "Close", "C"]),
+                ]:
+                    col = next((c for c in cands if c in df.columns), None)
+                    df[std] = pd.to_numeric(df[col], errors="coerce") if col else float("nan")
+                history[code] = df[["Date", "Open", "High", "Low", "Close"]].reset_index(drop=True)
+                latest = history[code].iloc[-1]
+                logger.info(f"  {code}: {latest['Close']:,.0f}円 ({latest['Date'].date()})")
             except Exception as e:
                 logger.warning(f"  {code} 価格取得失敗: {e}")
 
-        logger.info(f"取得価格: {prices}")
+        # 約定処理 → 売却判定
+        filled = fill_pending_positions(portfolio, history)
+        for pos in filled:
+            logger.info(f"約定: {pos['code']} {pos['entry_date']} {pos['entry_price']:,.0f}円 "
+                        f"TP={pos['tp_price']:,.0f} SL={pos['sl_price']:,.0f}")
+        exits = check_exits(portfolio, history)
+        for e in exits:
+            logger.info(f"売却シグナル: {e['code']} {e['exit_reason']} {e['pnl_pct']:+.1%}")
+        save_portfolio(portfolio)
 
-        message = build_portfolio_threads_message(portfolio, prices, target_date)
+        prices = {c: float(df.iloc[-1]["Close"]) for c, df in history.items() if not df.empty}
+
+        if not threads_token:
+            logger.warning("THREADS_ACCESS_TOKEN 未設定。投稿スキップ（ポートフォリオは更新済み）。")
+            return
+
+        if exits:
+            alert = build_exit_alert_message(exits, target_date)
+            print(alert)
+            post_to_threads(threads_token, alert)
+
+        if style == "morning":
+            message = build_morning_plan_message(portfolio, prices, target_date)
+        else:
+            message = build_portfolio_threads_message(portfolio, prices, target_date)
         print(message)
-
         post_to_threads(threads_token, message)
 
     except Exception as e:
@@ -927,8 +994,10 @@ def build_parser() -> argparse.ArgumentParser:
     vb.set_defaults(func=cmd_volume_backtest)
 
     # portfolio_post サブコマンド
-    pp = sub.add_parser("portfolio_post", help="保有ポジション損益をThreadsに投稿")
+    pp = sub.add_parser("portfolio_post", help="保有ポジション管理（約定/売却判定）& Threads投稿")
     pp.add_argument("--date", default=None, help="基準日 (YYYY-MM-DD、省略時は今日)")
+    pp.add_argument("--style", choices=["morning", "evening"], default="evening",
+                    help="morning: 今日の注文プラン / evening: 保有状況 (デフォルト)")
     pp.set_defaults(func=cmd_portfolio_post)
 
     # disclosure_post サブコマンド
