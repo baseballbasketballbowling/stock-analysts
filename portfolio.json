@@ -1,6 +1,20 @@
 {
   "positions": [
     {
+      "code": "19690",
+      "company": "高砂熱学工業",
+      "shares": 1,
+      "entry_price": 4641.0,
+      "entry_date": "2026-06-15",
+      "tp_price": 5337,
+      "sl_price": 4409,
+      "status": "open",
+      "source": "backfill",
+      "hold_days": 15
+    }
+  ],
+  "closed": [
+    {
       "code": "77470",
       "company": "朝日インテック",
       "shares": 5,
@@ -8,7 +22,11 @@
       "entry_date": "2026-05-18",
       "tp_price": 3933,
       "sl_price": 3249,
-      "status": "open"
+      "status": "open",
+      "exit_date": "2026-06-15",
+      "exit_price": 3554.0,
+      "exit_reason": "time_exit",
+      "pnl_pct": 0.0392
     },
     {
       "code": "285A0",
@@ -18,7 +36,11 @@
       "entry_date": "2026-05-18",
       "tp_price": 59168,
       "sl_price": 48878,
-      "status": "open"
+      "status": "open",
+      "exit_date": "2026-05-19",
+      "exit_price": 48878.0,
+      "exit_reason": "stop_loss",
+      "pnl_pct": -0.05
     },
     {
       "code": "96160",
@@ -28,41 +50,41 @@
       "entry_date": "2026-05-18",
       "tp_price": 2820,
       "sl_price": 2329,
-      "status": "open"
+      "status": "open",
+      "exit_date": "2026-06-15",
+      "exit_price": 2725.0,
+      "exit_reason": "time_exit",
+      "pnl_pct": 0.1113
     },
     {
       "code": "19420",
       "company": "関電工",
       "shares": 1,
-      "entry_price": null,
+      "entry_price": 6007.0,
       "entry_date": "2026-06-02",
-      "tp_price": null,
-      "sl_price": null,
-      "status": "pending",
-      "source": "backfill"
-    },
-    {
-      "code": "19690",
-      "company": "高砂熱学工業",
-      "shares": 1,
-      "entry_price": null,
-      "entry_date": "2026-06-15",
-      "tp_price": null,
-      "sl_price": null,
-      "status": "pending",
-      "source": "backfill"
+      "tp_price": 6908,
+      "sl_price": 5707,
+      "status": "open",
+      "source": "backfill",
+      "exit_date": "2026-06-08",
+      "exit_price": 5707.0,
+      "exit_reason": "stop_loss",
+      "pnl_pct": -0.0499
     },
     {
       "code": "81360",
       "company": "サンリオ",
       "shares": 1,
-      "entry_price": null,
+      "entry_price": 1043.5,
       "entry_date": "2026-06-24",
-      "tp_price": null,
-      "sl_price": null,
-      "status": "pending",
-      "source": "backfill"
+      "tp_price": 1200,
+      "sl_price": 991,
+      "status": "open",
+      "source": "backfill",
+      "exit_date": "2026-06-24",
+      "exit_price": 991.0,
+      "exit_reason": "stop_loss",
+      "pnl_pct": -0.0503
     }
-  ],
-  "closed": []
+  ]
 }
