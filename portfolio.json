@@ -10,7 +10,18 @@
       "sl_price": 4409,
       "status": "open",
       "source": "backfill",
-      "hold_days": 19
+      "hold_days": 20
+    },
+    {
+      "code": "74530",
+      "company": "74530",
+      "shares": 1,
+      "entry_price": null,
+      "entry_date": "2026-07-13",
+      "tp_price": null,
+      "sl_price": null,
+      "status": "pending",
+      "source": "auto"
     }
   ],
   "closed": [
