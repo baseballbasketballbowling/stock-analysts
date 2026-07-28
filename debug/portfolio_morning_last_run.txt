@@ -1,13 +1,13 @@
-03:59:50 [INFO] 管理銘柄: ['74530']
-03:59:52 [INFO]   74530: 4,202円 (2026-07-24)
-03:59:52 [ERROR] Threads投稿失敗: 500 Server Error: Internal Server Error for url: https://graph.threads.net/v1.0/me?fields=id%2Cusername&access_token=THAAdmkQt7IrhBYlkwbFpYaGgwS0xQWGlvUDlETTRBR3p1SG83VUZAoTm4wbjg1NUY2bU9HU0NGeVNPazlxMWZAxeFp5dDZAaQWUzSlM2eEtwOEN3QXVFdXhpWWVza1VuZAFBWdnV4Yk5LN01tX2g5cldYSE9sSUlOVkJNQjVQYmlPRUFVTWZAwXzhrc2dWUHp6QlUZD
-03:59:52 [ERROR] レスポンス: 
-【今日の注文プラン 07/27】
+03:32:07 [INFO] 管理銘柄: ['74530']
+03:32:08 [INFO]   74530: 4,313円 (2026-07-27)
+03:32:09 [ERROR] Threads投稿失敗: 500 Server Error: Internal Server Error for url: https://graph.threads.net/v1.0/me?fields=id%2Cusername&access_token=THAAdmkQt7IrhBYlkwbFpYaGgwS0xQWGlvUDlETTRBR3p1SG83VUZAoTm4wbjg1NUY2bU9HU0NGeVNPazlxMWZAxeFp5dDZAaQWUzSlM2eEtwOEN3QXVFdXhpWWVza1VuZAFBWdnV4Yk5LN01tX2g5cldYSE9sSUlOVkJNQjVQYmlPRUFVTWZAwXzhrc2dWUHp6QlUZD
+03:32:09 [ERROR] レスポンス: 
+【今日の注文プラン 07/28】
 
 ▼売り注文（OCOセット推奨）
 ◆74530
   利確指値 4,664円 / 逆指値 3,853円
-  前日終値 4,202円 (+3.6%)
-  保有 9/20日（残り11日）
+  前日終値 4,313円 (+6.3%)
+  保有 10/20日（残り10日）
 
 #株式投資 #AIトレード
