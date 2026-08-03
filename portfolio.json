@@ -10,18 +10,7 @@
       "sl_price": 3853,
       "status": "open",
       "source": "auto",
-      "hold_days": 14
-    },
-    {
-      "code": "285A0",
-      "company": "285A0",
-      "shares": 1,
-      "entry_price": null,
-      "entry_date": "2026-08-03",
-      "tp_price": null,
-      "sl_price": null,
-      "status": "pending",
-      "source": "auto"
+      "hold_days": 15
     }
   ],
   "closed": [
@@ -111,6 +100,21 @@
       "exit_price": 4644.0,
       "exit_reason": "time_exit",
       "pnl_pct": 0.0006
+    },
+    {
+      "code": "285A0",
+      "company": "285A0",
+      "shares": 1,
+      "entry_price": 47500.0,
+      "entry_date": "2026-08-03",
+      "tp_price": 54625,
+      "sl_price": 45125,
+      "status": "open",
+      "source": "auto",
+      "exit_date": "2026-08-03",
+      "exit_price": 45125.0,
+      "exit_reason": "stop_loss",
+      "pnl_pct": -0.05
     }
   ]
 }
