@@ -1,17 +1,13 @@
-03:52:08 [INFO] 管理銘柄: ['74530', '285A0']
-03:52:09 [INFO]   74530: 4,177円 (2026-07-31)
-03:52:10 [INFO]   285A0: 46,500円 (2026-07-31)
-03:52:10 [ERROR] Threads投稿失敗: 500 Server Error: Internal Server Error for url: https://graph.threads.net/v1.0/me?fields=id%2Cusername&access_token=THAAdmkQt7IrhBYlkwbFpYaGgwS0xQWGlvUDlETTRBR3p1SG83VUZAoTm4wbjg1NUY2bU9HU0NGeVNPazlxMWZAxeFp5dDZAaQWUzSlM2eEtwOEN3QXVFdXhpWWVza1VuZAFBWdnV4Yk5LN01tX2g5cldYSE9sSUlOVkJNQjVQYmlPRUFVTWZAwXzhrc2dWUHp6QlUZD
-03:52:10 [ERROR] レスポンス: 
-【今日の注文プラン 08/03】
-
-▼新規買い
-◆285A0  寄付き成行で買い
+03:34:12 [INFO] 管理銘柄: ['74530']
+03:34:13 [INFO]   74530: 4,217円 (2026-08-03)
+03:34:13 [ERROR] Threads投稿失敗: 500 Server Error: Internal Server Error for url: https://graph.threads.net/v1.0/me?fields=id%2Cusername&access_token=THAAdmkQt7IrhBYlkwbFpYaGgwS0xQWGlvUDlETTRBR3p1SG83VUZAoTm4wbjg1NUY2bU9HU0NGeVNPazlxMWZAxeFp5dDZAaQWUzSlM2eEtwOEN3QXVFdXhpWWVza1VuZAFBWdnV4Yk5LN01tX2g5cldYSE9sSUlOVkJNQjVQYmlPRUFVTWZAwXzhrc2dWUHp6QlUZD
+03:34:13 [ERROR] レスポンス: 
+【今日の注文プラン 08/04】
 
 ▼売り注文（OCOセット推奨）
 ◆74530
   利確指値 4,664円 / 逆指値 3,853円
-  前日終値 4,177円 (+3.0%)
-  保有 14/20日（残り6日）
+  前日終値 4,217円 (+4.0%)
+  保有 15/20日（残り5日）
 
 #株式投資 #AIトレード
