@@ -10,7 +10,18 @@
       "sl_price": 3853,
       "status": "open",
       "source": "auto",
-      "hold_days": 15
+      "hold_days": 16
+    },
+    {
+      "code": "30640",
+      "company": "30640",
+      "shares": 1,
+      "entry_price": null,
+      "entry_date": "2026-08-05",
+      "tp_price": null,
+      "sl_price": null,
+      "status": "pending",
+      "source": "auto"
     }
   ],
   "closed": [
