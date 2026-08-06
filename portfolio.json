@@ -10,7 +10,7 @@
       "sl_price": 3853,
       "status": "open",
       "source": "auto",
-      "hold_days": 17
+      "hold_days": 18
     },
     {
       "code": "30640",
@@ -22,29 +22,31 @@
       "sl_price": 1807,
       "status": "open",
       "source": "auto",
-      "hold_days": 1
+      "hold_days": 2
     },
     {
       "code": "43850",
       "company": "43850",
       "shares": 1,
-      "entry_price": null,
+      "entry_price": 4760.0,
       "entry_date": "2026-08-06",
-      "tp_price": null,
-      "sl_price": null,
-      "status": "pending",
-      "source": "auto"
+      "tp_price": 5474,
+      "sl_price": 4522,
+      "status": "open",
+      "source": "auto",
+      "hold_days": 1
     },
     {
       "code": "64810",
       "company": "64810",
       "shares": 1,
-      "entry_price": null,
+      "entry_price": 7510.0,
       "entry_date": "2026-08-06",
-      "tp_price": null,
-      "sl_price": null,
-      "status": "pending",
-      "source": "auto"
+      "tp_price": 8636,
+      "sl_price": 7134,
+      "status": "open",
+      "source": "auto",
+      "hold_days": 1
     }
   ],
   "closed": [
