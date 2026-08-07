@@ -1,25 +1,31 @@
-03:33:54 [INFO] 管理銘柄: ['74530', '30640', '43850', '64810']
-03:33:55 [INFO]   74530: 4,260円 (2026-08-05)
-03:33:56 [INFO]   30640: 1,904円 (2026-08-05)
-03:33:57 [INFO]   43850: 4,410円 (2026-08-05)
-03:33:58 [INFO]   64810: 7,456円 (2026-08-05)
-03:33:58 [ERROR] Threads投稿失敗: 500 Server Error: Internal Server Error for url: https://graph.threads.net/v1.0/me?fields=id%2Cusername&access_token=THAAdmkQt7IrhBYlkwbFpYaGgwS0xQWGlvUDlETTRBR3p1SG83VUZAoTm4wbjg1NUY2bU9HU0NGeVNPazlxMWZAxeFp5dDZAaQWUzSlM2eEtwOEN3QXVFdXhpWWVza1VuZAFBWdnV4Yk5LN01tX2g5cldYSE9sSUlOVkJNQjVQYmlPRUFVTWZAwXzhrc2dWUHp6QlUZD
-03:33:58 [ERROR] レスポンス: {"error":{"code":1,"message":"An unknown error occurred"}}
-【今日の注文プラン 08/06】
-
-▼新規買い
-◆43850  寄付き成行で買い
-◆64810  寄付き成行で買い
+03:13:30 [INFO] 管理銘柄: ['74530', '30640', '43850', '64810']
+03:13:31 [INFO]   74530: 4,395円 (2026-08-06)
+03:13:32 [INFO]   30640: 1,912円 (2026-08-06)
+03:13:33 [INFO]   43850: 4,921円 (2026-08-06)
+03:13:34 [INFO]   64810: 7,590円 (2026-08-06)
+03:13:34 [ERROR] Threads投稿失敗: 500 Server Error: Internal Server Error for url: https://graph.threads.net/v1.0/me?fields=id%2Cusername&access_token=THAAdmkQt7IrhBYlkwbFpYaGgwS0xQWGlvUDlETTRBR3p1SG83VUZAoTm4wbjg1NUY2bU9HU0NGeVNPazlxMWZAxeFp5dDZAaQWUzSlM2eEtwOEN3QXVFdXhpWWVza1VuZAFBWdnV4Yk5LN01tX2g5cldYSE9sSUlOVkJNQjVQYmlPRUFVTWZAwXzhrc2dWUHp6QlUZD
+03:13:34 [ERROR] レスポンス: 
+【今日の注文プラン 08/07】
 
 ▼売り注文（OCOセット推奨）
 ◆74530
   利確指値 4,664円 / 逆指値 3,853円
-  前日終値 4,260円 (+5.0%)
-  保有 17/20日（残り3日）
+  前日終値 4,395円 (+8.4%)
+  保有 18/20日（残り2日）
 
 ◆30640
   利確指値 2,187円 / 逆指値 1,807円
-  前日終値 1,904円 (+0.1%)
+  前日終値 1,912円 (+0.5%)
+  保有 2/20日（残り18日）
+
+◆43850
+  利確指値 5,474円 / 逆指値 4,522円
+  前日終値 4,921円 (+3.4%)
+  保有 1/20日（残り19日）
+
+◆64810
+  利確指値 8,636円 / 逆指値 7,134円
+  前日終値 7,590円 (+1.1%)
   保有 1/20日（残り19日）
 
 #株式投資 #AIトレード
