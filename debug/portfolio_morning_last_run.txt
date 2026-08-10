@@ -1,31 +1,37 @@
-03:13:30 [INFO] 管理銘柄: ['74530', '30640', '43850', '64810']
-03:13:31 [INFO]   74530: 4,395円 (2026-08-06)
-03:13:32 [INFO]   30640: 1,912円 (2026-08-06)
-03:13:33 [INFO]   43850: 4,921円 (2026-08-06)
-03:13:34 [INFO]   64810: 7,590円 (2026-08-06)
-03:13:34 [ERROR] Threads投稿失敗: 500 Server Error: Internal Server Error for url: https://graph.threads.net/v1.0/me?fields=id%2Cusername&access_token=THAAdmkQt7IrhBYlkwbFpYaGgwS0xQWGlvUDlETTRBR3p1SG83VUZAoTm4wbjg1NUY2bU9HU0NGeVNPazlxMWZAxeFp5dDZAaQWUzSlM2eEtwOEN3QXVFdXhpWWVza1VuZAFBWdnV4Yk5LN01tX2g5cldYSE9sSUlOVkJNQjVQYmlPRUFVTWZAwXzhrc2dWUHp6QlUZD
-03:13:34 [ERROR] レスポンス: 
-【今日の注文プラン 08/07】
+02:32:09 [INFO] 管理銘柄: ['74530', '30640', '43850', '35630', '47510', '50190', '58030', '62690']
+02:32:11 [INFO]   74530: 4,412円 (2026-08-07)
+02:32:12 [INFO]   30640: 1,924円 (2026-08-07)
+02:32:13 [INFO]   43850: 5,030円 (2026-08-07)
+02:32:14 [INFO]   35630: 5,672円 (2026-08-07)
+02:32:15 [INFO]   47510: 1,499円 (2026-08-07)
+02:32:16 [INFO]   50190: 1,321円 (2026-08-07)
+02:32:17 [INFO]   58030: 5,185円 (2026-08-07)
+02:32:18 [INFO]   62690: 10,320円 (2026-08-07)
+02:32:18 [ERROR] Threads投稿失敗: 400 Client Error: Bad Request for url: https://graph.threads.net/v1.0/me?fields=id%2Cusername&access_token=THAAdmkQt7IrhBYlkwbFpYaGgwS0xQWGlvUDlETTRBR3p1SG83VUZAoTm4wbjg1NUY2bU9HU0NGeVNPazlxMWZAxeFp5dDZAaQWUzSlM2eEtwOEN3QXVFdXhpWWVza1VuZAFBWdnV4Yk5LN01tX2g5cldYSE9sSUlOVkJNQjVQYmlPRUFVTWZAwXzhrc2dWUHp6QlUZD
+02:32:18 [ERROR] レスポンス: {"error":{"message":"Error validating access token: Session has expired on Friday, 17-Jul-26 16:35:56 PDT. The current time is Sunday, 09-Aug-26 19:32:18 PDT.","type":"OAuthException","code":190,"error_subcode":0,"fbtrace_id":"AW3lJKgrRo36HPRrnEBfweJ"}}
+【今日の注文プラン 08/10】
+
+▼新規買い
+◆35630  寄付き成行で買い
+◆47510  寄付き成行で買い
+◆50190  寄付き成行で買い
+◆58030  寄付き成行で買い
+◆62690  寄付き成行で買い
 
 ▼売り注文（OCOセット推奨）
 ◆74530
   利確指値 4,664円 / 逆指値 3,853円
-  前日終値 4,395円 (+8.4%)
-  保有 18/20日（残り2日）
+  前日終値 4,412円 (+8.8%)
+  保有 19/20日（残り1日）
 
 ◆30640
   利確指値 2,187円 / 逆指値 1,807円
-  前日終値 1,912円 (+0.5%)
-  保有 2/20日（残り18日）
+  前日終値 1,924円 (+1.2%)
+  保有 3/20日（残り17日）
 
 ◆43850
   利確指値 5,474円 / 逆指値 4,522円
-  前日終値 4,921円 (+3.4%)
-  保有 1/20日（残り19日）
-
-◆64810
-  利確指値 8,636円 / 逆指値 7,134円
-  前日終値 7,590円 (+1.1%)
-  保有 1/20日（残り19日）
+  前日終値 5,030円 (+5.7%)
+  保有 2/20日（残り18日）
 
 #株式投資 #AIトレード
