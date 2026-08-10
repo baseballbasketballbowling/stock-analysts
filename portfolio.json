@@ -10,7 +10,7 @@
       "sl_price": 3853,
       "status": "open",
       "source": "auto",
-      "hold_days": 19
+      "hold_days": 20
     },
     {
       "code": "30640",
@@ -22,7 +22,7 @@
       "sl_price": 1807,
       "status": "open",
       "source": "auto",
-      "hold_days": 3
+      "hold_days": 4
     },
     {
       "code": "43850",
@@ -34,62 +34,43 @@
       "sl_price": 4522,
       "status": "open",
       "source": "auto",
-      "hold_days": 2
+      "hold_days": 3
     },
     {
       "code": "35630",
       "company": "35630",
       "shares": 1,
-      "entry_price": null,
+      "entry_price": 5772.0,
       "entry_date": "2026-08-10",
-      "tp_price": null,
-      "sl_price": null,
-      "status": "pending",
-      "source": "auto"
-    },
-    {
-      "code": "47510",
-      "company": "47510",
-      "shares": 1,
-      "entry_price": null,
-      "entry_date": "2026-08-10",
-      "tp_price": null,
-      "sl_price": null,
-      "status": "pending",
-      "source": "auto"
+      "tp_price": 6638,
+      "sl_price": 5483,
+      "status": "open",
+      "source": "auto",
+      "hold_days": 1
     },
     {
       "code": "50190",
       "company": "50190",
       "shares": 1,
-      "entry_price": null,
+      "entry_price": 1323.0,
       "entry_date": "2026-08-10",
-      "tp_price": null,
-      "sl_price": null,
-      "status": "pending",
-      "source": "auto"
+      "tp_price": 1521,
+      "sl_price": 1257,
+      "status": "open",
+      "source": "auto",
+      "hold_days": 1
     },
     {
       "code": "58030",
       "company": "58030",
       "shares": 1,
-      "entry_price": null,
+      "entry_price": 5210.0,
       "entry_date": "2026-08-10",
-      "tp_price": null,
-      "sl_price": null,
-      "status": "pending",
-      "source": "auto"
-    },
-    {
-      "code": "62690",
-      "company": "62690",
-      "shares": 1,
-      "entry_price": null,
-      "entry_date": "2026-08-10",
-      "tp_price": null,
-      "sl_price": null,
-      "status": "pending",
-      "source": "auto"
+      "tp_price": 5991,
+      "sl_price": 4950,
+      "status": "open",
+      "source": "auto",
+      "hold_days": 1
     }
   ],
   "closed": [
@@ -209,6 +190,36 @@
       "exit_price": 7134.0,
       "exit_reason": "stop_loss",
       "pnl_pct": -0.0501
+    },
+    {
+      "code": "47510",
+      "company": "47510",
+      "shares": 1,
+      "entry_price": 1320.0,
+      "entry_date": "2026-08-10",
+      "tp_price": 1518,
+      "sl_price": 1254,
+      "status": "open",
+      "source": "auto",
+      "exit_date": "2026-08-10",
+      "exit_price": 1254.0,
+      "exit_reason": "stop_loss",
+      "pnl_pct": -0.05
+    },
+    {
+      "code": "62690",
+      "company": "62690",
+      "shares": 1,
+      "entry_price": 10205.0,
+      "entry_date": "2026-08-10",
+      "tp_price": 11736,
+      "sl_price": 9695,
+      "status": "open",
+      "source": "auto",
+      "exit_date": "2026-08-10",
+      "exit_price": 9695.0,
+      "exit_reason": "stop_loss",
+      "pnl_pct": -0.05
     }
   ]
 }
