@@ -1,13 +1,13 @@
-02:25:37 [INFO] 管理銘柄: ['74530', '30640', '43850', '35630', '50190', '58030']
-02:25:38 [INFO]   74530: 4,526円 (2026-08-10)
-02:25:39 [INFO]   30640: 1,956円 (2026-08-10)
-02:25:40 [INFO]   43850: 4,842円 (2026-08-10)
-02:25:41 [INFO]   35630: 5,928円 (2026-08-10)
-02:25:42 [INFO]   50190: 1,294円 (2026-08-10)
-02:25:43 [INFO]   58030: 5,580円 (2026-08-10)
-02:25:43 [ERROR] Threads投稿失敗: 400 Client Error: Bad Request for url: https://graph.threads.net/v1.0/me?fields=id%2Cusername&access_token=THAAdmkQt7IrhBYlkwbFpYaGgwS0xQWGlvUDlETTRBR3p1SG83VUZAoTm4wbjg1NUY2bU9HU0NGeVNPazlxMWZAxeFp5dDZAaQWUzSlM2eEtwOEN3QXVFdXhpWWVza1VuZAFBWdnV4Yk5LN01tX2g5cldYSE9sSUlOVkJNQjVQYmlPRUFVTWZAwXzhrc2dWUHp6QlUZD
-02:25:43 [ERROR] レスポンス: {"error":{"message":"Error validating access token: Session has expired on Friday, 17-Jul-26 16:35:56 PDT. The current time is Monday, 10-Aug-26 19:25:43 PDT.","type":"OAuthException","code":190,"error_subcode":0,"fbtrace_id":"AQwACyukqutTD4GDFQZ3N8i"}}
-【今日の注文プラン 08/11】
+02:41:58 [INFO] 管理銘柄: ['74530', '30640', '43850', '35630', '50190', '58030']
+02:42:00 [INFO]   74530: 4,526円 (2026-08-10)
+02:42:01 [INFO]   30640: 1,956円 (2026-08-10)
+02:42:02 [INFO]   43850: 4,842円 (2026-08-10)
+02:42:03 [INFO]   35630: 5,928円 (2026-08-10)
+02:42:04 [INFO]   50190: 1,294円 (2026-08-10)
+02:42:05 [INFO]   58030: 5,580円 (2026-08-10)
+02:42:05 [ERROR] Threads投稿失敗: 400 Client Error: Bad Request for url: https://graph.threads.net/v1.0/me?fields=id%2Cusername&access_token=THAAdmkQt7IrhBYlkwbFpYaGgwS0xQWGlvUDlETTRBR3p1SG83VUZAoTm4wbjg1NUY2bU9HU0NGeVNPazlxMWZAxeFp5dDZAaQWUzSlM2eEtwOEN3QXVFdXhpWWVza1VuZAFBWdnV4Yk5LN01tX2g5cldYSE9sSUlOVkJNQjVQYmlPRUFVTWZAwXzhrc2dWUHp6QlUZD
+02:42:05 [ERROR] レスポンス: {"error":{"message":"Error validating access token: Session has expired on Friday, 17-Jul-26 16:35:56 PDT. The current time is Tuesday, 11-Aug-26 19:42:05 PDT.","type":"OAuthException","code":190,"error_subcode":0,"fbtrace_id":"ABlBKzvouVwYsNw3vOrMdjh"}}
+【今日の注文プラン 08/12】
 
 ▼売り注文（OCOセット推奨）
 ◆74530
