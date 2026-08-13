@@ -10,7 +10,7 @@
       "sl_price": 1807,
       "status": "open",
       "source": "auto",
-      "hold_days": 5
+      "hold_days": 6
     },
     {
       "code": "43850",
@@ -22,7 +22,7 @@
       "sl_price": 4522,
       "status": "open",
       "source": "auto",
-      "hold_days": 4
+      "hold_days": 5
     },
     {
       "code": "35630",
@@ -34,7 +34,7 @@
       "sl_price": 5483,
       "status": "open",
       "source": "auto",
-      "hold_days": 2
+      "hold_days": 3
     },
     {
       "code": "50190",
@@ -46,7 +46,7 @@
       "sl_price": 1257,
       "status": "open",
       "source": "auto",
-      "hold_days": 2
+      "hold_days": 3
     },
     {
       "code": "58030",
@@ -58,7 +58,7 @@
       "sl_price": 4950,
       "status": "open",
       "source": "auto",
-      "hold_days": 2
+      "hold_days": 3
     }
   ],
   "closed": [
