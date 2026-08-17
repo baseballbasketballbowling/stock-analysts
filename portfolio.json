@@ -1,18 +1,6 @@
 {
   "positions": [
     {
-      "code": "30640",
-      "company": "30640",
-      "shares": 1,
-      "entry_price": 1902.0,
-      "entry_date": "2026-08-05",
-      "tp_price": 2187,
-      "sl_price": 1807,
-      "status": "open",
-      "source": "auto",
-      "hold_days": 7
-    },
-    {
       "code": "43850",
       "company": "43850",
       "shares": 1,
@@ -22,7 +10,7 @@
       "sl_price": 4522,
       "status": "open",
       "source": "auto",
-      "hold_days": 6
+      "hold_days": 7
     },
     {
       "code": "35630",
@@ -34,7 +22,7 @@
       "sl_price": 5483,
       "status": "open",
       "source": "auto",
-      "hold_days": 4
+      "hold_days": 5
     },
     {
       "code": "50190",
@@ -46,19 +34,7 @@
       "sl_price": 1257,
       "status": "open",
       "source": "auto",
-      "hold_days": 4
-    },
-    {
-      "code": "58030",
-      "company": "58030",
-      "shares": 1,
-      "entry_price": 5210.0,
-      "entry_date": "2026-08-10",
-      "tp_price": 5991,
-      "sl_price": 4950,
-      "status": "open",
-      "source": "auto",
-      "hold_days": 4
+      "hold_days": 5
     }
   ],
   "closed": [
@@ -223,6 +199,36 @@
       "exit_price": 4495.0,
       "exit_reason": "time_exit",
       "pnl_pct": 0.1082
+    },
+    {
+      "code": "30640",
+      "company": "30640",
+      "shares": 1,
+      "entry_price": 1902.0,
+      "entry_date": "2026-08-05",
+      "tp_price": 2187,
+      "sl_price": 1807,
+      "status": "open",
+      "source": "auto",
+      "exit_date": "2026-08-17",
+      "exit_price": 1807.0,
+      "exit_reason": "stop_loss",
+      "pnl_pct": -0.0499
+    },
+    {
+      "code": "58030",
+      "company": "58030",
+      "shares": 1,
+      "entry_price": 5210.0,
+      "entry_date": "2026-08-10",
+      "tp_price": 5991,
+      "sl_price": 4950,
+      "status": "open",
+      "source": "auto",
+      "exit_date": "2026-08-17",
+      "exit_price": 5991.0,
+      "exit_reason": "take_profit",
+      "pnl_pct": 0.1499
     }
   ]
 }
