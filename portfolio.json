@@ -1,18 +1,6 @@
 {
   "positions": [
     {
-      "code": "43850",
-      "company": "43850",
-      "shares": 1,
-      "entry_price": 4760.0,
-      "entry_date": "2026-08-06",
-      "tp_price": 5474,
-      "sl_price": 4522,
-      "status": "open",
-      "source": "auto",
-      "hold_days": 7
-    },
-    {
       "code": "35630",
       "company": "35630",
       "shares": 1,
@@ -22,7 +10,7 @@
       "sl_price": 5483,
       "status": "open",
       "source": "auto",
-      "hold_days": 5
+      "hold_days": 6
     },
     {
       "code": "50190",
@@ -34,7 +22,7 @@
       "sl_price": 1257,
       "status": "open",
       "source": "auto",
-      "hold_days": 5
+      "hold_days": 6
     }
   ],
   "closed": [
@@ -229,6 +217,21 @@
       "exit_price": 5991.0,
       "exit_reason": "take_profit",
       "pnl_pct": 0.1499
+    },
+    {
+      "code": "43850",
+      "company": "43850",
+      "shares": 1,
+      "entry_price": 4760.0,
+      "entry_date": "2026-08-06",
+      "tp_price": 5474,
+      "sl_price": 4522,
+      "status": "open",
+      "source": "auto",
+      "exit_date": "2026-08-18",
+      "exit_price": 4522.0,
+      "exit_reason": "stop_loss",
+      "pnl_pct": -0.05
     }
   ]
 }
