@@ -10,7 +10,7 @@
       "sl_price": 5483,
       "status": "open",
       "source": "auto",
-      "hold_days": 6
+      "hold_days": 7
     },
     {
       "code": "50190",
@@ -22,7 +22,7 @@
       "sl_price": 1257,
       "status": "open",
       "source": "auto",
-      "hold_days": 6
+      "hold_days": 7
     }
   ],
   "closed": [
