@@ -1,19 +1,19 @@
-01:51:17 [INFO] 管理銘柄: ['35630', '50190']
-01:51:18 [INFO]   35630: 5,806円 (2026-08-18)
-01:51:19 [INFO]   50190: 1,370円 (2026-08-18)
-01:51:20 [ERROR] Threads投稿失敗: 400 Client Error: Bad Request for url: https://graph.threads.net/v1.0/me?fields=id%2Cusername&access_token=THAAdmkQt7IrhBYlkwbFpYaGgwS0xQWGlvUDlETTRBR3p1SG83VUZAoTm4wbjg1NUY2bU9HU0NGeVNPazlxMWZAxeFp5dDZAaQWUzSlM2eEtwOEN3QXVFdXhpWWVza1VuZAFBWdnV4Yk5LN01tX2g5cldYSE9sSUlOVkJNQjVQYmlPRUFVTWZAwXzhrc2dWUHp6QlUZD
-01:51:20 [ERROR] レスポンス: {"error":{"message":"Error validating access token: Session has expired on Friday, 17-Jul-26 16:35:56 PDT. The current time is Tuesday, 18-Aug-26 18:51:20 PDT.","type":"OAuthException","code":190,"error_subcode":0,"fbtrace_id":"AZ_7qcCrmlJd6O5pvbGrCbl"}}
-【今日の注文プラン 08/19】
+01:49:32 [INFO] 管理銘柄: ['35630', '50190']
+01:49:33 [INFO]   35630: 5,660円 (2026-08-19)
+01:49:34 [INFO]   50190: 1,337円 (2026-08-19)
+01:49:34 [ERROR] Threads投稿失敗: 400 Client Error: Bad Request for url: https://graph.threads.net/v1.0/me?fields=id%2Cusername&access_token=THAAdmkQt7IrhBYlkwbFpYaGgwS0xQWGlvUDlETTRBR3p1SG83VUZAoTm4wbjg1NUY2bU9HU0NGeVNPazlxMWZAxeFp5dDZAaQWUzSlM2eEtwOEN3QXVFdXhpWWVza1VuZAFBWdnV4Yk5LN01tX2g5cldYSE9sSUlOVkJNQjVQYmlPRUFVTWZAwXzhrc2dWUHp6QlUZD
+01:49:34 [ERROR] レスポンス: {"error":{"message":"Error validating access token: Session has expired on Friday, 17-Jul-26 16:35:56 PDT. The current time is Wednesday, 19-Aug-26 18:49:34 PDT.","type":"OAuthException","code":190,"error_subcode":0,"fbtrace_id":"AlOTIlDnbmok6yBcvwfFLr7"}}
+【今日の注文プラン 08/20】
 
 ▼売り注文（OCOセット推奨）
 ◆35630
   利確指値 6,638円 / 逆指値 5,483円
-  前日終値 5,806円 (+0.6%)
-  保有 6/20日（残り14日）
+  前日終値 5,660円 (-1.9%)
+  保有 7/20日（残り13日）
 
 ◆50190
   利確指値 1,521円 / 逆指値 1,257円
-  前日終値 1,370円 (+3.6%)
-  保有 6/20日（残り14日）
+  前日終値 1,337円 (+1.1%)
+  保有 7/20日（残り13日）
 
 #株式投資 #AIトレード
