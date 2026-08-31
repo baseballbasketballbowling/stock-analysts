@@ -1,8 +1,8 @@
-11:20:37 [INFO] 管理銘柄: ['50190']
-11:20:39 [INFO]   50190: 1,380円 (2026-08-28)
-11:20:39 [ERROR] Threads投稿失敗: 400 Client Error: Bad Request for url: https://graph.threads.net/v1.0/me?fields=id%2Cusername&access_token=THAAdmkQt7IrhBYlkwbFpYaGgwS0xQWGlvUDlETTRBR3p1SG83VUZAoTm4wbjg1NUY2bU9HU0NGeVNPazlxMWZAxeFp5dDZAaQWUzSlM2eEtwOEN3QXVFdXhpWWVza1VuZAFBWdnV4Yk5LN01tX2g5cldYSE9sSUlOVkJNQjVQYmlPRUFVTWZAwXzhrc2dWUHp6QlUZD
-11:20:39 [ERROR] レスポンス: {"error":{"message":"Error validating access token: Session has expired on Friday, 17-Jul-26 16:35:56 PDT. The current time is Friday, 28-Aug-26 04:20:39 PDT.","type":"OAuthException","code":190,"error_subcode":0,"fbtrace_id":"Al5H8sffuFyyztYWAvYeW5F"}}
-【今日の注文プラン 08/28】
+05:29:59 [INFO] 管理銘柄: ['50190']
+05:30:00 [INFO]   50190: 1,380円 (2026-08-28)
+05:30:01 [ERROR] Threads投稿失敗: 400 Client Error: Bad Request for url: https://graph.threads.net/v1.0/me?fields=id%2Cusername&access_token=THAAdmkQt7IrhBYlkwbFpYaGgwS0xQWGlvUDlETTRBR3p1SG83VUZAoTm4wbjg1NUY2bU9HU0NGeVNPazlxMWZAxeFp5dDZAaQWUzSlM2eEtwOEN3QXVFdXhpWWVza1VuZAFBWdnV4Yk5LN01tX2g5cldYSE9sSUlOVkJNQjVQYmlPRUFVTWZAwXzhrc2dWUHp6QlUZD
+05:30:01 [ERROR] レスポンス: {"error":{"message":"Error validating access token: Session has expired on Friday, 17-Jul-26 16:35:56 PDT. The current time is Sunday, 30-Aug-26 22:30:00 PDT.","type":"OAuthException","code":190,"error_subcode":0,"fbtrace_id":"AuoOWNYX4QG4_cUKm284Fhz"}}
+【今日の注文プラン 08/31】
 
 ▼売り注文（OCOセット推奨）
 ◆50190
