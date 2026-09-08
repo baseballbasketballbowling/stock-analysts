@@ -1,18 +1,5 @@
 {
-  "positions": [
-    {
-      "code": "50190",
-      "company": "50190",
-      "shares": 1,
-      "entry_price": 1323.0,
-      "entry_date": "2026-08-10",
-      "tp_price": 1521,
-      "sl_price": 1257,
-      "status": "open",
-      "source": "auto",
-      "hold_days": 20
-    }
-  ],
+  "positions": [],
   "closed": [
     {
       "code": "77470",
@@ -235,6 +222,21 @@
       "exit_price": 5483.0,
       "exit_reason": "stop_loss",
       "pnl_pct": -0.0501
+    },
+    {
+      "code": "50190",
+      "company": "50190",
+      "shares": 1,
+      "entry_price": 1323.0,
+      "entry_date": "2026-08-10",
+      "tp_price": 1521,
+      "sl_price": 1257,
+      "status": "open",
+      "source": "auto",
+      "exit_date": "2026-09-08",
+      "exit_price": 1543.0,
+      "exit_reason": "time_exit",
+      "pnl_pct": 0.1663
     }
   ]
 }
