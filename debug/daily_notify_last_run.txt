@@ -1,163 +1,165 @@
-17:53:03 [INFO] 毎日スクリーニング: 2026-11-04 (遡及1日)
-17:53:03 [INFO] J-Quants: 上場銘柄情報を取得中...
-17:53:05 [INFO] 財務データ取得: 2024-11-04 〜 2026-11-04
-17:53:05 [INFO] J-Quants: 財務データを取得中 (2024-11-04 〜 2026-11-04)...
-17:53:05 [WARNING] fin_summary: バルク失敗(403 for url: https://api.jquants.com/v2/bulk/list?endpoint=%2Ffins%2Fsummary body: This API is not available on your subscription.  If you want more data, please check other plans:https://jpx-jquants.com/#dataset) → 逐次フェッチ
-17:53:05 [INFO]   fin_summary 逐次取得: 523 営業日
-17:55:33 [INFO]   fin_summary: 100/523
-17:58:02 [INFO]   fin_summary: 200/523
-18:00:31 [INFO]   fin_summary: 300/523
-18:03:01 [INFO]   fin_summary: 400/523
-18:04:39 [WARNING]   fin_summary 2026-08-14 00:00:00: HTTPError スキップ
-18:04:40 [WARNING]   fin_summary 2026-08-17 00:00:00: HTTPError スキップ
-18:04:41 [WARNING]   fin_summary 2026-08-18 00:00:00: HTTPError スキップ
-18:04:43 [WARNING]   fin_summary 2026-08-19 00:00:00: HTTPError スキップ
-18:04:44 [WARNING]   fin_summary 2026-08-20 00:00:00: HTTPError スキップ
-18:04:46 [WARNING]   fin_summary 2026-08-21 00:00:00: HTTPError スキップ
-18:04:47 [WARNING]   fin_summary 2026-08-24 00:00:00: HTTPError スキップ
-18:04:48 [WARNING]   fin_summary 2026-08-25 00:00:00: HTTPError スキップ
-18:04:50 [WARNING]   fin_summary 2026-08-26 00:00:00: HTTPError スキップ
-18:04:51 [WARNING]   fin_summary 2026-08-27 00:00:00: HTTPError スキップ
-18:04:53 [WARNING]   fin_summary 2026-08-28 00:00:00: HTTPError スキップ
-18:04:54 [WARNING]   fin_summary 2026-08-31 00:00:00: HTTPError スキップ
-18:04:55 [WARNING]   fin_summary 2026-09-01 00:00:00: HTTPError スキップ
-18:04:57 [WARNING]   fin_summary 2026-09-02 00:00:00: HTTPError スキップ
-18:04:58 [WARNING]   fin_summary 2026-09-03 00:00:00: HTTPError スキップ
-18:04:59 [WARNING]   fin_summary 2026-09-04 00:00:00: HTTPError スキップ
-18:05:01 [WARNING]   fin_summary 2026-09-07 00:00:00: HTTPError スキップ
-18:05:02 [WARNING]   fin_summary 2026-09-08 00:00:00: HTTPError スキップ
-18:05:04 [WARNING]   fin_summary 2026-09-09 00:00:00: HTTPError スキップ
-18:05:05 [WARNING]   fin_summary 2026-09-10 00:00:00: HTTPError スキップ
-18:05:06 [WARNING]   fin_summary 2026-09-11 00:00:00: HTTPError スキップ
-18:05:08 [WARNING]   fin_summary 2026-09-14 00:00:00: HTTPError スキップ
-18:05:09 [WARNING]   fin_summary 2026-09-15 00:00:00: HTTPError スキップ
-18:05:11 [WARNING]   fin_summary 2026-09-16 00:00:00: HTTPError スキップ
-18:05:12 [WARNING]   fin_summary 2026-09-17 00:00:00: HTTPError スキップ
-18:05:13 [WARNING]   fin_summary 2026-09-18 00:00:00: HTTPError スキップ
-18:05:15 [WARNING]   fin_summary 2026-09-21 00:00:00: HTTPError スキップ
-18:05:16 [WARNING]   fin_summary 2026-09-22 00:00:00: HTTPError スキップ
-18:05:17 [WARNING]   fin_summary 2026-09-23 00:00:00: HTTPError スキップ
-18:05:19 [WARNING]   fin_summary 2026-09-24 00:00:00: HTTPError スキップ
-18:05:20 [WARNING]   fin_summary 2026-09-25 00:00:00: HTTPError スキップ
-18:05:22 [WARNING]   fin_summary 2026-09-28 00:00:00: HTTPError スキップ
-18:05:23 [WARNING]   fin_summary 2026-09-29 00:00:00: HTTPError スキップ
-18:05:24 [WARNING]   fin_summary 2026-09-30 00:00:00: HTTPError スキップ
-18:05:26 [WARNING]   fin_summary 2026-10-01 00:00:00: HTTPError スキップ
-18:05:27 [INFO]   fin_summary: 500/523
-18:05:27 [WARNING]   fin_summary 2026-10-02 00:00:00: HTTPError スキップ
-18:05:29 [WARNING]   fin_summary 2026-10-05 00:00:00: HTTPError スキップ
-18:05:30 [WARNING]   fin_summary 2026-10-06 00:00:00: HTTPError スキップ
-18:05:31 [WARNING]   fin_summary 2026-10-07 00:00:00: HTTPError スキップ
-18:05:33 [WARNING]   fin_summary 2026-10-08 00:00:00: HTTPError スキップ
-18:05:34 [WARNING]   fin_summary 2026-10-09 00:00:00: HTTPError スキップ
-18:05:36 [WARNING]   fin_summary 2026-10-12 00:00:00: HTTPError スキップ
-18:05:37 [WARNING]   fin_summary 2026-10-13 00:00:00: HTTPError スキップ
-18:05:38 [WARNING]   fin_summary 2026-10-14 00:00:00: HTTPError スキップ
-18:05:40 [WARNING]   fin_summary 2026-10-15 00:00:00: HTTPError スキップ
-18:05:41 [WARNING]   fin_summary 2026-10-16 00:00:00: HTTPError スキップ
-18:05:42 [WARNING]   fin_summary 2026-10-19 00:00:00: HTTPError スキップ
-18:05:44 [WARNING]   fin_summary 2026-10-20 00:00:00: HTTPError スキップ
-18:05:45 [WARNING]   fin_summary 2026-10-21 00:00:00: HTTPError スキップ
-18:05:47 [WARNING]   fin_summary 2026-10-22 00:00:00: HTTPError スキップ
-18:05:48 [WARNING]   fin_summary 2026-10-23 00:00:00: HTTPError スキップ
-18:05:49 [WARNING]   fin_summary 2026-10-26 00:00:00: HTTPError スキップ
-18:05:51 [WARNING]   fin_summary 2026-10-27 00:00:00: HTTPError スキップ
-18:05:52 [WARNING]   fin_summary 2026-10-28 00:00:00: HTTPError スキップ
-18:05:53 [WARNING]   fin_summary 2026-10-29 00:00:00: HTTPError スキップ
-18:05:55 [WARNING]   fin_summary 2026-10-30 00:00:00: HTTPError スキップ
-18:05:56 [WARNING]   fin_summary 2026-11-02 00:00:00: HTTPError スキップ
-18:05:58 [WARNING]   fin_summary 2026-11-03 00:00:00: HTTPError スキップ
-18:05:59 [WARNING]   fin_summary 2026-11-04 00:00:00: HTTPError スキップ
-18:06:03 [INFO] 日足データ取得: 2026-08-06 〜 2026-11-04
-18:06:03 [INFO] J-Quants: 日足データを取得中 (2026-08-06 〜 2026-11-04)...
-18:06:03 [WARNING] eq_bars_daily: バルク失敗(403 for url: https://api.jquants.com/v2/bulk/list?endpoint=%2Fequities%2Fbars%2Fdaily body: This API is not available on your subscription.  If you want more data, please check other plans:https://jpx-jquants.com/#dataset) → 逐次フェッチ
-18:06:03 [INFO]   eq_bars_daily 逐次取得: 65 営業日
-18:06:23 [INFO]   eq_bars_daily 2026-08-13 00:00:00: 429 → 60s待機
-18:07:23 [INFO]   eq_bars_daily 2026-08-13 00:00:00: 429 → 120s待機
-18:09:27 [WARNING]   eq_bars_daily 2026-08-14 00:00:00: HTTPError スキップ
-18:09:29 [WARNING]   eq_bars_daily 2026-08-17 00:00:00: HTTPError スキップ
-18:09:30 [WARNING]   eq_bars_daily 2026-08-18 00:00:00: HTTPError スキップ
-18:09:31 [WARNING]   eq_bars_daily 2026-08-19 00:00:00: HTTPError スキップ
-18:09:33 [INFO]   eq_bars_daily 2026-08-20 00:00:00: 429 → 60s待機
-18:10:34 [WARNING]   eq_bars_daily 2026-08-20 00:00:00: HTTPError スキップ
-18:10:35 [INFO]   eq_bars_daily 2026-08-21 00:00:00: 429 → 60s待機
-18:11:36 [WARNING]   eq_bars_daily 2026-08-21 00:00:00: HTTPError スキップ
-18:11:37 [WARNING]   eq_bars_daily 2026-08-24 00:00:00: HTTPError スキップ
-18:11:38 [WARNING]   eq_bars_daily 2026-08-25 00:00:00: HTTPError スキップ
-18:11:40 [INFO]   eq_bars_daily 2026-08-26 00:00:00: 429 → 60s待機
-18:12:40 [WARNING]   eq_bars_daily 2026-08-26 00:00:00: HTTPError スキップ
-18:12:42 [WARNING]   eq_bars_daily 2026-08-27 00:00:00: HTTPError スキップ
-18:12:43 [WARNING]   eq_bars_daily 2026-08-28 00:00:00: HTTPError スキップ
-18:12:45 [INFO]   eq_bars_daily 2026-08-31 00:00:00: 429 → 60s待機
-18:13:45 [WARNING]   eq_bars_daily 2026-08-31 00:00:00: HTTPError スキップ
-18:13:47 [WARNING]   eq_bars_daily 2026-09-01 00:00:00: HTTPError スキップ
-18:13:48 [WARNING]   eq_bars_daily 2026-09-02 00:00:00: HTTPError スキップ
-18:13:50 [INFO]   eq_bars_daily 2026-09-03 00:00:00: 429 → 60s待機
-18:14:50 [WARNING]   eq_bars_daily 2026-09-03 00:00:00: HTTPError スキップ
-18:14:51 [WARNING]   eq_bars_daily 2026-09-04 00:00:00: HTTPError スキップ
-18:14:53 [WARNING]   eq_bars_daily 2026-09-07 00:00:00: HTTPError スキップ
-18:14:54 [WARNING]   eq_bars_daily 2026-09-08 00:00:00: HTTPError スキップ
-18:14:56 [INFO]   eq_bars_daily 2026-09-09 00:00:00: 429 → 60s待機
-18:15:56 [WARNING]   eq_bars_daily 2026-09-09 00:00:00: HTTPError スキップ
-18:15:58 [WARNING]   eq_bars_daily 2026-09-10 00:00:00: HTTPError スキップ
-18:15:59 [WARNING]   eq_bars_daily 2026-09-11 00:00:00: HTTPError スキップ
-18:16:00 [WARNING]   eq_bars_daily 2026-09-14 00:00:00: HTTPError スキップ
-18:16:02 [WARNING]   eq_bars_daily 2026-09-15 00:00:00: HTTPError スキップ
-18:16:04 [INFO]   eq_bars_daily 2026-09-16 00:00:00: 429 → 60s待機
-18:17:04 [INFO]   eq_bars_daily 2026-09-16 00:00:00: 429 → 120s待機
-18:19:04 [WARNING]   eq_bars_daily 2026-09-16 00:00:00: HTTPError スキップ
-18:19:06 [WARNING]   eq_bars_daily 2026-09-17 00:00:00: HTTPError スキップ
-18:19:07 [WARNING]   eq_bars_daily 2026-09-18 00:00:00: HTTPError スキップ
-18:19:09 [WARNING]   eq_bars_daily 2026-09-21 00:00:00: HTTPError スキップ
-18:19:10 [WARNING]   eq_bars_daily 2026-09-22 00:00:00: HTTPError スキップ
-18:19:12 [INFO]   eq_bars_daily 2026-09-23 00:00:00: 429 → 60s待機
-18:20:12 [INFO]   eq_bars_daily 2026-09-23 00:00:00: 429 → 120s待機
-18:22:13 [WARNING]   eq_bars_daily 2026-09-23 00:00:00: HTTPError スキップ
-18:22:14 [WARNING]   eq_bars_daily 2026-09-24 00:00:00: HTTPError スキップ
-18:22:15 [WARNING]   eq_bars_daily 2026-09-25 00:00:00: HTTPError スキップ
-18:22:17 [WARNING]   eq_bars_daily 2026-09-28 00:00:00: HTTPError スキップ
-18:22:18 [WARNING]   eq_bars_daily 2026-09-29 00:00:00: HTTPError スキップ
-18:22:20 [INFO]   eq_bars_daily 2026-09-30 00:00:00: 429 → 60s待機
-18:23:21 [INFO]   eq_bars_daily 2026-09-30 00:00:00: 429 → 120s待機
-18:25:21 [WARNING]   eq_bars_daily 2026-09-30 00:00:00: HTTPError スキップ
-18:25:22 [WARNING]   eq_bars_daily 2026-10-01 00:00:00: HTTPError スキップ
-18:25:24 [WARNING]   eq_bars_daily 2026-10-02 00:00:00: HTTPError スキップ
-18:25:25 [WARNING]   eq_bars_daily 2026-10-05 00:00:00: HTTPError スキップ
-18:25:26 [WARNING]   eq_bars_daily 2026-10-06 00:00:00: HTTPError スキップ
-18:25:28 [INFO]   eq_bars_daily 2026-10-07 00:00:00: 429 → 60s待機
-18:26:29 [INFO]   eq_bars_daily 2026-10-07 00:00:00: 429 → 120s待機
-18:28:29 [WARNING]   eq_bars_daily 2026-10-07 00:00:00: HTTPError スキップ
-18:28:30 [WARNING]   eq_bars_daily 2026-10-08 00:00:00: HTTPError スキップ
-18:28:32 [WARNING]   eq_bars_daily 2026-10-09 00:00:00: HTTPError スキップ
-18:28:33 [WARNING]   eq_bars_daily 2026-10-12 00:00:00: HTTPError スキップ
-18:28:34 [WARNING]   eq_bars_daily 2026-10-13 00:00:00: HTTPError スキップ
-18:28:36 [INFO]   eq_bars_daily 2026-10-14 00:00:00: 429 → 60s待機
-18:29:37 [WARNING]   eq_bars_daily 2026-10-14 00:00:00: HTTPError スキップ
-18:29:38 [INFO]   eq_bars_daily 2026-10-15 00:00:00: 429 → 60s待機
-18:30:39 [WARNING]   eq_bars_daily 2026-10-15 00:00:00: HTTPError スキップ
-18:30:40 [WARNING]   eq_bars_daily 2026-10-16 00:00:00: HTTPError スキップ
-18:30:41 [WARNING]   eq_bars_daily 2026-10-19 00:00:00: HTTPError スキップ
-18:30:43 [INFO]   eq_bars_daily 2026-10-20 00:00:00: 429 → 60s待機
-18:31:43 [WARNING]   eq_bars_daily 2026-10-20 00:00:00: HTTPError スキップ
-18:31:45 [WARNING]   eq_bars_daily 2026-10-21 00:00:00: HTTPError スキップ
-18:31:46 [WARNING]   eq_bars_daily 2026-10-22 00:00:00: HTTPError スキップ
-18:31:48 [INFO]   eq_bars_daily 2026-10-23 00:00:00: 429 → 60s待機
-18:32:48 [WARNING]   eq_bars_daily 2026-10-23 00:00:00: HTTPError スキップ
-18:32:50 [WARNING]   eq_bars_daily 2026-10-26 00:00:00: HTTPError スキップ
-18:32:51 [WARNING]   eq_bars_daily 2026-10-27 00:00:00: HTTPError スキップ
-18:32:52 [WARNING]   eq_bars_daily 2026-10-28 00:00:00: HTTPError スキップ
-18:32:54 [INFO]   eq_bars_daily 2026-10-29 00:00:00: 429 → 60s待機
-18:33:54 [WARNING]   eq_bars_daily 2026-10-29 00:00:00: HTTPError スキップ
-18:33:56 [WARNING]   eq_bars_daily 2026-10-30 00:00:00: HTTPError スキップ
-18:33:57 [WARNING]   eq_bars_daily 2026-11-02 00:00:00: HTTPError スキップ
-18:33:59 [WARNING]   eq_bars_daily 2026-11-03 00:00:00: HTTPError スキップ
-18:34:00 [WARNING]   eq_bars_daily 2026-11-04 00:00:00: HTTPError スキップ
-18:34:01 [INFO]   黒字転換補正: 635 件
-18:34:01 [INFO]   黒字転換補正: 635 件
-18:34:01 [INFO]   決算成長率 >= 20%: 5329 件
-18:34:01 [INFO]   ROE >= 12%: 5329 → 934 件
-18:34:01 [INFO]   時価総額 300億〜3000億円: 0 件
-18:34:01 [INFO]   始値カラム: AdjustmentOpen
-18:34:04 [INFO]   最終候補: 0 件
-18:34:04 [INFO] 条件に合致する銘柄なし。通知しません。
-18:34:04 [INFO] 保有ポジションなし。スキップ。
+17:55:49 [INFO] 毎日スクリーニング: 2026-11-05 (遡及1日)
+17:55:49 [INFO] J-Quants: 上場銘柄情報を取得中...
+17:55:51 [INFO] 財務データ取得: 2024-11-05 〜 2026-11-05
+17:55:51 [INFO] J-Quants: 財務データを取得中 (2024-11-05 〜 2026-11-05)...
+17:55:52 [WARNING] fin_summary: バルク失敗(403 for url: https://api.jquants.com/v2/bulk/list?endpoint=%2Ffins%2Fsummary body: This API is not available on your subscription.  If you want more data, please check other plans:https://jpx-jquants.com/#dataset) → 逐次フェッチ
+17:55:52 [INFO]   fin_summary 逐次取得: 523 営業日
+17:58:17 [INFO]   fin_summary: 100/523
+18:00:44 [INFO]   fin_summary: 200/523
+18:03:08 [INFO]   fin_summary: 300/523
+18:05:35 [INFO]   fin_summary: 400/523
+18:07:10 [WARNING]   fin_summary 2026-08-17 00:00:00: HTTPError スキップ
+18:07:11 [WARNING]   fin_summary 2026-08-18 00:00:00: HTTPError スキップ
+18:07:13 [WARNING]   fin_summary 2026-08-19 00:00:00: HTTPError スキップ
+18:07:14 [WARNING]   fin_summary 2026-08-20 00:00:00: HTTPError スキップ
+18:07:15 [WARNING]   fin_summary 2026-08-21 00:00:00: HTTPError スキップ
+18:07:17 [WARNING]   fin_summary 2026-08-24 00:00:00: HTTPError スキップ
+18:07:18 [WARNING]   fin_summary 2026-08-25 00:00:00: HTTPError スキップ
+18:07:19 [WARNING]   fin_summary 2026-08-26 00:00:00: HTTPError スキップ
+18:07:21 [WARNING]   fin_summary 2026-08-27 00:00:00: HTTPError スキップ
+18:07:22 [WARNING]   fin_summary 2026-08-28 00:00:00: HTTPError スキップ
+18:07:23 [WARNING]   fin_summary 2026-08-31 00:00:00: HTTPError スキップ
+18:07:25 [WARNING]   fin_summary 2026-09-01 00:00:00: HTTPError スキップ
+18:07:26 [WARNING]   fin_summary 2026-09-02 00:00:00: HTTPError スキップ
+18:07:27 [WARNING]   fin_summary 2026-09-03 00:00:00: HTTPError スキップ
+18:07:29 [WARNING]   fin_summary 2026-09-04 00:00:00: HTTPError スキップ
+18:07:30 [WARNING]   fin_summary 2026-09-07 00:00:00: HTTPError スキップ
+18:07:32 [WARNING]   fin_summary 2026-09-08 00:00:00: HTTPError スキップ
+18:07:33 [WARNING]   fin_summary 2026-09-09 00:00:00: HTTPError スキップ
+18:07:34 [WARNING]   fin_summary 2026-09-10 00:00:00: HTTPError スキップ
+18:07:36 [WARNING]   fin_summary 2026-09-11 00:00:00: HTTPError スキップ
+18:07:37 [WARNING]   fin_summary 2026-09-14 00:00:00: HTTPError スキップ
+18:07:38 [WARNING]   fin_summary 2026-09-15 00:00:00: HTTPError スキップ
+18:07:40 [WARNING]   fin_summary 2026-09-16 00:00:00: HTTPError スキップ
+18:07:41 [WARNING]   fin_summary 2026-09-17 00:00:00: HTTPError スキップ
+18:07:42 [WARNING]   fin_summary 2026-09-18 00:00:00: HTTPError スキップ
+18:07:44 [WARNING]   fin_summary 2026-09-21 00:00:00: HTTPError スキップ
+18:07:45 [WARNING]   fin_summary 2026-09-22 00:00:00: HTTPError スキップ
+18:07:46 [WARNING]   fin_summary 2026-09-23 00:00:00: HTTPError スキップ
+18:07:48 [WARNING]   fin_summary 2026-09-24 00:00:00: HTTPError スキップ
+18:07:49 [WARNING]   fin_summary 2026-09-25 00:00:00: HTTPError スキップ
+18:07:50 [WARNING]   fin_summary 2026-09-28 00:00:00: HTTPError スキップ
+18:07:52 [WARNING]   fin_summary 2026-09-29 00:00:00: HTTPError スキップ
+18:07:53 [WARNING]   fin_summary 2026-09-30 00:00:00: HTTPError スキップ
+18:07:55 [WARNING]   fin_summary 2026-10-01 00:00:00: HTTPError スキップ
+18:07:56 [WARNING]   fin_summary 2026-10-02 00:00:00: HTTPError スキップ
+18:07:57 [INFO]   fin_summary: 500/523
+18:07:57 [WARNING]   fin_summary 2026-10-05 00:00:00: HTTPError スキップ
+18:07:59 [WARNING]   fin_summary 2026-10-06 00:00:00: HTTPError スキップ
+18:08:00 [WARNING]   fin_summary 2026-10-07 00:00:00: HTTPError スキップ
+18:08:01 [WARNING]   fin_summary 2026-10-08 00:00:00: HTTPError スキップ
+18:08:03 [WARNING]   fin_summary 2026-10-09 00:00:00: HTTPError スキップ
+18:08:04 [WARNING]   fin_summary 2026-10-12 00:00:00: HTTPError スキップ
+18:08:05 [WARNING]   fin_summary 2026-10-13 00:00:00: HTTPError スキップ
+18:08:07 [WARNING]   fin_summary 2026-10-14 00:00:00: HTTPError スキップ
+18:08:08 [WARNING]   fin_summary 2026-10-15 00:00:00: HTTPError スキップ
+18:08:09 [WARNING]   fin_summary 2026-10-16 00:00:00: HTTPError スキップ
+18:08:11 [WARNING]   fin_summary 2026-10-19 00:00:00: HTTPError スキップ
+18:08:12 [WARNING]   fin_summary 2026-10-20 00:00:00: HTTPError スキップ
+18:08:14 [WARNING]   fin_summary 2026-10-21 00:00:00: HTTPError スキップ
+18:08:15 [WARNING]   fin_summary 2026-10-22 00:00:00: HTTPError スキップ
+18:08:16 [WARNING]   fin_summary 2026-10-23 00:00:00: HTTPError スキップ
+18:08:18 [WARNING]   fin_summary 2026-10-26 00:00:00: HTTPError スキップ
+18:08:19 [WARNING]   fin_summary 2026-10-27 00:00:00: HTTPError スキップ
+18:08:20 [WARNING]   fin_summary 2026-10-28 00:00:00: HTTPError スキップ
+18:08:22 [WARNING]   fin_summary 2026-10-29 00:00:00: HTTPError スキップ
+18:08:23 [WARNING]   fin_summary 2026-10-30 00:00:00: HTTPError スキップ
+18:08:24 [WARNING]   fin_summary 2026-11-02 00:00:00: HTTPError スキップ
+18:08:26 [WARNING]   fin_summary 2026-11-03 00:00:00: HTTPError スキップ
+18:08:27 [WARNING]   fin_summary 2026-11-04 00:00:00: HTTPError スキップ
+18:08:28 [WARNING]   fin_summary 2026-11-05 00:00:00: HTTPError スキップ
+18:08:33 [INFO] 日足データ取得: 2026-08-07 〜 2026-11-05
+18:08:33 [INFO] J-Quants: 日足データを取得中 (2026-08-07 〜 2026-11-05)...
+18:08:33 [WARNING] eq_bars_daily: バルク失敗(403 for url: https://api.jquants.com/v2/bulk/list?endpoint=%2Fequities%2Fbars%2Fdaily body: This API is not available on your subscription.  If you want more data, please check other plans:https://jpx-jquants.com/#dataset) → 逐次フェッチ
+18:08:33 [INFO]   eq_bars_daily 逐次取得: 65 営業日
+18:08:53 [INFO]   eq_bars_daily 2026-08-14 00:00:00: 429 → 60s待機
+18:09:58 [WARNING]   eq_bars_daily 2026-08-17 00:00:00: HTTPError スキップ
+18:09:59 [WARNING]   eq_bars_daily 2026-08-18 00:00:00: HTTPError スキップ
+18:10:00 [WARNING]   eq_bars_daily 2026-08-19 00:00:00: HTTPError スキップ
+18:10:02 [WARNING]   eq_bars_daily 2026-08-20 00:00:00: HTTPError スキップ
+18:10:03 [INFO]   eq_bars_daily 2026-08-21 00:00:00: 429 → 60s待機
+18:11:04 [INFO]   eq_bars_daily 2026-08-21 00:00:00: 429 → 120s待機
+18:13:04 [WARNING]   eq_bars_daily 2026-08-21 00:00:00: HTTPError スキップ
+18:13:05 [WARNING]   eq_bars_daily 2026-08-24 00:00:00: HTTPError スキップ
+18:13:07 [WARNING]   eq_bars_daily 2026-08-25 00:00:00: HTTPError スキップ
+18:13:08 [WARNING]   eq_bars_daily 2026-08-26 00:00:00: HTTPError スキップ
+18:13:10 [WARNING]   eq_bars_daily 2026-08-27 00:00:00: HTTPError スキップ
+18:13:11 [INFO]   eq_bars_daily 2026-08-28 00:00:00: 429 → 60s待機
+18:14:12 [INFO]   eq_bars_daily 2026-08-28 00:00:00: 429 → 120s待機
+18:16:12 [WARNING]   eq_bars_daily 2026-08-28 00:00:00: HTTPError スキップ
+18:16:13 [WARNING]   eq_bars_daily 2026-08-31 00:00:00: HTTPError スキップ
+18:16:15 [WARNING]   eq_bars_daily 2026-09-01 00:00:00: HTTPError スキップ
+18:16:16 [WARNING]   eq_bars_daily 2026-09-02 00:00:00: HTTPError スキップ
+18:16:17 [WARNING]   eq_bars_daily 2026-09-03 00:00:00: HTTPError スキップ
+18:16:19 [INFO]   eq_bars_daily 2026-09-04 00:00:00: 429 → 60s待機
+18:17:20 [INFO]   eq_bars_daily 2026-09-04 00:00:00: 429 → 120s待機
+18:19:20 [WARNING]   eq_bars_daily 2026-09-04 00:00:00: HTTPError スキップ
+18:19:21 [WARNING]   eq_bars_daily 2026-09-07 00:00:00: HTTPError スキップ
+18:19:23 [WARNING]   eq_bars_daily 2026-09-08 00:00:00: HTTPError スキップ
+18:19:24 [WARNING]   eq_bars_daily 2026-09-09 00:00:00: HTTPError スキップ
+18:19:25 [WARNING]   eq_bars_daily 2026-09-10 00:00:00: HTTPError スキップ
+18:19:27 [INFO]   eq_bars_daily 2026-09-11 00:00:00: 429 → 60s待機
+18:20:28 [INFO]   eq_bars_daily 2026-09-11 00:00:00: 429 → 120s待機
+18:22:28 [WARNING]   eq_bars_daily 2026-09-11 00:00:00: HTTPError スキップ
+18:22:29 [WARNING]   eq_bars_daily 2026-09-14 00:00:00: HTTPError スキップ
+18:22:30 [WARNING]   eq_bars_daily 2026-09-15 00:00:00: HTTPError スキップ
+18:22:32 [WARNING]   eq_bars_daily 2026-09-16 00:00:00: HTTPError スキップ
+18:22:33 [WARNING]   eq_bars_daily 2026-09-17 00:00:00: HTTPError スキップ
+18:22:35 [INFO]   eq_bars_daily 2026-09-18 00:00:00: 429 → 60s待機
+18:23:35 [WARNING]   eq_bars_daily 2026-09-18 00:00:00: HTTPError スキップ
+18:23:37 [INFO]   eq_bars_daily 2026-09-21 00:00:00: 429 → 60s待機
+18:24:37 [WARNING]   eq_bars_daily 2026-09-21 00:00:00: HTTPError スキップ
+18:24:38 [WARNING]   eq_bars_daily 2026-09-22 00:00:00: HTTPError スキップ
+18:24:40 [WARNING]   eq_bars_daily 2026-09-23 00:00:00: HTTPError スキップ
+18:24:41 [INFO]   eq_bars_daily 2026-09-24 00:00:00: 429 → 60s待機
+18:25:41 [WARNING]   eq_bars_daily 2026-09-24 00:00:00: HTTPError スキップ
+18:25:43 [WARNING]   eq_bars_daily 2026-09-25 00:00:00: HTTPError スキップ
+18:25:44 [WARNING]   eq_bars_daily 2026-09-28 00:00:00: HTTPError スキップ
+18:25:46 [INFO]   eq_bars_daily 2026-09-29 00:00:00: 429 → 60s待機
+18:26:46 [WARNING]   eq_bars_daily 2026-09-29 00:00:00: HTTPError スキップ
+18:26:47 [WARNING]   eq_bars_daily 2026-09-30 00:00:00: HTTPError スキップ
+18:26:49 [WARNING]   eq_bars_daily 2026-10-01 00:00:00: HTTPError スキップ
+18:26:51 [INFO]   eq_bars_daily 2026-10-02 00:00:00: 429 → 60s待機
+18:27:51 [WARNING]   eq_bars_daily 2026-10-02 00:00:00: HTTPError スキップ
+18:27:52 [WARNING]   eq_bars_daily 2026-10-05 00:00:00: HTTPError スキップ
+18:27:53 [WARNING]   eq_bars_daily 2026-10-06 00:00:00: HTTPError スキップ
+18:27:55 [WARNING]   eq_bars_daily 2026-10-07 00:00:00: HTTPError スキップ
+18:27:57 [INFO]   eq_bars_daily 2026-10-08 00:00:00: 429 → 60s待機
+18:28:57 [WARNING]   eq_bars_daily 2026-10-08 00:00:00: HTTPError スキップ
+18:28:58 [WARNING]   eq_bars_daily 2026-10-09 00:00:00: HTTPError スキップ
+18:28:59 [WARNING]   eq_bars_daily 2026-10-12 00:00:00: HTTPError スキップ
+18:29:01 [WARNING]   eq_bars_daily 2026-10-13 00:00:00: HTTPError スキップ
+18:29:02 [WARNING]   eq_bars_daily 2026-10-14 00:00:00: HTTPError スキップ
+18:29:04 [INFO]   eq_bars_daily 2026-10-15 00:00:00: 429 → 60s待機
+18:30:04 [INFO]   eq_bars_daily 2026-10-15 00:00:00: 429 → 120s待機
+18:32:05 [WARNING]   eq_bars_daily 2026-10-15 00:00:00: HTTPError スキップ
+18:32:06 [WARNING]   eq_bars_daily 2026-10-16 00:00:00: HTTPError スキップ
+18:32:07 [WARNING]   eq_bars_daily 2026-10-19 00:00:00: HTTPError スキップ
+18:32:09 [WARNING]   eq_bars_daily 2026-10-20 00:00:00: HTTPError スキップ
+18:32:10 [WARNING]   eq_bars_daily 2026-10-21 00:00:00: HTTPError スキップ
+18:32:12 [INFO]   eq_bars_daily 2026-10-22 00:00:00: 429 → 60s待機
+18:33:12 [INFO]   eq_bars_daily 2026-10-22 00:00:00: 429 → 120s待機
+18:35:12 [WARNING]   eq_bars_daily 2026-10-22 00:00:00: HTTPError スキップ
+18:35:14 [WARNING]   eq_bars_daily 2026-10-23 00:00:00: HTTPError スキップ
+18:35:15 [WARNING]   eq_bars_daily 2026-10-26 00:00:00: HTTPError スキップ
+18:35:16 [WARNING]   eq_bars_daily 2026-10-27 00:00:00: HTTPError スキップ
+18:35:18 [WARNING]   eq_bars_daily 2026-10-28 00:00:00: HTTPError スキップ
+18:35:20 [INFO]   eq_bars_daily 2026-10-29 00:00:00: 429 → 60s待機
+18:36:20 [INFO]   eq_bars_daily 2026-10-29 00:00:00: 429 → 120s待機
+18:38:20 [WARNING]   eq_bars_daily 2026-10-29 00:00:00: HTTPError スキップ
+18:38:22 [WARNING]   eq_bars_daily 2026-10-30 00:00:00: HTTPError スキップ
+18:38:23 [WARNING]   eq_bars_daily 2026-11-02 00:00:00: HTTPError スキップ
+18:38:24 [WARNING]   eq_bars_daily 2026-11-03 00:00:00: HTTPError スキップ
+18:38:26 [WARNING]   eq_bars_daily 2026-11-04 00:00:00: HTTPError スキップ
+18:38:27 [INFO]   eq_bars_daily 2026-11-05 00:00:00: 429 → 60s待機
+18:39:28 [INFO]   eq_bars_daily 2026-11-05 00:00:00: 429 → 120s待機
+18:41:28 [WARNING]   eq_bars_daily 2026-11-05 00:00:00: HTTPError スキップ
+18:41:30 [INFO]   黒字転換補正: 676 件
+18:41:30 [INFO]   黒字転換補正: 676 件
+18:41:30 [INFO]   決算成長率 >= 20%: 5506 件
+18:41:30 [INFO]   ROE >= 12%: 5506 → 958 件
+18:41:30 [INFO]   時価総額 300億〜3000億円: 0 件
+18:41:30 [INFO]   始値カラム: AdjustmentOpen
+18:41:32 [INFO]   最終候補: 0 件
+18:41:32 [INFO] 条件に合致する銘柄なし。通知しません。
+18:41:33 [INFO] 保有ポジションなし。スキップ。
